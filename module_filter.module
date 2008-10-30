@@ -17,7 +17,9 @@ function module_filter_form_alter(&$form, $form_state, $form_id) {
   if ($form_id == 'system_modules' && !isset($form['confirm'])) {
     $form['module_filter'] = array(
       '#type' => 'textfield',
-      '#title' => t('Filter modules')
+      '#title' => t('Filter modules'),
+      '#prefix' => '<div id="module-filter-wrapper" style="display: none;">',
+      '#suffix' => '</div>'
     );
   }
 }

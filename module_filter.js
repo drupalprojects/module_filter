@@ -5,6 +5,7 @@ if (Drupal.jsEnabled) {
   var filterText = '';
 
   $(document).ready(function() {
+    $("#module-filter-wrapper").show();
     $("#edit-module-filter").keyup(function() {
       if (filterText != $(this).val()) {
         if (timeOut) {
