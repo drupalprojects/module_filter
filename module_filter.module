@@ -1,0 +1,42 @@
+<?php
+// $Id$
+
+/**
+ * @file
+ * This is the file description for Module Filter module.
+ *
+ * In this more verbose, multi-line description, you can specify what this
+ * file does exactly. Make sure to wrap your documentation in column 78 so
+ * that the file can be displayed nicely in default-sized consoles.
+ */
+
+/**
+ * Implementation of hook_form_alter().
+ */
+function module_filter_form_alter(&$form, $form_state, $form_id) {
+  if ($form_id == 'system_modules' && !isset($form['confirm'])) {
+    $form['module_filter'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Filter modules')
+    );
+  }
+}
+
+/**
+ * Implementation of hook_theme_registry_alter().
+ */
+function module_filter_theme_registry_alter(&$theme_registry) {
+  $theme_registry['system_modules']['function'] = 'theme_module_filter_system_modules';
+}
+
+function theme_module_filter_system_modules($form) {
+  if (isset($form['confirm'])) {
+    return drupal_render($form);
+  }
+
+  drupal_add_js(drupal_get_path('module', 'module_filter') .'/module_filter.js');
+
+  $output = drupal_render($form['module_filter']);
+  $output .= theme_system_modules($form);
+  return $output;
+}
