@@ -6,12 +6,13 @@ if (Drupal.jsEnabled) {
 
   $(document).ready(function() {
     $("#module-filter-wrapper").show();
+    $("#edit-module-filter").focus();
     $("#edit-module-filter").keyup(function() {
       if (filterText != $(this).val()) {
+        filterText = this.value.substring(0, startPos);
         if (timeOut) {
           clearTimeout(timeOut);
         }
-        filterText = $(this).val();
         timeOut = setTimeout("moduleFilter('" + filterText + "')", 500);
       }
     });
@@ -24,8 +25,7 @@ function moduleFilter(filter) {
   $("table.package tbody tr td strong label").each(function(i) {
     var parent = $(this).parent().parent().parent();
     var module = $(this).text();
-
-    moduleLowerCase = module.toLowerCase();
+    var moduleLowerCase = module.toLowerCase();
 
     if (moduleLowerCase.match(filterLowerCase)) {
       if (parent.css('display') == 'none') {
