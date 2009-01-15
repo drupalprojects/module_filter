@@ -2,12 +2,12 @@
 
 if (Drupal.jsEnabled) {
   var moduleFilterTimeOut;
-  var moduleFilterLeftHeight;
+  var moduleFilterTabsHeight;
   var moduleFilterTextFilter = '';
   var moduleFilterActiveTab = 'all-tab';
 
   $(document).ready(function() {
-    moduleFilterLeftHeight = $("#module-filter-left").height();
+    moduleFilterTabsHeight = $("#module-filter-tabs").height();
     _moduleFilterSpacerHeight();
     $("#edit-module-filter").focus();
     $("#module-filter-left a.project-tab").each(function(i) {
@@ -105,10 +105,10 @@ function _moduleFilterFlipper() {
 
 function _moduleFilterSpacerHeight() {
   var rightHeight = $("#module-filter-squeeze").height();
-  if (moduleFilterLeftHeight < rightHeight) {
+  if (moduleFilterTabsHeight <= rightHeight) {
     $("#module-filter-spacer").height($("#module-filter-squeeze").height());
   }
   else {
-    $("#module-filter-spacer").height($("#module-filter-left ul").height() - 1);
+    $("#module-filter-spacer").height($("#module-filter-tabs").height() - 1);
   }
 }
