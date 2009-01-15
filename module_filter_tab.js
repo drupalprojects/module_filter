@@ -45,6 +45,8 @@ if (Drupal.jsEnabled) {
 function moduleFilterTabLoad() {
   var flip = 'odd';
 
+  $("#edit-module-filter").val('');
+
   if (moduleFilterActiveTab == 'all-tab') {
     $("#projects tbody tr").each(function(i) {
       $(this).removeClass('odd');
