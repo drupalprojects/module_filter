@@ -2,10 +2,13 @@
 
 if (Drupal.jsEnabled) {
   var moduleFilterTimeOut;
+  var moduleFilterLeftHeight;
   var moduleFilterTextFilter = '';
   var moduleFilterActiveTab = 'all-tab';
 
   $(document).ready(function() {
+    moduleFilterLeftHeight = $("#module-filter-left").height();
+    _moduleFilterSpacerHeight();
     $("#edit-module-filter").focus();
     $("#module-filter-left a.project-tab").each(function(i) {
       $(this).click(function() {
@@ -63,6 +66,8 @@ function moduleFilterTabLoad() {
     });
     $("#projects tbody tr." + moduleFilterActiveTab + "-content").show();
   }
+
+  _moduleFilterSpacerHeight();
 }
 
 function moduleFilter(string) {
@@ -78,6 +83,8 @@ function moduleFilter(string) {
       _moduleFilter(stringLowerCase, this);
     });
   }
+
+  _moduleFilterSpacerHeight();
 }
 
 function _moduleFilter(stringLowerCase, item) {
@@ -89,5 +96,15 @@ function _moduleFilter(stringLowerCase, item) {
   }
   else {
     parent.hide();
+  }
+}
+
+function _moduleFilterSpacerHeight() {
+  var rightHeight = $("#module-filter-right").height();
+  if (moduleFilterLeftHeight < rightHeight) {
+    $("#module-filter-spacer").height($("#module-filter-right").height());
+  }
+  else {
+    $("#module-filter-spacer").height($("#module-filter-left").height());
   }
 }

@@ -230,6 +230,7 @@ function theme_module_filter_system_modules_tabs($form) {
   ksort($rows);
   $output .= '<div id="module-filter-left"><ul>'. implode($tabs) .'</ul>';
   $output .= '<div id="module-filter-submit">'. drupal_render($form['buttons']) .'</div></div>';
+  $output .= '<div id="module-filter-spacer"></div>';
   $output .= '<div id="module-filter-right">'. drupal_render($form['module_filter']);
   $output .= theme('table', $header, $rows, array('id' => 'projects')) .'</div>';
   $output .= '<div class="clear-block"></div>';
