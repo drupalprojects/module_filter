@@ -17,6 +17,7 @@
   border-bottom: 1px solid #D6DBDE;
   margin: 0px;
   padding: 0px;
+  list-style-image: none;
 }
 #module-filter-left ul li.active {
   margin-right: -1px;
