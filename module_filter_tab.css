@@ -47,6 +47,9 @@
 #module-filter-submit {
   text-align: center;
 }
+#module-filter-submit input {
+  margin-right: 0px;
+}
 #module-filter-spacer {
   float: left;
   width: 3px;
