@@ -102,9 +102,9 @@ function _moduleFilter(stringLowerCase, item) {
 }
 
 function _moduleFilterSpacerHeight() {
-  var rightHeight = $("#module-filter-right").height();
+  var rightHeight = $("#module-filter-squeeze").height();
   if (moduleFilterLeftHeight < rightHeight) {
-    $("#module-filter-spacer").height($("#module-filter-right").height());
+    $("#module-filter-spacer").height($("#module-filter-squeeze").height());
   }
   else {
     $("#module-filter-spacer").height($("#module-filter-left").height());

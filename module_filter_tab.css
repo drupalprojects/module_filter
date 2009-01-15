@@ -59,14 +59,18 @@
   margin-right: -1px;
 }
 #module-filter-right {
-  float: left;
-  width: 550px;
+  display: block;
+}
+#module-filter-squeeze {
+  margin-left: 173px;
   background-color: #FFFFFF;
   border-top: 1px solid #D6DBDE;
   border-bottom: 1px solid #D6DBDE;
   border-right: 1px solid #D6DBDE;
+  position: relative;
+  left: -1px;
 }
-#module-filter-right #projects {
+#module-filter-squeeze #projects {
   margin: 0px;
 }
 #edit-module-filter-wrapper {
