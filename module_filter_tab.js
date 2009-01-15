@@ -109,6 +109,6 @@ function _moduleFilterSpacerHeight() {
     $("#module-filter-spacer").height($("#module-filter-squeeze").height());
   }
   else {
-    $("#module-filter-spacer").height($("#module-filter-left").height());
+    $("#module-filter-spacer").height($("#module-filter-left ul").height() - 1);
   }
 }
