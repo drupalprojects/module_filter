@@ -27,22 +27,22 @@ if (Drupal.jsEnabled) {
   });
 }
 
-function moduleFilter(filter) {
-  filterLowerCase = filter.toLowerCase();
+function moduleFilter(string) {
+  stringLowerCase = string.toLowerCase();
 
   $("table.package tbody tr td strong").each(function(i) {
     var parent = $(this).parent().parent();
     var module = $(this).text();
     var moduleLowerCase = module.toLowerCase();
 
-    if (moduleLowerCase.match(filterLowerCase)) {
+    if (moduleLowerCase.match(stringLowerCase)) {
       if (parent.css('display') == 'none') {
         parent.show();
         if (parent.parent().parent().parent().parent().css('display') == 'none') {
           parent.parent().parent().parent().parent().show();
         }
       }
-      if (filter == '') {
+      if (string == '') {
         var fieldset = parent.parent().parent().parent().parent();
         for (var i in moduleFilterClosedFieldsets) {
           if (fieldset.children('legend').text() == moduleFilterClosedFieldsets[i]) {
@@ -51,7 +51,8 @@ function moduleFilter(filter) {
           }
         }
       }
-    } else {
+    }
+    else {
       if (parent.css('display') != 'none') {
         parent.hide();
         if (parent.siblings(":visible").html() == null) {
