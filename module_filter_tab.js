@@ -31,13 +31,6 @@ if (Drupal.jsEnabled) {
         }
         moduleFilterTimeOut = setTimeout("moduleFilter('" + moduleFilterTextFilter + "')", 500);
       }
-
-      if (moduleFilterClosedFieldsets == '') {
-        $("fieldset.collapsed").each(function(i) {
-          $(this).removeClass('collapsed');
-          moduleFilterClosedFieldsets.push($(this).children('legend').text());
-        });
-      }
     });
   });
 }
@@ -73,32 +66,41 @@ function moduleFilterTabLoad() {
 }
 
 function moduleFilter(string) {
-  stringLowerCase = string.toLowerCase();
+  var stringLowerCase = string.toLowerCase();
+  var flipper = new _moduleFilterFlipper();
 
   if (moduleFilterActiveTab == 'all-tab') {
     $("#projects tbody tr td strong").each(function(i) {
-      _moduleFilter(stringLowerCase, this);
+      _moduleFilter(stringLowerCase, this, flipper);
     });
   }
   else {
     $("#projects tbody tr." + moduleFilterActiveTab + "-content td strong").each(function(i) {
-      _moduleFilter(stringLowerCase, this);
+      _moduleFilter(stringLowerCase, this, flipper);
     });
   }
 
   _moduleFilterSpacerHeight();
 }
 
-function _moduleFilter(stringLowerCase, item) {
+function _moduleFilter(stringLowerCase, item, flip) {
   var parent = $(item).parent().parent();
   var module = $(item).text();
   var moduleLowerCase = module.toLowerCase();
   if (moduleLowerCase.match(stringLowerCase)) {
+    parent.removeClass('odd');
+    parent.removeClass('even');
+    parent.addClass(flip.flip);
     parent.show();
+    flip.flip = (flip.flip == 'odd') ? 'even' : 'odd';
   }
   else {
     parent.hide();
   }
+}
+
+function _moduleFilterFlipper() {
+  this.flip = 'odd';
 }
 
 function _moduleFilterSpacerHeight() {
