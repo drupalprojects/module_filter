@@ -19,6 +19,11 @@ if (Drupal.jsEnabled) {
 
           // Filter rows depending on tab selected.
           moduleFilterTabLoad();
+
+          if ($("#module-filter-squeeze table.sticky-header").css('visibility') == 'visible') {
+            destination = $("#module-filter-left").offset().top;
+            $("html:not(:animated),body:not(:animated)").scrollTop(destination - 15);
+          }
         }
         return false;
       });
