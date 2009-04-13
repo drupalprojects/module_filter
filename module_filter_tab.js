@@ -1,5 +1,7 @@
 // $Id$
 
+(function($) {
+
 if (Drupal.jsEnabled) {
   var moduleFilterTimeOut;
   var moduleFilterTabsHeight;
@@ -117,3 +119,5 @@ function _moduleFilterSpacerHeight() {
     $("#module-filter-spacer").height($("#module-filter-tabs").height() - 1);
   }
 }
+
+})(jQuery);

@@ -1,4 +1,10 @@
 ; $Id$
 name = Module filter
 description = "Filter the modules list."
-core = 6.x
+version = VERSION
+core = 7.x
+files[] = module_filter.install
+files[] = module_filter.js
+files[] = module_filter.module
+files[] = module_filter_tab.css
+files[] = module_filter_tab.js

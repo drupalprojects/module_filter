@@ -1,5 +1,7 @@
 // $Id$
 
+(function($) {
+
 if (Drupal.jsEnabled) {
   var moduleFilterTimeOut;
   var moduleFilterTextFilter = '';
@@ -64,3 +66,5 @@ function moduleFilter(string) {
     }
   });
 }
+
+})(jQuery);
