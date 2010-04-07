@@ -25,7 +25,6 @@ if (Drupal.jsEnabled) {
             $("html:not(:animated),body:not(:animated)").scrollTop(destination - 15);
           }
         }
-        return false;
       });
     });
     $("#edit-module-filter").keyup(function() {
@@ -75,12 +74,12 @@ function moduleFilter(string) {
   var flipper = new _moduleFilterFlipper();
 
   if (moduleFilterActiveTab == 'all-tab') {
-    $("#projects tbody tr td strong").each(function(i) {
+    $("#projects tbody tr td > strong").each(function(i) {
       _moduleFilter(stringLowerCase, this, flipper);
     });
   }
   else {
-    $("#projects tbody tr." + moduleFilterActiveTab + "-content td strong").each(function(i) {
+    $("#projects tbody tr." + moduleFilterActiveTab + "-content td > strong").each(function(i) {
       _moduleFilter(stringLowerCase, this, flipper);
     });
   }

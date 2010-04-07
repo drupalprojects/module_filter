@@ -30,7 +30,7 @@ if (Drupal.jsEnabled) {
 function moduleFilter(string) {
   stringLowerCase = string.toLowerCase();
 
-  $("table.package tbody tr td strong").each(function(i) {
+  $("table.package tbody tr td > strong").each(function(i) {
     var parent = $(this).parent().parent();
     var module = $(this).text();
     var moduleLowerCase = module.toLowerCase();

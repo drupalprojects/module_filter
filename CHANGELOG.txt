@@ -1,0 +1,15 @@
+// $Id$
+
+Module Filter x.x-x.x, xxxx-xx-xx
+---------------------------------
+
+
+Module Filter 6.x-1.x, xxxx-xx-xx
+---------------------------------
+by greenSkin: Moved .js and .css files into appropriate folders.
+by greenSkin: Moved admin callback into module_filter.admin.inc file.
+by greenSkin: Made tabs enabled by default.
+by greenSkin: Put tabs option to the top of admin page.
+#443584 by picardo: Fixed strange behavior with ModuleInfo module.
+#566394 by designerbrent: Replaced deprecated PHP function ereg_replace() with
+  preg_replace().
