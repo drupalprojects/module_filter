@@ -36,6 +36,12 @@ if (Drupal.jsEnabled) {
         moduleFilterTimeOut = setTimeout("moduleFilter('" + moduleFilterTextFilter + "')", 500);
       }
     });
+
+    var url = document.location.toString();
+    if (url.match('#')) {
+      var anchor = '#' + url.split('#')[1];
+      $('a[href="' + anchor + '"]').click();
+    }
   });
 }
 

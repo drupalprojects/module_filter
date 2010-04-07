@@ -13,3 +13,4 @@ by greenSkin: Put tabs option to the top of admin page.
 #443584 by picardo: Fixed strange behavior with ModuleInfo module.
 #566394 by designerbrent: Replaced deprecated PHP function ereg_replace() with
   preg_replace().
+by greenSkin: Added the use of anchors for tabs.
