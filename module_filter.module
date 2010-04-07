@@ -160,7 +160,6 @@ function theme_module_filter_system_modules_tabs($form) {
   ksort($packages);
 
   // Display packages.
-  $output = '';
   $rows = array();
   $tabs = array('all' => '<li class="active"><a id="all-tab" class="project-tab" href="#all">'. t('All') .'</a></li>');
   foreach ($packages as $package => $modules) {
@@ -211,6 +210,7 @@ function theme_module_filter_system_modules_tabs($form) {
   }
 
   ksort($rows);
+  $output = '<div id="module-filter-wrapper">'.
   $output .= '<div id="module-filter-left">';
   $output .= '<div id="module-filter-tabs"><ul>'. implode($tabs) .'</ul></div>';
   $output .= '<div id="module-filter-submit">'. drupal_render($form['buttons']) .'</div></div>';
@@ -218,6 +218,7 @@ function theme_module_filter_system_modules_tabs($form) {
   $output .= '<div id="module-filter-right"><div id="module-filter-squeeze">'. drupal_render($form['module_filter']);
   $output .= theme('table', $header, $rows, array('id' => 'projects')) .'</div></div>';
   $output .= '<div class="clear-block"></div>';
+  $output .= '</div>';
 
   $output .= drupal_render($form);
   return $output;
