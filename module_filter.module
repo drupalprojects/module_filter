@@ -165,7 +165,8 @@ function theme_module_filter_system_modules_tabs($form) {
   $tabs = array('all' => '<li class="active"><a id="all-tab" class="project-tab" href="#all">'. t('All') .'</a></li>');
   foreach ($packages as $package => $modules) {
     $id = strtolower($package);
-    $id = preg_replace('/[^a-z ][ ]/', '', $id);
+    // $id = preg_replace('/[^a-z ]\//', '', $id);
+    $id = preg_replace('/([^a-z])([\/(  )])*/', '-', $id);
     foreach ($modules as $key => $module) {
       $row = array();
       $description = drupal_render($form['description'][$key]);
