@@ -168,6 +168,7 @@ function theme_module_filter_system_modules_tabs($form) {
     $id = preg_replace('[^a-z ]', '', $id);
     $id = str_replace(' ', '-', $id);
     $id = str_replace('--', '-', $id);
+    $id = str_replace('/', '-', $id);
     foreach ($modules as $key => $module) {
       $row = array();
       $description = drupal_render($form['description'][$key]);

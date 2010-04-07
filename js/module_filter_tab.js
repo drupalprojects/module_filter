@@ -27,6 +27,10 @@ if (Drupal.jsEnabled) {
         }
       });
     });
+
+    // Move anchors to top of tabs.
+    $('a.anchor', $('#module-filter-left')).remove().prependTo('#module-filter-tabs');
+
     $("#edit-module-filter").keyup(function() {
       if (moduleFilterTextFilter != $(this).val()) {
         moduleFilterTextFilter = this.value;
