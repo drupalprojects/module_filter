@@ -7,3 +7,9 @@
 function module_filter_uninstall() {
   variable_del('module_filter_autocomplete');
 }
+
+function module_filter_update_6000() {
+  $ret = array();
+  $ret[] = array('success' => TRUE, 'query' => t('Force menu to rebuild.'));
+  return $ret;
+}
