@@ -50,8 +50,7 @@ function module_filter_form_alter(&$form, $form_state, $form_id) {
     $form['module_filter'] = array('#tree' => TRUE);
     $form['module_filter']['name'] = array(
       '#type' => 'textfield',
-      '#title' => t('Filter list'),
-      '#size' => 40
+      '#title' => t('Filter list')
     );
     $form['module_filter']['show'] = array(
       '#type' => 'checkboxes',
