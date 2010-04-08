@@ -60,6 +60,10 @@ Drupal.behaviors.moduleFilter = function() {
     var anchor = '#' + url.split('#')[1];
     $('a[href="' + anchor + '"]').click();
   }
+  // Else if no active tab is defined, set it to the all tab.
+  else if (Drupal.ModuleFilter.activeTab == undefined) {
+    Drupal.ModuleFilter.activeTab = Drupal.ModuleFilter.tabs['all-tab'];
+  }
 }
 
 Drupal.ModuleFilter.setSpacerHeight = function() {

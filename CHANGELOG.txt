@@ -20,3 +20,5 @@ by greenSkin: Updated preg_replace to return the ID in the needed format.
 by greenSkin: Updated tabs JavaScript code to be more object oriented.
 #535736 by eMPee584, greenSkin: Added enabled, disabled, required, and
   unavailable options to filter by to the tabbed version.
+by greenSkin: Updated code to define the activeTab as 'All' when no anchor
+  is given and the activeTab is undefined.
