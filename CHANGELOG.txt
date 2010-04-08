@@ -22,3 +22,4 @@ by greenSkin: Updated tabs JavaScript code to be more object oriented.
   unavailable options to filter by to the tabbed version.
 by greenSkin: Updated code to define the activeTab as 'All' when no anchor
   is given and the activeTab is undefined.
+by greenSkin: Set module filter textfield to size 40.
