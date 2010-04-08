@@ -24,3 +24,4 @@ by greenSkin: Updated code to define the activeTab as 'All' when no anchor
   is given and the activeTab is undefined.
 by greenSkin: Moved css used with and without tabs into separate file that
   will get added to both versions of the module page.
+by greenSkin: Improved js code for non-tabs.

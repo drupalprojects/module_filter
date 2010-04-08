@@ -3,7 +3,6 @@
 if (Drupal.jsEnabled) {
   var moduleFilterTimeOut;
   var moduleFilterTextFilter = '';
-  var moduleFilterClosedFieldsets = new Array();
 
   $(document).ready(function() {
     $("#module-filter-wrapper").show();
@@ -16,13 +15,6 @@ if (Drupal.jsEnabled) {
         }
         moduleFilterTimeOut = setTimeout("moduleFilter('" + moduleFilterTextFilter + "')", 500);
       }
-
-      if (moduleFilterClosedFieldsets == '') {
-        $("fieldset.collapsed").each(function(i) {
-          $(this).removeClass('collapsed');
-          moduleFilterClosedFieldsets.push($(this).children('legend').text());
-        });
-      }
     });
   });
 }
@@ -31,34 +23,27 @@ function moduleFilter(string) {
   stringLowerCase = string.toLowerCase();
 
   $("table.package tbody tr td > strong").each(function(i) {
-    var parent = $(this).parent().parent();
+    var $row = $(this).parent().parent();
     var module = $(this).text();
     var moduleLowerCase = module.toLowerCase();
+    var $fieldset = $row.parents('fieldset');
 
     if (moduleLowerCase.match(stringLowerCase)) {
-      if (parent.css('display') == 'none') {
-        parent.show();
-        if (parent.parent().parent().parent().parent().css('display') == 'none') {
-          parent.parent().parent().parent().parent().show();
+      if (!$row.is(':visible')) {
+        $row.show();
+        if ($fieldset.hasClass('collapsed')) {
+          $fieldset.removeClass('collapsed');
         }
-      }
-      if (string == '') {
-        var fieldset = parent.parent().parent().parent().parent();
-        for (var i in moduleFilterClosedFieldsets) {
-          if (fieldset.children('legend').text() == moduleFilterClosedFieldsets[i]) {
-            fieldset.addClass('collapsed');
-            delete(moduleFilterClosedFieldsets[i]);
-          }
+        if (!$fieldset.is(':visible')) {
+          $fieldset.show();
         }
       }
     }
     else {
-      if (parent.css('display') != 'none') {
-        parent.hide();
-        if (parent.siblings(":visible").html() == null) {
-          if (parent.parent().parent().parent().parent().css('display') != 'none') {
-            parent.parent().parent().parent().parent().hide();
-          }
+      if ($row.css('display') != 'none') {
+        $row.hide();
+        if ($row.siblings(":visible").html() == null) {
+          $fieldset.hide();
         }
       }
     }
