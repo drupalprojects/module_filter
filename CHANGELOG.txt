@@ -30,3 +30,5 @@ by greenSkin: Improved js code for non-tabs.
 #378758 by greenSkin: Added description to Module Filter's settings menu item.
 by greenSkin: Updated theming of the tabs layout. Removed spacer div. Declare
   styling to fix issues with other themes using .form-item:after.
+by greenSkin: Updated js code for tabs. The filter textfield now gets cleared
+  when a tab is set to active and regains focus.

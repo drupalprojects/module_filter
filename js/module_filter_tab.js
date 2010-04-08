@@ -142,13 +142,14 @@ Drupal.ModuleFilter.Tab.prototype.setActive = function() {
   Drupal.ModuleFilter.activeTab = this;
   $(Drupal.ModuleFilter.activeTab.element).parent().addClass('active');
   Drupal.ModuleFilter.activeTab.displayRows();
+
+  // Clear filter textfield and refocus on it.
+  $('#edit-module-filter-name').val('');
+  $('#edit-module-filter-name').focus();
 }
 
 Drupal.ModuleFilter.Tab.prototype.displayRows = function() {
   var flip = 'odd';
-
-  // Clear value in module filter textfield, if any.
-  $('#edit-module-filter-name').val('');
 
   if (Drupal.ModuleFilter.activeTab.id == 'all-tab' && Drupal.ModuleFilter.status == 'all') {
     $('#projects tbody tr').each(function(i) {
