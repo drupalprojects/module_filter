@@ -22,13 +22,13 @@ Drupal.behaviors.moduleFilter = function() {
   // Move anchors to top of tabs.
   $('a.anchor', $('#module-filter-left')).remove().prependTo('#module-filter-tabs');
 
-  $("#edit-module-filter").keyup(function() {
+  $('#edit-module-filter').keyup(function() {
     if (Drupal.ModuleFilter.textFilter != $(this).val()) {
       Drupal.ModuleFilter.textFilter = this.value;
       if (Drupal.ModuleFilter.timeout) {
         clearTimeout(Drupal.ModuleFilter.timeout);
       }
-      Drupal.ModuleFilter.timeout = setTimeout("Drupal.ModuleFilter.filter('" + Drupal.ModuleFilter.textFilter + "')", 500);
+      Drupal.ModuleFilter.timeout = setTimeout('Drupal.ModuleFilter.filter("' + Drupal.ModuleFilter.textFilter + '")', 500);
     }
   });
 
@@ -57,9 +57,6 @@ Drupal.ModuleFilter.filter = function(string) {
 
   if (Drupal.ModuleFilter.activeTab.id == 'all-tab') {
     var selector = '#projects tbody tr td > strong';
-    $("#projects tbody tr td > strong").each(function(i) {
-      _moduleFilter(stringLowerCase, this, flipper);
-    });
   }
   else {
     var selector = '#projects tbody tr.' + Drupal.ModuleFilter.activeTab.id + '-content td > strong';
