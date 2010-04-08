@@ -29,6 +29,7 @@ function module_filter_perm() {
 function module_filter_menu() {
   $items['admin/settings/module_filter'] = array(
     'title' => 'Module filter',
+    'description' => 'Configure settings for Module Filter.',
     'access arguments' => array('administer module filter'),
     'page callback' => 'drupal_get_form',
     'page arguments' => array('module_filter_settings'),
