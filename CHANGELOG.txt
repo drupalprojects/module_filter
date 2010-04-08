@@ -11,10 +11,12 @@ by greenSkin: Moved admin callback into module_filter.admin.inc file.
 by greenSkin: Made tabs enabled by default.
 by greenSkin: Put tabs option to the top of admin page.
 #443584 by picardo: Fixed strange behavior with ModuleInfo module.
-#566394 by designerbrent: Replaced deprecated PHP function ereg_replace() with
-  preg_replace().
+#566394 by designerbrent: Replaced deprecated PHP 5.3 function ereg_replace()
+  with preg_replace().
 by greenSkin: Added the use of anchors for tabs.
 by greenSkin: Moved tab anchors to top of #module-filter-tabs.
 by greenSkin: Convert forward slash to dash for ID.
 by greenSkin: Updated preg_replace to return the ID in the needed format.
 by greenSkin: Updated tabs JavaScript code to be more object oriented.
+#535736 by eMPee584, greenSkin: Added enabled, disabled, required, and
+  unavailable options to filter by to the tabbed version.

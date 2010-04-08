@@ -71,9 +71,15 @@
   position: relative;
   left: -1px;
 }
-#edit-module-filter-wrapper {
+#edit-module-filter-name-wrapper {
   text-align: center;
 }
-#edit-module-filter-wrapper label {
+#edit-module-filter-name-wrapper label {
+  display: inline;
+}
+#module-filter-show-wrapper {
+  text-align: center;
+}
+#module-filter-show-wrapper .form-item {
   display: inline;
 }

@@ -7,8 +7,8 @@ if (Drupal.jsEnabled) {
 
   $(document).ready(function() {
     $("#module-filter-wrapper").show();
-    $("#edit-module-filter").focus();
-    $("#edit-module-filter").keyup(function() {
+    $("#edit-module-filter-name").focus();
+    $("#edit-module-filter-name").keyup(function() {
       if (moduleFilterTextFilter != $(this).val()) {
         moduleFilterTextFilter = this.value;
         if (moduleFilterTimeOut) {
