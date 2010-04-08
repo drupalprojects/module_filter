@@ -4,7 +4,7 @@ Module Filter x.x-x.x, xxxx-xx-xx
 ---------------------------------
 
 
-Module Filter 6.x-1.x, xxxx-xx-xx
+Module Filter 6.x-1.3, 2010-04-08
 ---------------------------------
 by greenSkin: Moved .js and .css files into appropriate folders.
 by greenSkin: Moved admin callback into module_filter.admin.inc file.
