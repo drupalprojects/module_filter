@@ -69,7 +69,7 @@ Drupal.ModuleFilter.filter = function(string) {
 
     if (moduleLowerCase.match(stringLowerCase)) {
       $parent.removeClass('odd even');
-      $parent.addClass(flip.flip);
+      $parent.addClass(flip);
       $parent.show();
       flip = (flip == 'odd') ? 'even' : 'odd';
     }
