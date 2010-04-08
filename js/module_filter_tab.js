@@ -1,7 +1,6 @@
 // $Id$
 
 Drupal.ModuleFilter = Drupal.ModuleFilter || {};
-Drupal.ModuleFilter.tabsHeight;
 Drupal.ModuleFilter.textFilter = '';
 Drupal.ModuleFilter.timeout;
 Drupal.ModuleFilter.tabs = {};
@@ -10,10 +9,7 @@ Drupal.behaviors.moduleFilter = function() {
   // Set the focus on the module filter textfield.
   $('#edit-module-filter-name').focus();
 
-  // Determine the height for the tabs div.
-  Drupal.ModuleFilter.tabsHeight = $('#module-filter-tabs').height();
-  // Set the spacer height.
-  Drupal.ModuleFilter.setSpacerHeight();
+  $('#module-filter-squeeze').css('min-height', $('#module-filter-tabs').height());
 
   $('#module-filter-left a.project-tab').each(function(i) {
     Drupal.ModuleFilter.tabs[$(this).attr('id')] = new Drupal.ModuleFilter.Tab(this);
@@ -63,16 +59,6 @@ Drupal.behaviors.moduleFilter = function() {
   // Else if no active tab is defined, set it to the all tab.
   else if (Drupal.ModuleFilter.activeTab == undefined) {
     Drupal.ModuleFilter.activeTab = Drupal.ModuleFilter.tabs['all-tab'];
-  }
-}
-
-Drupal.ModuleFilter.setSpacerHeight = function() {
-  var rightHeight = $("#module-filter-squeeze").height();
-  if (Drupal.ModuleFilter.tabsHeight <= rightHeight) {
-    $("#module-filter-spacer").height($("#module-filter-squeeze").height());
-  }
-  else {
-    $("#module-filter-spacer").height($("#module-filter-tabs").height() - 1);
   }
 }
 
@@ -184,7 +170,4 @@ Drupal.ModuleFilter.Tab.prototype.displayRows = function() {
       }
     });
   }
-
-  // Adjust spacer height.
-  Drupal.ModuleFilter.setSpacerHeight();
 }

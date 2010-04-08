@@ -1,5 +1,14 @@
 /* $Id$ */
 
+#module-filter-wrapper .form-item {
+  border: 0px none;
+  margin: 0;
+  padding: 9px;
+}
+#module-filter-wrapper .form-item:after {
+/*  display: block;*/
+  clear: none;
+}
 #module-filter-left {
   float: left;
   background-color: #F6F6F6;
@@ -51,25 +60,14 @@
 #module-filter-submit input {
   margin: 2em 0.5em 1em 0;
 }
-#module-filter-spacer {
-  float: left;
-  width: 3px;
-  height: 600px;
-  background-color: #FFFFFF;
-  border: 1px solid #D6DBDE;
-  margin-right: -1px;
-}
 #module-filter-right {
   display: block;
 }
 #module-filter-squeeze {
-  margin-left: 173px;
+  margin-left: 168px;
   background-color: #FFFFFF;
-  border-top: 1px solid #D6DBDE;
-  border-bottom: 1px solid #D6DBDE;
-  border-right: 1px solid #D6DBDE;
-  position: relative;
-  left: -1px;
+  border: 1px solid #D6DBDE;
+  height: auto !important;
 }
 #edit-module-filter-name-wrapper {
   text-align: center;
@@ -77,6 +75,12 @@
 #edit-module-filter-name-wrapper label {
   display: inline;
 }
-#module-filter-show-wrapper {
+#module-filter-show-wrapper .form-checkboxes {
   text-align: center;
+}
+#module-filter-show-wrapper .form-item:after {
+  display: inline;
+}
+table#projects {
+  margin: 1em 0;
 }

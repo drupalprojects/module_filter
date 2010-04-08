@@ -28,3 +28,5 @@ by greenSkin: Improved js code for non-tabs.
 #535736 by eMPee584, greenSkin: Added enabled, disabled, required, and
   unavailable options to filter by to the non-tabbed version.
 #378758 by greenSkin: Added description to Module Filter's settings menu item.
+by greenSkin: Updated theming of the tabs layout. Removed spacer div. Declare
+  styling to fix issues with other themes using .form-item:after.
