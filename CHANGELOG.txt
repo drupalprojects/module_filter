@@ -32,3 +32,5 @@ by greenSkin: Updated theming of the tabs layout. Removed spacer div. Declare
   styling to fix issues with other themes using .form-item:after.
 by greenSkin: Updated js code for tabs. The filter textfield now gets cleared
   when a tab is set to active and regains focus.
+by greenSkin: Updated table and table row in tabbed style to not use borders
+  on the left or right.

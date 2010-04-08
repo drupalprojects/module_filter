@@ -83,4 +83,10 @@
 }
 table#projects {
   margin: 1em 0;
+  border-right: 0 none;
+  border-left: 0 none;
+}
+table#projects tbody tr {
+  border-right: 0 none;
+  border-left: 0 none;
 }
