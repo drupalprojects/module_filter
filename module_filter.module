@@ -122,7 +122,7 @@ function theme_module_filter_system_modules($form) {
   drupal_add_css(drupal_get_path('module', 'module_filter') .'/css/module_filter.css');
 
   $output = '';
-  if (variable_get('module_filter_tabs', 0)) {
+  if (variable_get('module_filter_tabs', 1)) {
     drupal_add_css(drupal_get_path('module', 'module_filter') .'/css/module_filter_tab.css');
     drupal_add_js(drupal_get_path('module', 'module_filter') .'/js/module_filter_tab.js');
     $form['module_filter']['#size'] = 45;
