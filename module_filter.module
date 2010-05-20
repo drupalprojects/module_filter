@@ -133,6 +133,7 @@ function theme_module_filter_system_modules($form) {
     $form['module_filter']['#prefix'] = '<div id="module-filter-wrapper" style="display: none;">';
     $form['module_filter']['#suffix'] = '</div>';
     $output = drupal_render($form['module_filter']);
+    $form['#theme'] = 'system_modules';
     $output .= theme('system_modules', $form);
   }
   return $output;
