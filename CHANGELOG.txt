@@ -4,7 +4,7 @@ Module Filter x.x-x.x, xxxx-xx-xx
 ---------------------------------
 
 
-Module Filter 6.x-1.x, xxxx-xx-xx
+Module Filter 6.x-1.4, 2010-05-20
 ---------------------------------
 by greenSkin: Fixed issue where tabs appears to be enabled on the settings
   page for a fresh install but is not actually enabled.
