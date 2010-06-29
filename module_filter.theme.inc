@@ -119,7 +119,11 @@ function theme_module_filter_system_modules_tabs($form) {
 
       $row[] = array('data' => drupal_render($form['version'][$key]), 'class' => 'version');
       $row[] = array('data' => $description, 'class' => 'description');
-      $rows[$form['name'][$key]['#value']] = array(
+
+      // Set the key for the row to the module name so we can easily sort it.
+      // Append the $key variable to the end of the row key to ensure a unique
+      // key. http://drupal.org/node/840324
+      $rows[$form['name'][$key]['#value'] . $key] = array(
         'data' => $row,
         'class' => $id .'-tab-content'
       );

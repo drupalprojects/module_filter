@@ -5,6 +5,8 @@ Module Filter x.x-x.x, xxxx-xx-xx
 by greenSkin: Fixed a minor syntax issue.
 #837846 by Sweetchack, greenSkin: Code Optimization - truncate the module code
   and move appropriate code to separate files.
+#840324 by greenSkin: Resolved issue with two modules sharing the same name not
+  showing correctly in tabbed version of module page.
 
 
 Module Filter 6.x-1.4, 2010-05-20
