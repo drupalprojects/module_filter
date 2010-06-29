@@ -222,7 +222,7 @@ function theme_module_filter_system_modules_tabs($form) {
   }
 
   ksort($rows);
-  $output = '<div id="module-filter-wrapper">'.
+  $output = '<div id="module-filter-wrapper">';
   $output .= '<div id="module-filter-left">';
   $output .= '<div id="module-filter-tabs"><ul>'. implode($tabs) .'</ul></div>';
   $output .= '<div id="module-filter-submit">'. drupal_render($form['buttons']) .'</div></div>';

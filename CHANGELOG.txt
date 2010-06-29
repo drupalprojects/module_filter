@@ -2,6 +2,7 @@
 
 Module Filter x.x-x.x, xxxx-xx-xx
 ---------------------------------
+by greenSkin: Fixed a minor syntax issue.
 
 
 Module Filter 6.x-1.4, 2010-05-20
