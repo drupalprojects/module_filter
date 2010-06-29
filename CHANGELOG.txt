@@ -3,6 +3,8 @@
 Module Filter x.x-x.x, xxxx-xx-xx
 ---------------------------------
 by greenSkin: Fixed a minor syntax issue.
+#837846 by Sweetchack, greenSkin: Code Optimization - truncate the module code
+  and move appropriate code to separate files.
 
 
 Module Filter 6.x-1.4, 2010-05-20

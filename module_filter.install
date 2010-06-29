@@ -5,9 +5,13 @@
  * Implementation of hook_uninstall().
  */
 function module_filter_uninstall() {
+  variable_del('module_filter_tabs');
   variable_del('module_filter_autocomplete');
 }
 
+/**
+ * Force the menu system to rebuild.
+ */
 function module_filter_update_6000() {
   $ret = array();
   $ret[] = array('success' => TRUE, 'query' => t('Force menu to rebuild.'));
