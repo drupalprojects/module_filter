@@ -17,18 +17,24 @@
  ******************************************************************************/
 
 /**
- * Implementation of hook_perm().
+ * Implementation of hook_permission().
  */
-function module_filter_perm() {
-  return array('administer module filter');
+function module_filter_permission() {
+  return array(
+    'administer module filter' => array(
+      'title' => t('Administer Module Filter'),
+      'description' => t('Perform administration tasks for Module Filter.')
+    )
+  );
 }
 
 /**
  * Implementation of hook_menu().
  */
 function module_filter_menu() {
-  $items['admin/settings/module_filter'] = array(
+  $items['admin/config/user-interface/modulefilter'] = array(
     'title' => 'Module filter',
+    'description' => 'Configure how Module Filter performs.',
     'access arguments' => array('administer module filter'),
     'page callback' => 'drupal_get_form',
     'page arguments' => array('module_filter_settings')
@@ -44,7 +50,8 @@ function module_filter_menu() {
 /**
  * Implementation of hook_form_alter().
  */
-function module_filter_form_alter(&$form, $form_state, $form_id) {
+function module_filter_form_alter(&$form, &$form_state, $form_id) {
+  // dpm(debug_backtrace());
   if ($form_id == 'system_modules' && !isset($form['confirm'])) {
     $form['module_filter'] = array(
       '#type' => 'textfield',
@@ -95,10 +102,10 @@ function module_filter_settings() {
 }
 
 function module_filter_autocomplete($string) {
-  $files = module_rebuild_cache();
+  $files = system_get_module_data();
   $matches = array();
   $count = 1;
-  foreach (module_rebuild_cache() as $id => $module) {
+  foreach ($files as $id => $module) {
     if ($count > 10) {
       break;
     }
@@ -130,13 +137,13 @@ function theme_module_filter_system_modules($form) {
 
   $output = '';
   if (variable_get('module_filter_tabs', 0)) {
-    drupal_add_css(drupal_get_path('module', 'module_filter') .'/css/module_filter_tab.css');
-    drupal_add_js(drupal_get_path('module', 'module_filter') .'/js/module_filter_tab.js');
+    drupal_add_css(drupal_get_path('module', 'module_filter') . '/css/module_filter_tab.css');
+    drupal_add_js(drupal_get_path('module', 'module_filter') . '/js/module_filter_tab.js');
     $form['module_filter']['#size'] = 45;
     $output .= theme('module_filter_system_modules_tabs', $form);
   }
   else {
-    drupal_add_js(drupal_get_path('module', 'module_filter') .'/js/module_filter.js');
+    drupal_add_js(drupal_get_path('module', 'module_filter') . '/js/module_filter.js');
     $form['module_filter']['#prefix'] = '<div id="module-filter-wrapper" style="display: none;">';
     $form['module_filter']['#suffix'] = '</div>';
     // $output .= drupal_render($form['module_filter']);
@@ -180,7 +187,7 @@ function theme_module_filter_system_modules_tabs($form) {
   // Display packages.
   $output = '';
   $rows = array();
-  $tabs = array('all' => '<li class="active"><a id="all-tab" class="project-tab" href="">'. t('All') .'</a></li>');
+  $tabs = array('all' => '<li class="active"><a id="all-tab" class="project-tab" href="">' . t('All') . '</a></li>');
   foreach ($packages as $package => $modules) {
     $id = strtolower($package);
     $id = ereg_replace('[^a-z ]', '', $id);
@@ -192,7 +199,7 @@ function theme_module_filter_system_modules_tabs($form) {
       if (isset($form['status']['#incompatible_modules_core'][$key])) {
         unset($form['status'][$key]);
         $status = theme('image', 'misc/watchdog-error.png', t('incompatible'), t('Incompatible with this version of Drupal core'));
-        $description .= '<div class="incompatible">'. t('This version is incompatible with the !core_version version of Drupal core.', array('!core_version' => VERSION)) .'</div>';
+        $description .= '<div class="incompatible">' . t('This version is incompatible with the !core_version version of Drupal core.', array('!core_version' => VERSION)) . '</div>';
       }
       elseif (isset($form['status']['#incompatible_modules_php'][$key])) {
         unset($form['status'][$key]);
@@ -201,7 +208,7 @@ function theme_module_filter_system_modules_tabs($form) {
         if (substr_count($php_required, '.') < 2) {
           $php_required .= '.*';
         }
-        $description .= '<div class="incompatible">'. t('This module requires PHP version @php_required and is incompatible with PHP version !php_version.', array('@php_required' => $php_required, '!php_version' => phpversion())) .'</div>';
+        $description .= '<div class="incompatible">' . t('This module requires PHP version @php_required and is incompatible with PHP version !php_version.', array('@php_required' => $php_required, '!php_version' => phpversion())) . '</div>';
       }
       else {
         $status = drupal_render($form['status'][$key]);
@@ -213,29 +220,29 @@ function theme_module_filter_system_modules_tabs($form) {
 
       // Add labels only when there is also a checkbox.
       if (isset($form['status'][$key])) {
-        $row[] = '<strong><label for="'. $form['status'][$key]['#id'] .'">'. drupal_render($form['name'][$key]) .'</label></strong>';
+        $row[] = '<strong><label for="' . $form['status'][$key]['#id'] . '">' . drupal_render($form['name'][$key]) . '</label></strong>';
       }
       else {
-        $row[] = '<strong>'. drupal_render($form['name'][$key]) .'</strong>';
+        $row[] = '<strong>' . drupal_render($form['name'][$key]) . '</strong>';
       }
 
       $row[] = array('data' => drupal_render($form['version'][$key]), 'class' => 'version');
       $row[] = array('data' => $description, 'class' => 'description');
       $rows[$form['name'][$key]['#value']] = array(
         'data' => $row,
-        'class' => $id .'-tab-content'
+        'class' => $id . '-tab-content'
       );
     }
-    $tabs[$id] = '<li><a id="'. $id .'-tab" class="project-tab" href="">'. $package .'</a></li>';
+    $tabs[$id] = '<li><a id="' . $id . '-tab" class="project-tab" href="">' . $package . '</a></li>';
   }
 
   ksort($rows);
   $output .= '<div id="module-filter-left">';
-  $output .= '<div id="module-filter-tabs"><ul>'. implode($tabs) .'</ul></div>';
-  $output .= '<div id="module-filter-submit">'. drupal_render($form['buttons']) .'</div></div>';
+  $output .= '<div id="module-filter-tabs"><ul>' . implode($tabs) . '</ul></div>';
+  $output .= '<div id="module-filter-submit">' . drupal_render($form['buttons']) . '</div></div>';
   $output .= '<div id="module-filter-spacer"></div>';
-  $output .= '<div id="module-filter-right"><div id="module-filter-squeeze">'. drupal_render($form['module_filter']);
-  $output .= theme('table', $header, $rows, array('id' => 'projects')) .'</div></div>';
+  $output .= '<div id="module-filter-right"><div id="module-filter-squeeze">' . drupal_render($form['module_filter']);
+  $output .= theme('table', $header, $rows, array('id' => 'projects')) . '</div></div>';
   $output .= '<div class="clear-block"></div>';
 
   $output .= drupal_render($form);

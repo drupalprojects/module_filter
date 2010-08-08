@@ -2,6 +2,12 @@
 // $Id$
 
 /**
+ * @file
+ *
+ * @author greenSkin
+ */
+
+/**
  * Implementation of hook_uninstall().
  */
 function module_filter_uninstall() {

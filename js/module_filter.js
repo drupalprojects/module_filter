@@ -1,6 +1,6 @@
 // $Id$
 
-if (Drupal.jsEnabled) {
+(function ($) {
   var moduleFilterTimeOut;
   var moduleFilterTextFilter = '';
 
@@ -30,73 +30,73 @@ if (Drupal.jsEnabled) {
       moduleFilter($('#edit-module-filter-name').val());
     });
   });
-}
 
-function moduleFilter(string) {
-  stringLowerCase = string.toLowerCase();
+  function moduleFilter(string) {
+    stringLowerCase = string.toLowerCase();
 
-  $("table.package tbody tr td > strong").each(function(i) {
-    var $row = $(this).parent().parent();
-    var module = $(this).text();
-    var moduleLowerCase = module.toLowerCase();
-    var $fieldset = $row.parents('fieldset');
+    $("table.package tbody tr td > strong").each(function(i) {
+      var $row = $(this).parent().parent();
+      var module = $(this).text();
+      var moduleLowerCase = module.toLowerCase();
+      var $fieldset = $row.parents('fieldset');
 
-    if (string != '') {
-      if ($fieldset.hasClass('collapsed')) {
-        $fieldset.removeClass('collapsed');
+      if (string != '') {
+        if ($fieldset.hasClass('collapsed')) {
+          $fieldset.removeClass('collapsed');
+        }
       }
-    }
 
-    if (moduleLowerCase.match(stringLowerCase)) {
-      if (moduleFilterVisible($('td.checkbox input', $row))) {
-        if (!$row.is(':visible')) {
-          $row.show();
-          if ($fieldset.hasClass('collapsed')) {
-            $fieldset.removeClass('collapsed');
+      if (moduleLowerCase.match(stringLowerCase)) {
+        if (moduleFilterVisible($('td.checkbox input', $row))) {
+          if (!$row.is(':visible')) {
+            $row.show();
+            if ($fieldset.hasClass('collapsed')) {
+              $fieldset.removeClass('collapsed');
+            }
+            if (!$fieldset.is(':visible')) {
+              $fieldset.show();
+            }
           }
-          if (!$fieldset.is(':visible')) {
-            $fieldset.show();
+        }
+        else {
+          $row.hide();
+          if ($row.siblings(':visible').html() == null) {
+            $fieldset.hide();
           }
         }
       }
       else {
-        $row.hide();
-        if ($row.siblings(':visible').html() == null) {
-          $fieldset.hide();
+        if ($row.is(':visible')) {
+          $row.hide();
+          if ($row.siblings(':visible').html() == null) {
+            $fieldset.hide();
+          }
         }
       }
-    }
-    else {
-      if ($row.is(':visible')) {
-        $row.hide();
-        if ($row.siblings(':visible').html() == null) {
-          $fieldset.hide();
-        }
-      }
-    }
-  });
-}
+    });
+  }
 
-function moduleFilterVisible(checkbox) {
-  if ($('#edit-module-filter-show-enabled').is(':checked')) {
-    if ($(checkbox).is(':checked') && !$(checkbox).is(':disabled')) {
-      return true;
+  function moduleFilterVisible(checkbox) {
+    if ($('#edit-module-filter-show-enabled').is(':checked')) {
+      if ($(checkbox).is(':checked') && !$(checkbox).is(':disabled')) {
+        return true;
+      }
     }
-  }
-  if ($('#edit-module-filter-show-disabled').is(':checked')) {
-    if (!$(checkbox).is(':checked') && !$(checkbox).is(':disabled')) {
-      return true;
+    if ($('#edit-module-filter-show-disabled').is(':checked')) {
+      if (!$(checkbox).is(':checked') && !$(checkbox).is(':disabled')) {
+        return true;
+      }
     }
-  }
-  if ($('#edit-module-filter-show-required').is(':checked')) {
-    if ($(checkbox).is(':checked') && $(checkbox).is(':disabled')) {
-      return true;
+    if ($('#edit-module-filter-show-required').is(':checked')) {
+      if ($(checkbox).is(':checked') && $(checkbox).is(':disabled')) {
+        return true;
+      }
     }
-  }
-  if ($('#edit-module-filter-show-unavailable').is(':checked')) {
-    if (!$(checkbox).is(':checked') && $(checkbox).is(':disabled')) {
-      return true;
+    if ($('#edit-module-filter-show-unavailable').is(':checked')) {
+      if (!$(checkbox).is(':checked') && $(checkbox).is(':disabled')) {
+        return true;
+      }
     }
+    return false;
   }
-  return false;
-}
+})(jQuery);
