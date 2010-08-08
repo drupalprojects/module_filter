@@ -1,6 +1,6 @@
 // $Id$
 
-Module Filter x.x-x.x, xxxx-xx-xx
+Module Filter 6.x-1.5, 2010-08-08
 ---------------------------------
 by greenSkin: Fixed a minor syntax issue.
 #837846 by Sweetchack, greenSkin: Code Optimization - truncate the module code
