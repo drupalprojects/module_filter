@@ -28,7 +28,7 @@ function module_filter_permission() {
  * Implementation of hook_menu().
  */
 function module_filter_menu() {
-  $items['admin/settings/module_filter'] = array(
+  $items['admin/config/user-interface/modulefilter'] = array(
     'title' => 'Module filter',
     'description' => 'Configure settings for Module Filter.',
     'access arguments' => array('administer module filter'),
@@ -49,7 +49,7 @@ function module_filter_menu() {
  * Implementation of hook_form_FORM_ID_alter().
  */
 function module_filter_form_system_modules_alter(&$form, $form_state) {
-  // Don't alter the form when confirming.
+  /*// Don't alter the form when confirming.
   if (isset($form['confirm'])) {
     return;
   }
@@ -72,7 +72,7 @@ function module_filter_form_system_modules_alter(&$form, $form_state) {
     '#suffix' => '</div>'
   );
 
-  $form['#theme'] = 'module_filter_system_modules';
+  $form['#theme'] = 'module_filter_system_modules';*/
 }
 
 /**

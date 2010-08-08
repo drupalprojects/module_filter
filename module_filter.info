@@ -6,7 +6,7 @@ core = 7.x
 files[] = module_filter.install
 files[] = module_filter.js
 files[] = module_filter.module
-files[] = module_filter.admin.in
+files[] = module_filter.admin.inc
 files[] = module_filter.theme.inc
 
 files[] = css/module_filter.css
