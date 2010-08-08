@@ -7,7 +7,7 @@
   Drupal.ModuleFilter.tabs = {};
 
   Drupal.behaviors.moduleFilter = {
-    attach: function(context) {
+    attach: function() {
       // Set the focus on the module filter textfield.
       $('#edit-module-filter-name').focus();
 
@@ -63,7 +63,7 @@
         Drupal.ModuleFilter.activeTab = Drupal.ModuleFilter.tabs['all-tab'];
       }
     }
-  };
+  }
 
   Drupal.ModuleFilter.visible = function(checkbox) {
     if (Drupal.ModuleFilter.showEnabled) {
