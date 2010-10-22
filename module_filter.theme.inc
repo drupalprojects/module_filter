@@ -79,7 +79,7 @@ function theme_module_filter_system_modules_tabs($form) {
 
   // Display packages.
   $rows = array();
-  $tabs = array('all' => '<li class="active"><a id="all-tab" class="project-tab" href="#all">'. t('All') .'</a></li>');
+  $tabs = array('all' => '<li class="active"><a id="all-tab" class="project-tab" href="#all">'. t('All') .'<span></span></a></li>');
   foreach ($packages as $package => $modules) {
     $id = strtolower($package);
     // $id = preg_replace('/[^a-z ]\//', '', $id);
@@ -128,7 +128,7 @@ function theme_module_filter_system_modules_tabs($form) {
         'class' => $id .'-tab-content'
       );
     }
-    $tabs[$id] = '<li><a id="'. $id .'-tab" class="project-tab" href="#'. str_replace('-', '_', $id) .'">'. $package .'</a></li>';
+    $tabs[$id] = '<li><a id="'. $id .'-tab" class="project-tab" href="#'. str_replace('-', '_', $id) .'">'. $package .'<span></span></a></li>';
   }
 
   ksort($rows);
