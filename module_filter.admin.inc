@@ -12,7 +12,7 @@
  ******************************************************************************/
 
 function module_filter_autocomplete($string) {
-  $files = system_get_module_data();
+  $files = system_rebuild_module_data();
   $matches = array();
   $count = 1;
   foreach ($files as $id => $module) {
@@ -26,8 +26,7 @@ function module_filter_autocomplete($string) {
       $count++;
     }
   }
-  print drupal_to_js($matches);
-  exit();
+  drupal_json_output($matches);
 }
 
 /**

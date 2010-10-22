@@ -49,19 +49,22 @@ function module_filter_menu() {
  * Implementation of hook_form_FORM_ID_alter().
  */
 function module_filter_form_system_modules_alter(&$form, $form_state) {
-  /*// Don't alter the form when confirming.
+  // Don't alter the form when confirming.
   if (isset($form['confirm'])) {
     return;
   }
 
-  $form['module_filter'] = array('#tree' => TRUE);
+  $form['module_filter'] = array(
+    '#tree' => TRUE,
+    '#weight' => -1
+  );
   $form['module_filter']['name'] = array(
     '#type' => 'textfield',
     '#title' => t('Filter list')
   );
 
   if (variable_get('module_filter_autocomplete', 0)) {
-    $form['module_filter']['#autocomplete_path'] = 'module/autocomplete';
+    $form['module_filter']['name']['#autocomplete_path'] = 'module_filter/autocomplete';
   }
 
   $form['module_filter']['show'] = array(
@@ -72,7 +75,39 @@ function module_filter_form_system_modules_alter(&$form, $form_state) {
     '#suffix' => '</div>'
   );
 
-  $form['#theme'] = 'module_filter_system_modules';*/
+  if (variable_get('module_filter_tabs', 1)) {
+    // Remove the fieldsets for each package since we will be using tabs
+    // instead. Put all modules into one array.
+    $modules = array(
+      '#theme' => 'module_filter_modules_table',
+      '#header' => array(
+        array('data' => t('Enabled'), 'class' => 'checkbox'),
+        t('Name'),
+        t('Version'),
+        t('Description'),
+        array('data' => t('Operations'), 'colspan' => 3)
+      )
+    );
+
+    $form['#packages'] = array();
+    foreach (element_children($form['modules']) as $package) {
+      // Add the package to $form['#packages']. Tabs are built from this.
+      $form['#packages'][$package] = $package;
+
+      foreach (element_children($form['modules'][$package]) as $module) {
+        $modules[$module] = $form['modules'][$package][$module];
+        $modules[$module]['#package'] = $package;
+      }
+    }
+
+    // Sort the array of modules alphabetically.
+    ksort($modules);
+
+    // Replace the $form['modules'] with our $modules array.
+    $form['modules'] = $modules;
+  }
+
+  $form['#theme'] = 'module_filter_system_modules';
 }
 
 /**
@@ -81,12 +116,21 @@ function module_filter_form_system_modules_alter(&$form, $form_state) {
 function module_filter_theme() {
   return array(
     'module_filter_system_modules' => array(
-      'arguments' => array('form' => NULL),
+      'render element' => 'form',
       'file' => 'module_filter.theme.inc'
     ),
+    'module_filter_modules_table' => array(
+      'render element' => 'form',
+      'file' => 'module_filter.theme.inc',
+    ),
     'module_filter_system_modules_tabs' => array(
-      'arguments' => array('form' => NULL),
+      'render element' => 'form',
       'file' => 'module_filter.theme.inc'
     )
   );
+}
+
+function module_filter_get_id($text) {
+  $id = strtolower($text);
+  return preg_replace('/([^a-z])([\/(  )])*/', '-', $id);
 }

@@ -9,7 +9,7 @@
   Drupal.behaviors.moduleFilter = {
     attach: function() {
       // Set the focus on the module filter textfield.
-      $('#edit-module-filter-name').focus();
+      $('input[name="module_filter[name]"]').focus();
 
       $('#module-filter-squeeze').css('min-height', $('#module-filter-tabs').height());
 
@@ -20,7 +20,7 @@
       // Move anchors to top of tabs.
       $('a.anchor', $('#module-filter-left')).remove().prependTo('#module-filter-tabs');
 
-      $('#edit-module-filter-name').keyup(function() {
+      $('input[name="module_filter[name]"]').keyup(function() {
         if (Drupal.ModuleFilter.textFilter != $(this).val()) {
           Drupal.ModuleFilter.textFilter = this.value;
           if (Drupal.ModuleFilter.timeout) {
@@ -33,22 +33,22 @@
       Drupal.ModuleFilter.showEnabled = $('#edit-module-filter-show-enabled').is(':checked');
       $('#edit-module-filter-show-enabled').change(function() {
         Drupal.ModuleFilter.showEnabled = $(this).is(':checked');
-        Drupal.ModuleFilter.filter($('#edit-module-filter-name').val());
+        Drupal.ModuleFilter.filter($('input[name="module_filter[name]"]').val());
       });
       Drupal.ModuleFilter.showDisabled = $('#edit-module-filter-show-disabled').is(':checked');
       $('#edit-module-filter-show-disabled').change(function() {
         Drupal.ModuleFilter.showDisabled = $(this).is(':checked');
-        Drupal.ModuleFilter.filter($('#edit-module-filter-name').val());
+        Drupal.ModuleFilter.filter($('input[name="module_filter[name]"]').val());
       });
       Drupal.ModuleFilter.showRequired = $('#edit-module-filter-show-required').is(':checked');
       $('#edit-module-filter-show-required').change(function() {
         Drupal.ModuleFilter.showRequired = $(this).is(':checked');
-        Drupal.ModuleFilter.filter($('#edit-module-filter-name').val());
+        Drupal.ModuleFilter.filter($('input[name="module_filter[name]"]').val());
       });
       Drupal.ModuleFilter.showUnavailable = $('#edit-module-filter-show-unavailable').is(':checked');
       $('#edit-module-filter-show-unavailable').change(function() {
         Drupal.ModuleFilter.showUnavailable = $(this).is(':checked');
-        Drupal.ModuleFilter.filter($('#edit-module-filter-name').val());
+        Drupal.ModuleFilter.filter($('input[name="module_filter[name]"]').val());
       });
 
       // Check for anchor.
@@ -94,19 +94,19 @@
     var flip = 'odd';
 
     if (Drupal.ModuleFilter.activeTab.id == 'all-tab') {
-      var selector = '#projects tbody tr td > strong';
+      var selector = 'table.package tbody tr td label > strong';
     }
     else {
-      var selector = '#projects tbody tr.' + Drupal.ModuleFilter.activeTab.id + '-content td > strong';
+      var selector = 'table.package tbody tr.' + Drupal.ModuleFilter.activeTab.id + '-content td label > strong';
     }
 
     $(selector).each(function(i) {
-      var $row = $(this).parent().parent();
+      var $row = $(this).parents('tr');
       var module = $(this).text();
       var moduleLowerCase = module.toLowerCase();
 
       if (moduleLowerCase.match(stringLowerCase)) {
-        if (Drupal.ModuleFilter.visible($('td.checkbox input', $row))) {
+        if (Drupal.ModuleFilter.visible($('td.checkbox :checkbox', $row))) {
           $row.removeClass('odd even');
           $row.addClass(flip);
           $row.show();
@@ -120,8 +120,6 @@
         $row.hide();
       }
     });
-
-    Drupal.ModuleFilter.setSpacerHeight();
   }
 
   Drupal.ModuleFilter.Tab = function(element) {
@@ -147,25 +145,25 @@
     Drupal.ModuleFilter.activeTab.displayRows();
 
     // Clear filter textfield and refocus on it.
-    $('#edit-module-filter-name').val('');
-    $('#edit-module-filter-name').focus();
+    $('input[name="module_filter[name]"]').val('');
+    $('input[name="module_filter[name]"]').focus();
   }
 
   Drupal.ModuleFilter.Tab.prototype.displayRows = function() {
     var flip = 'odd';
 
     if (Drupal.ModuleFilter.activeTab.id == 'all-tab' && Drupal.ModuleFilter.status == 'all') {
-      $('#projects tbody tr').each(function(i) {
+      $('table.package tbody tr').each(function(i) {
         $(this).removeClass('odd even');
         $(this).addClass(flip);
         flip = (flip == 'odd') ? 'even' : 'odd';
       });
-      $('#projects tbody tr').show();
+      $('table.package tbody tr').show();
     }
     else {
-      var selector = (Drupal.ModuleFilter.activeTab.id == 'all-tab') ? '#projects tbody tr' : '#projects tbody tr.' + this.id + '-content';
-      $('#projects tbody tr').hide();
-      $('#projects tbody tr').removeClass('odd even');
+      var selector = (Drupal.ModuleFilter.activeTab.id == 'all-tab') ? 'table.package tbody tr' : 'table.package tbody tr.' + this.id + '-content';
+      $('table.package tbody tr').hide();
+      $('table.package tbody tr').removeClass('odd even');
       $(selector).each(function(i) {
         if (Drupal.ModuleFilter.visible($('td.checkbox input', $(this)))) {
           $(this).addClass(flip);

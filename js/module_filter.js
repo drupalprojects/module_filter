@@ -4,38 +4,41 @@
   var moduleFilterTimeOut;
   var moduleFilterTextFilter = '';
 
-  $(document).ready(function() {
-    $("#module-filter-wrapper").show();
-    $("#edit-module-filter-name").focus();
-    $("#edit-module-filter-name").keyup(function() {
-      if (moduleFilterTextFilter != $(this).val()) {
-        moduleFilterTextFilter = this.value;
-        if (moduleFilterTimeOut) {
-          clearTimeout(moduleFilterTimeOut);
+  Drupal.behaviors.moduleFilter = {
+    attach: function() {
+      $("#module-filter-wrapper").show();
+      $('input[name="module_filter[name]"]').focus();
+      $('input[name="module_filter[name]"]').keyup(function() {
+        if (moduleFilterTextFilter != $(this).val()) {
+          moduleFilterTextFilter = this.value;
+          if (moduleFilterTimeOut) {
+            clearTimeout(moduleFilterTimeOut);
+          }
+
+          moduleFilterTimeOut = setTimeout('moduleFilter("' + moduleFilterTextFilter + '")', 500);
         }
-        moduleFilterTimeOut = setTimeout("moduleFilter('" + moduleFilterTextFilter + "')", 500);
-      }
-    });
+      });
 
-    $('#edit-module-filter-show-enabled').change(function() {
-      moduleFilter($('#edit-module-filter-name').val());
-    });
-    $('#edit-module-filter-show-disabled').change(function() {
-      moduleFilter($('#edit-module-filter-name').val());
-    });
-    $('#edit-module-filter-show-required').change(function() {
-      moduleFilter($('#edit-module-filter-name').val());
-    });
-    $('#edit-module-filter-show-unavailable').change(function() {
-      moduleFilter($('#edit-module-filter-name').val());
-    });
-  });
+      $('#edit-module-filter-show-enabled').change(function() {
+        moduleFilter($('input[name="module_filter[name]"]').val());
+      });
+      $('#edit-module-filter-show-disabled').change(function() {
+        moduleFilter($('input[name="module_filter[name]"]').val());
+      });
+      $('#edit-module-filter-show-required').change(function() {
+        moduleFilter($('input[name="module_filter[name]"]').val());
+      });
+      $('#edit-module-filter-show-unavailable').change(function() {
+        moduleFilter($('input[name="module_filter[name]"]').val());
+      });
+    }
+  }
 
-  function moduleFilter(string) {
+  moduleFilter = function(string) {
     stringLowerCase = string.toLowerCase();
 
-    $("table.package tbody tr td > strong").each(function(i) {
-      var $row = $(this).parent().parent();
+    $("fieldset table tbody tr td label > strong").each(function(i) {
+      var $row = $(this).parents('tr');
       var module = $(this).text();
       var moduleLowerCase = module.toLowerCase();
       var $fieldset = $row.parents('fieldset');
@@ -76,7 +79,7 @@
     });
   }
 
-  function moduleFilterVisible(checkbox) {
+  moduleFilterVisible = function(checkbox) {
     if ($('#edit-module-filter-show-enabled').is(':checked')) {
       if ($(checkbox).is(':checked') && !$(checkbox).is(':disabled')) {
         return true;

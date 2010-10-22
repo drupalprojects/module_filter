@@ -57,8 +57,10 @@
 #module-filter-submit {
   text-align: center;
 }
-#module-filter-submit input {
-  margin: 2em 0.5em 1em 0;
+#module-filter-submit input.form-submit {
+  margin: 1em 0 0 0.2em;
+  border-radius: 0;
+  font-size: 1em;
 }
 #module-filter-right {
   display: block;
@@ -81,12 +83,12 @@
 #module-filter-show-wrapper .form-item:after {
   display: inline;
 }
-table#projects {
+table.package {
   margin: 1em 0;
   border-right: 0 none;
   border-left: 0 none;
 }
-table#projects tbody tr {
+table.package tbody tr {
   border-right: 0 none;
   border-left: 0 none;
 }
