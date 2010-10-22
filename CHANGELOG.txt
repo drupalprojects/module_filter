@@ -1,5 +1,10 @@
 // $Id$
 
+Module Filter 6.x-x.x, 2010-10-22
+---------------------------------
+#883262 by greenSkin: Removed call to Drupal.ModuleFilter.setSpacerHeight().
+
+
 Module Filter 6.x-1.5, 2010-08-08
 ---------------------------------
 by greenSkin: Fixed a minor syntax issue.

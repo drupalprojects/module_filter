@@ -117,8 +117,6 @@ Drupal.ModuleFilter.filter = function(string) {
       $row.hide();
     }
   });
-
-  Drupal.ModuleFilter.setSpacerHeight();
 }
 
 Drupal.ModuleFilter.Tab = function(element) {
