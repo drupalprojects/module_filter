@@ -5,6 +5,8 @@ Module Filter 6.x-x.x, 2010-10-22
 #883262 by greenSkin: Removed call to Drupal.ModuleFilter.setSpacerHeight().
 by greenSkin: Added number of enabled of total number of modules to the active 
   tab.
+by greenSkin: Added some JavaScript code to help position the 'Save 
+  configuration' button for instances with lots of tabs.
 
 
 Module Filter 6.x-1.5, 2010-08-08
