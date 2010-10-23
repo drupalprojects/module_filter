@@ -7,6 +7,8 @@ by greenSkin: Added number of enabled of total number of modules to the active
   tab.
 by greenSkin: Added some JavaScript code to help position the 'Save 
   configuration' button for instances with lots of tabs.
+by greenSkin: Enabled modules count and dynamic save position can be 
+  enabled/disabled via the Module Filter's settings page.
 
 
 Module Filter 6.x-1.5, 2010-08-08

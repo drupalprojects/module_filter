@@ -29,11 +29,18 @@ function theme_module_filter_system_modules($form) {
   if (variable_get('module_filter_tabs', 1)) {
     drupal_add_css(drupal_get_path('module', 'module_filter') .'/css/module_filter_tab.css');
     drupal_add_js(drupal_get_path('module', 'module_filter') .'/js/module_filter_tab.js');
+    drupal_add_js(array('moduleFilter' => array('countEnabled' => variable_get('module_filter_count_enabled', 1))), 'setting');
+
+    if (variable_get('module_filter_dynamic_save_position', 0)) {
+      drupal_add_js(drupal_get_path('module', 'module_filter') .'/js/dynamic_position.js');
+    }
+
     $form['module_filter']['#size'] = 45;
     $output .= theme('module_filter_system_modules_tabs', $form);
   }
   else {
     drupal_add_js(drupal_get_path('module', 'module_filter') .'/js/module_filter.js');
+
     $form['module_filter']['#prefix'] = '<div id="module-filter-wrapper" style="display: none;">';
     $form['module_filter']['#suffix'] = '</div>';
     $output = drupal_render($form['module_filter']);

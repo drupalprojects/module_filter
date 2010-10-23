@@ -60,24 +60,6 @@ Drupal.behaviors.moduleFilter = function() {
   else if (Drupal.ModuleFilter.activeTab == undefined) {
     Drupal.ModuleFilter.activeTab = Drupal.ModuleFilter.tabs['all-tab'];
   }
-
-  $(window).scroll(function() {
-    var top = $('#module-filter-tabs').offset().top;
-    var bottom = top + $('#module-filter-tabs').height();
-    var windowHeight = $(window).height();
-    if (((bottom - windowHeight) > ($(window).scrollTop() - $('#module-filter-submit').height())) && $(window).scrollTop() + windowHeight - $('#module-filter-submit').height() - $('#all-tab').height() > top) {
-      if (!$('#module-filter-submit').hasClass('fixed')) {
-        $('#module-filter-submit').addClass('fixed');
-      }
-    }
-    else {
-      $('#module-filter-submit').removeClass('fixed');
-    }
-  });
-  $(window).trigger('scroll');
-  $(window).resize(function() {
-    $(window).trigger('scroll');
-  });
 }
 
 Drupal.ModuleFilter.visible = function(checkbox) {
@@ -189,7 +171,9 @@ Drupal.ModuleFilter.Tab.prototype.displayRows = function() {
     });
   }
 
-  var enabled = $('#projects tbody tr:visible td.checkbox input:checked').length;
-  var total = $('#projects tbody tr:visible').length;
-  $('span', Drupal.ModuleFilter.activeTab.element).empty().append(Drupal.t('@enabled of @total', { '@enabled': enabled, '@total': total }));
+  if (Drupal.settings.moduleFilter.countEnabled) {
+    var enabled = $('#projects tbody tr:visible td.checkbox input:checked').length;
+    var total = $('#projects tbody tr:visible').length;
+    $('span', Drupal.ModuleFilter.activeTab.element).empty().append(Drupal.t('@enabled of @total', { '@enabled': enabled, '@total': total }));
+  }
 }
