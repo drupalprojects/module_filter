@@ -84,7 +84,7 @@ function theme_module_filter_system_modules_tabs($form) {
   ksort($packages);
 
   // Display packages.
-  $tab_counts = array('all' => array('id' => 'all', 'enabled' => 0, 'total' => 0));
+  $tab_counts = array(t('All') => array('id' => 'all', 'enabled' => 0, 'total' => 0));
   $rows = array();
   foreach ($packages as $package => $modules) {
     $id = strtolower($package);
@@ -96,11 +96,11 @@ function theme_module_filter_system_modules_tabs($form) {
     }
 
     foreach ($modules as $key => $module) {
-      $tab_counts['all']['total']++;
+      $tab_counts[t('All')]['total']++;
       $tab_counts[$package]['total']++;
       if ($form['status'][$key]['#default_value']) {
         $tab_counts[$package]['enabled']++;
-        $tab_counts['all']['enabled']++;
+        $tab_counts[t('All')]['enabled']++;
       }
 
       $row = array();
