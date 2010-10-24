@@ -42,13 +42,6 @@
   font-size: 90%;
   outline: none;
 }
-#module-filter-left ul li a span {
-  font-weight: normal;
-  display: block;
-  font-size: 0.8em;
-  color: #333333;
-  padding: 2px 0 0;
-}
 #module-filter-left ul li.active a {
   background-color: #FFFFFF;
   color: #000000;
@@ -60,6 +53,16 @@
 }
 #module-filter-left ul li.active a:hover {
   background-color: #FFFFFF;
+}
+#module-filter-left ul li a span {
+  font-weight: normal;
+  display: none;
+  font-size: 0.8em;
+  color: #333333;
+  padding: 2px 0 0;
+}
+#module-filter-left ul li.active a span {
+  display: block;
 }
 #module-filter-submit {
   text-align: center;

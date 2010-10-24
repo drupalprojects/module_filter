@@ -29,7 +29,6 @@ function theme_module_filter_system_modules($form) {
   if (variable_get('module_filter_tabs', 1)) {
     drupal_add_css(drupal_get_path('module', 'module_filter') .'/css/module_filter_tab.css');
     drupal_add_js(drupal_get_path('module', 'module_filter') .'/js/module_filter_tab.js');
-    drupal_add_js(array('moduleFilter' => array('countEnabled' => variable_get('module_filter_count_enabled', 1))), 'setting');
 
     if (variable_get('module_filter_dynamic_save_position', 0)) {
       drupal_add_js(drupal_get_path('module', 'module_filter') .'/js/dynamic_position.js');
@@ -85,13 +84,25 @@ function theme_module_filter_system_modules_tabs($form) {
   ksort($packages);
 
   // Display packages.
+  $tab_counts = array('all' => array('id' => 'all', 'enabled' => 0, 'total' => 0));
   $rows = array();
-  $tabs = array('all' => '<li class="active"><a id="all-tab" class="project-tab" href="#all">'. t('All') .'<span></span></a></li>');
   foreach ($packages as $package => $modules) {
     $id = strtolower($package);
     // $id = preg_replace('/[^a-z ]\//', '', $id);
     $id = preg_replace('/([^a-z])([\/(  )])*/', '-', $id);
+
+    if (!isset($tab_counts[$package])) {
+      $tab_counts[$package] = array('id' => $id, 'enabled' => 0, 'total' => 0);
+    }
+
     foreach ($modules as $key => $module) {
+      $tab_counts['all']['total']++;
+      $tab_counts[$package]['total']++;
+      if ($form['status'][$key]['#default_value']) {
+        $tab_counts[$package]['enabled']++;
+        $tab_counts['all']['enabled']++;
+      }
+
       $row = array();
       $description = drupal_render($form['description'][$key]);
       if (isset($form['status']['#incompatible_modules_core'][$key])) {
@@ -135,7 +146,12 @@ function theme_module_filter_system_modules_tabs($form) {
         'class' => $id .'-tab-content'
       );
     }
-    $tabs[$id] = '<li><a id="'. $id .'-tab" class="project-tab" href="#'. str_replace('-', '_', $id) .'">'. $package .'<span></span></a></li>';
+  }
+
+  $tabs = array();
+  foreach ($tab_counts as $package => $value) {
+    $count = (variable_get('module_filter_count_enabled', 1)) ? '<span>'. t('!enabled of !total', array('!enabled' => $value['enabled'], '!total' => $value['total'])) .'</span>' : '';
+    $tabs[$package] = '<li><a id="'. $value['id'] .'-tab" class="project-tab" href="#'. str_replace('-', '_', $value['id']) .'">'. $package . $count .'</a></li>';
   }
 
   ksort($rows);

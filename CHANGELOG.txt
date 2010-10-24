@@ -1,5 +1,13 @@
 // $Id$
 
+Module Filter 6.x-x.x, 2010-10-24
+---------------------------------
+by greenSkin: The count of enabled modules is no longer built via JavaScript
+  but in PHP. The count reflects the number of currently enabled modules,
+  meaning checking a module's checkbox without saving will not change the
+  number of enabled modules until the form is saved.
+
+
 Module Filter 6.x-x.x, 2010-10-22
 ---------------------------------
 #883262 by greenSkin: Removed call to Drupal.ModuleFilter.setSpacerHeight().

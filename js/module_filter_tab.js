@@ -131,7 +131,6 @@ Drupal.ModuleFilter.Tab = function(element) {
 Drupal.ModuleFilter.Tab.prototype.setActive = function() {
   if (Drupal.ModuleFilter.activeTab) {
     $(Drupal.ModuleFilter.activeTab.element).parent().removeClass('active');
-    $('span', Drupal.ModuleFilter.activeTab.element).empty();
   }
   // Assume the default active tab is #all-tab. Remove its active class.
   else {
@@ -171,9 +170,7 @@ Drupal.ModuleFilter.Tab.prototype.displayRows = function() {
     });
   }
 
-  if (Drupal.settings.moduleFilter.countEnabled) {
-    var enabled = $('#projects tbody tr:visible td.checkbox input:checked').length;
-    var total = $('#projects tbody tr:visible').length;
-    $('span', Drupal.ModuleFilter.activeTab.element).empty().append(Drupal.t('@enabled of @total', { '@enabled': enabled, '@total': total }));
+  if (typeof Drupal.ModuleFilter.enabledCount == 'function') {
+    Drupal.ModuleFilter.enabledCount(Drupal.ModuleFilter.activeTab);
   }
 }
