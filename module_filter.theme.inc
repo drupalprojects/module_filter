@@ -151,7 +151,7 @@ function theme_module_filter_system_modules_tabs($form) {
   $tabs = array();
   foreach ($tab_counts as $package => $value) {
     $count = (variable_get('module_filter_count_enabled', 1)) ? '<span>'. t('!enabled of !total', array('!enabled' => $value['enabled'], '!total' => $value['total'])) .'</span>' : '';
-    $tabs[$package] = '<li><a id="'. $value['id'] .'-tab" class="project-tab" href="#'. str_replace('-', '_', $value['id']) .'">'. $package . $count .'</a></li>';
+    $tabs[$package] = '<li'. (($value['id'] == 'all') ? ' class="active"' : '') .'><a id="'. $value['id'] .'-tab" class="project-tab" href="#'. str_replace('-', '_', $value['id']) .'">'. $package . $count .'</a></li>';
   }
 
   ksort($rows);

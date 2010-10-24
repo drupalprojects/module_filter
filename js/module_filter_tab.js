@@ -148,27 +148,19 @@ Drupal.ModuleFilter.Tab.prototype.setActive = function() {
 
 Drupal.ModuleFilter.Tab.prototype.displayRows = function() {
   var flip = 'odd';
-
-  if (Drupal.ModuleFilter.activeTab.id == 'all-tab' && Drupal.ModuleFilter.status == 'all') {
-    $('#projects tbody tr').each(function(i) {
-      $(this).removeClass('odd even');
+  var begin = new Date();
+  var selector = (Drupal.ModuleFilter.activeTab.id == 'all-tab') ? '#projects tbody tr' : '#projects tbody tr.' + this.id + '-content';
+  $('#projects tbody tr').hide();
+  $('#projects tbody tr').removeClass('odd even');
+  $(selector).each(function(i) {
+    if (Drupal.ModuleFilter.visible($('td.checkbox input', $(this)))) {
       $(this).addClass(flip);
       flip = (flip == 'odd') ? 'even' : 'odd';
-    });
-    $('#projects tbody tr').show();
-  }
-  else {
-    var selector = (Drupal.ModuleFilter.activeTab.id == 'all-tab') ? '#projects tbody tr' : '#projects tbody tr.' + this.id + '-content';
-    $('#projects tbody tr').hide();
-    $('#projects tbody tr').removeClass('odd even');
-    $(selector).each(function(i) {
-      if (Drupal.ModuleFilter.visible($('td.checkbox input', $(this)))) {
-        $(this).addClass(flip);
-        flip = (flip == 'odd') ? 'even' : 'odd';
-        $(this).show();
-      }
-    });
-  }
+      $(this).show();
+    }
+  });
+  var end = new Date();
+  alert(end.getTime() - begin.getTime());
 
   if (typeof Drupal.ModuleFilter.enabledCount == 'function') {
     Drupal.ModuleFilter.enabledCount(Drupal.ModuleFilter.activeTab);
