@@ -148,7 +148,6 @@ Drupal.ModuleFilter.Tab.prototype.setActive = function() {
 
 Drupal.ModuleFilter.Tab.prototype.displayRows = function() {
   var flip = 'odd';
-  var begin = new Date();
   var selector = (Drupal.ModuleFilter.activeTab.id == 'all-tab') ? '#projects tbody tr' : '#projects tbody tr.' + this.id + '-content';
   $('#projects tbody tr').hide();
   $('#projects tbody tr').removeClass('odd even');
@@ -159,8 +158,6 @@ Drupal.ModuleFilter.Tab.prototype.displayRows = function() {
       $(this).show();
     }
   });
-  var end = new Date();
-  alert(end.getTime() - begin.getTime());
 
   if (typeof Drupal.ModuleFilter.enabledCount == 'function') {
     Drupal.ModuleFilter.enabledCount(Drupal.ModuleFilter.activeTab);
