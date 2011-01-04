@@ -38,6 +38,7 @@ function theme_module_filter_system_modules($variables) {
     $output = drupal_render($form['module_filter']);
     $form['#theme'] = 'system_modules';
     $output .= drupal_render($form['modules']);
+    $output .= drupal_render($form['actions']);
   }
   return $output;
 }

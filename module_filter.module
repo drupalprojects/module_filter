@@ -97,6 +97,7 @@ function module_filter_form_system_modules_alter(&$form, $form_state) {
       foreach (element_children($form['modules'][$package]) as $module) {
         $modules[$module] = $form['modules'][$package][$module];
         $modules[$module]['#package'] = $package;
+        $modules[$module]['#parents'] = array('modules', $package, $module);
       }
     }
 
