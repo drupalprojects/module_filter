@@ -63,6 +63,11 @@ function module_filter_form_system_modules_alter(&$form, $form_state) {
     '#title' => t('Filter list')
   );
 
+  $form['module_filter_submit'] = array (
+        '#value' => t('Save configuration'),
+        '#type' => 'submit',
+  );
+
   if (variable_get('module_filter_autocomplete', 0)) {
     $form['module_filter']['name']['#autocomplete_path'] = 'module_filter/autocomplete';
   }

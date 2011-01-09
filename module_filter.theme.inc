@@ -60,15 +60,15 @@ function theme_module_filter_modules_table($variables) {
     if (isset($module['enable']['#id'])) {
       $label .= ' for="'. $module['enable']['#id'] .'"';
     }
-    $row[] = $label .'><strong>'. drupal_render($module['name']) .'</strong></label>';
+    $row[] = $label .'><strong>' . drupal_render($module['name']) . '</strong></label>';
     $row[] = drupal_render($module['version']);
     // Add the description, along with any modules it requires.
     $description = drupal_render($module['description']);
     if ($module['#requires']) {
-      $description .= '<div class="admin-requirements">'. t('Requires: !module-list', array('!module-list' => implode(', ', $module['#requires']))) .'</div>';
+      $description .= '<div class="admin-requirements">' . t('Requires: !module-list', array('!module-list' => implode(', ', $module['#requires']))) . '</div>';
     }
     if ($module['#required_by']) {
-      $description .= '<div class="admin-requirements">'. t('Required by: !module-list', array('!module-list' => implode(', ', $module['#required_by']))) .'</div>';
+      $description .= '<div class="admin-requirements">' . t('Required by: !module-list', array('!module-list' => implode(', ', $module['#required_by']))) . '</div>';
     }
     $row[] = array('data' => $description, 'class' => array('description'));
     // Display links (such as help or permissions) in their own columns.
@@ -93,19 +93,19 @@ function theme_module_filter_system_modules_tabs($variables) {
   $form = $variables['form'];
 
   // Display packages.
-  $tabs = array('all' => '<li class="active"><a id="all-tab" class="project-tab" href="#all">'. t('All') .'</a></li>');
+  $tabs = array('all' => '<li class="active"><a id="all-tab" class="project-tab" href="#all">' . t('All') . '</a></li>');
   foreach ($form['#packages'] as $package) {
     $id = module_filter_get_id($package);
 
-    $tabs[$id] = '<li><a id="'. $id .'-tab" class="project-tab" href="#'. str_replace('-', '_', $id) .'">'. $package .'</a></li>';
+    $tabs[$id] = '<li><a id="' . $id . '-tab" class="project-tab" href="#' . str_replace('-', '_', $id) . '">' . $package . '</a></li>';
   }
 
   $output = '<div id="module-filter-wrapper">';
   $output .= '<div id="module-filter-left">';
-  $output .= '<div id="module-filter-tabs"><ul>'. implode($tabs) .'</ul></div>';
-  $output .= '<div id="module-filter-submit">'. drupal_render($form['actions']) .'</div></div>';
-  $output .= '<div id="module-filter-right"><div id="module-filter-squeeze">'. drupal_render($form['module_filter']);
-  $output .= drupal_render($form['modules']) .'</div></div>';
+  $output .= '<div id="module-filter-tabs"><ul>'. implode($tabs) . '</ul></div>';
+  $output .= '</div>';
+  $output .= '<div id="module-filter-right"><div id="module-filter-squeeze">' . drupal_render($form['module_filter']);
+  $output .= '<div class="module-filter-submit">' . drupal_render($form['module_filter_submit']) . '</div>' . drupal_render($form['modules']) . '<div class="module-filter-submit">' . drupal_render($form['actions']) . '</div></div></div>';
   $output .= '<div class="clear-block"></div>';
   $output .= '</div>';
   $output .= drupal_render_children($form);

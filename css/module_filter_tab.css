@@ -13,6 +13,7 @@
   float: left;
   background-color: #F6F6F6;
   border: 1px solid #D6DBDE;
+  border-bottom: none;
   margin-right: -1px;
   width: 167px;
 }
@@ -54,14 +55,6 @@
 #module-filter-left ul li.active a:hover {
   background-color: #FFFFFF;
 }
-#module-filter-submit {
-  text-align: center;
-}
-#module-filter-submit input.form-submit {
-  margin: 1em 0 0 0.2em;
-  border-radius: 0;
-  font-size: 1em;
-}
 #module-filter-right {
   display: block;
 }
@@ -76,9 +69,6 @@
 }
 #edit-module-filter-name-wrapper label {
   display: inline;
-}
-#module-filter-show-wrapper .form-checkboxes {
-  text-align: center;
 }
 #module-filter-show-wrapper .form-item:after {
   display: inline;
