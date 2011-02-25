@@ -1,4 +1,3 @@
-// $Id$
 
 Drupal.ModuleFilter = Drupal.ModuleFilter || {};
 Drupal.ModuleFilter.textFilter = '';

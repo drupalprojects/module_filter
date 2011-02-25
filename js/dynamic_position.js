@@ -1,4 +1,3 @@
-// $Id$
 
 Drupal.behaviors.moduleFilterDynamicPosition = function() {
   $(window).scroll(function() {
