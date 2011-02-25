@@ -1,4 +1,3 @@
-// $Id$
 
 (function ($) {
   Drupal.ModuleFilter = Drupal.ModuleFilter || {};
