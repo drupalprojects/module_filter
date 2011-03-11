@@ -35,12 +35,6 @@ function module_filter_menu() {
     'page arguments' => array('module_filter_settings'),
     'file' => 'module_filter.admin.inc'
   );
-  $items['module_filter/autocomplete'] = array(
-    'access arguments' => array('administer site configuration'),
-    'page callback' => 'module_filter_autocomplete',
-    'file' => 'module_filter.admin.inc',
-    'type' => MENU_CALLBACK
-  );
   return $items;
 }
 
@@ -67,9 +61,6 @@ function module_filter_form_system_modules_alter(&$form, $form_state) {
         '#type' => 'submit',
   );
 
-  if (variable_get('module_filter_autocomplete', 0)) {
-    $form['module_filter']['name']['#autocomplete_path'] = 'module_filter/autocomplete';
-  }
 
   $form['module_filter']['show'] = array(
     '#type' => 'checkboxes',
