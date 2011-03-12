@@ -30,6 +30,8 @@ function theme_module_filter_system_modules($form) {
     drupal_add_css(drupal_get_path('module', 'module_filter') .'/css/module_filter_tab.css');
     drupal_add_js(drupal_get_path('module', 'module_filter') .'/js/module_filter_tab.js');
 
+    drupal_add_js(array('moduleFilter' => array('visualAid' => variable_get('module_filter_visual_aid', 1))), 'setting');
+
     if (variable_get('module_filter_dynamic_save_position', 0)) {
       drupal_add_js(drupal_get_path('module', 'module_filter') .'/js/dynamic_position.js');
     }
@@ -150,7 +152,7 @@ function theme_module_filter_system_modules_tabs($form) {
 
   $tabs = array();
   foreach ($tab_counts as $package => $value) {
-    $count = (variable_get('module_filter_count_enabled', 1)) ? '<span>'. t('!enabled of !total', array('!enabled' => $value['enabled'], '!total' => $value['total'])) .'</span>' : '';
+    $count = (variable_get('module_filter_count_enabled', 1)) ? '<span class="counts">'. t('!enabled of !total', array('!enabled' => $value['enabled'], '!total' => $value['total'])) .'</span>' : '';
     $tabs[strtolower($package)] = '<li'. (($value['id'] == 'all') ? ' class="active"' : '') .'><a id="'. $value['id'] .'-tab" class="project-tab" href="#'. str_replace('-', '_', $value['id']) .'">'. $package . $count .'</a></li>';
   }
 

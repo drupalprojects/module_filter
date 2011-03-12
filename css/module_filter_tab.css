@@ -53,14 +53,25 @@
 #module-filter-left ul li.active a:hover {
   background-color: #FFFFFF;
 }
-#module-filter-left ul li a span {
+#module-filter-left ul li a span.visual-aid {
+  font-size: 8px;
+  float: right;
+}
+#module-filter-left ul li a span.enabling {
+  color: green;
+}
+#module-filter-left ul li a span.disabling {
+  color: red;
+  margin-left: 5px;
+}
+#module-filter-left ul li a span.counts {
   font-weight: normal;
   display: none;
   font-size: 0.8em;
   color: #333333;
   padding: 2px 0 0;
 }
-#module-filter-left ul li.active a span {
+#module-filter-left ul li.active a span.counts {
   display: block;
 }
 #module-filter-submit {
@@ -106,4 +117,10 @@ table#projects {
 table#projects tbody tr {
   border-right: 0 none;
   border-left: 0 none;
+}
+table#projects tr.enabling {
+  background-color: #dfd;
+}
+table#projects tr.disabling {
+  background-color: #fcc;
 }

@@ -8,6 +8,7 @@ independently below the capitalized modules/tabs.
 checkbox is unchecked.
 #1050182 by greenSkin: Fixed filtering rows where <strong> is used in the
 module description.
+#1032996 by greenSkin: Added visual aids functionality.
 
 
 Module Filter 6.x-x.x, 2011-03-08
