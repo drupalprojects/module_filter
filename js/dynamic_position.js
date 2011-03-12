@@ -5,12 +5,13 @@ Drupal.behaviors.moduleFilterDynamicPosition = function() {
     var bottom = top + $('#module-filter-tabs').height();
     var windowHeight = $(window).height();
     if (((bottom - windowHeight) > ($(window).scrollTop() - $('#module-filter-submit').height())) && $(window).scrollTop() + windowHeight - $('#module-filter-submit').height() - $('#all-tab').height() > top) {
-      if (!$('#module-filter-submit').hasClass('fixed')) {
-        $('#module-filter-submit').addClass('fixed');
-      }
+      $('#module-filter-submit').removeClass('fixed-top').addClass('fixed fixed-bottom');
+    }
+    else if (bottom < $(window).scrollTop()) {
+      $('#module-filter-submit').removeClass('fixed-bottom').addClass('fixed fixed-top');
     }
     else {
-      $('#module-filter-submit').removeClass('fixed');
+      $('#module-filter-submit').removeClass('fixed fixed-bottom fixed-top');
     }
   });
   $(window).trigger('scroll');
