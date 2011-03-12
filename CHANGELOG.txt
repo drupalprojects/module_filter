@@ -4,6 +4,8 @@ Module Filter 6.x-x.x, 2011-03-12
 #904984 by greenSkin: Fixed sorting of modules/tabs. Uncapitalized modules/tabs
 now correctly sort into capitalized modules/tabs rather than sorting
 independently below the capitalized modules/tabs.
+#1033012 by greenSkin: Hide incompatible module rows when the 'Unavailable'
+checkbox is unchecked.
 
 
 Module Filter 6.x-x.x, 2011-03-08

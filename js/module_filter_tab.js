@@ -68,7 +68,7 @@ Drupal.ModuleFilter.visible = function(checkbox) {
     }
   }
   if (Drupal.ModuleFilter.showDisabled) {
-    if (!$(checkbox).is(':checked') && !$(checkbox).is(':disabled')) {
+    if (checkbox.size() && (!$(checkbox).is(':checked') && !$(checkbox).is(':disabled'))) {
       return true;
     }
   }
@@ -78,7 +78,7 @@ Drupal.ModuleFilter.visible = function(checkbox) {
     }
   }
   if (Drupal.ModuleFilter.showUnavailable) {
-    if (!$(checkbox).is(':checked') && $(checkbox).is(':disabled')) {
+    if (!checkbox.size() || (!$(checkbox).is(':checked') && $(checkbox).is(':disabled'))) {
       return true;
     }
   }
