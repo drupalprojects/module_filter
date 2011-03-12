@@ -153,7 +153,10 @@ function theme_module_filter_system_modules_tabs($form) {
     $count = (variable_get('module_filter_count_enabled', 1)) ? '<span>'. t('!enabled of !total', array('!enabled' => $value['enabled'], '!total' => $value['total'])) .'</span>' : '';
     $tabs[strtolower($package)] = '<li'. (($value['id'] == 'all') ? ' class="active"' : '') .'><a id="'. $value['id'] .'-tab" class="project-tab" href="#'. str_replace('-', '_', $value['id']) .'">'. $package . $count .'</a></li>';
   }
+
+  $all_tab = array_shift($tabs); // Shifts the 'All' tab off so we can prepend it back on after sorting.
   ksort($tabs);
+  $tabs = array_merge(array(t('All') => $all_tab), $tabs);
 
   ksort($rows);
   $output = '<div id="module-filter-wrapper">';
