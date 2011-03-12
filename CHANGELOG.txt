@@ -6,6 +6,8 @@ now correctly sort into capitalized modules/tabs rather than sorting
 independently below the capitalized modules/tabs.
 #1033012 by greenSkin: Hide incompatible module rows when the 'Unavailable'
 checkbox is unchecked.
+#1050182 by greenSkin: Fixed filtering rows where <strong> is used in the
+module description.
 
 
 Module Filter 6.x-x.x, 2011-03-08

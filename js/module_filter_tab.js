@@ -93,7 +93,7 @@ Drupal.ModuleFilter.filter = function(string) {
     var selector = '#projects tbody tr td > strong';
   }
   else {
-    var selector = '#projects tbody tr.' + Drupal.ModuleFilter.activeTab.id + '-content td > strong';
+    var selector = '#projects tbody tr.' + Drupal.ModuleFilter.activeTab.id + '-content td > strong.project-name';
   }
 
   $(selector).each(function(i) {

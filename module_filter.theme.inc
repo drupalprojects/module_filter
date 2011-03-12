@@ -129,10 +129,10 @@ function theme_module_filter_system_modules_tabs($form) {
 
       // Add labels only when there is also a checkbox.
       if (isset($form['status'][$key])) {
-        $row[] = '<strong><label for="'. $form['status'][$key]['#id'] .'">'. drupal_render($form['name'][$key]) .'</label></strong>';
+        $row[] = '<strong class="project-name"><label for="'. $form['status'][$key]['#id'] .'">'. drupal_render($form['name'][$key]) .'</label></strong>';
       }
       else {
-        $row[] = '<strong>'. drupal_render($form['name'][$key]) .'</strong>';
+        $row[] = '<strong class="project-name">'. drupal_render($form['name'][$key]) .'</strong>';
       }
 
       $row[] = array('data' => drupal_render($form['version'][$key]), 'class' => 'version');
