@@ -1,4 +1,16 @@
 
+Module Filter 6.x-x.x, 2011-03-12
+---------------------------------
+#904984 by greenSkin: Fixed sorting of modules/tabs. Uncapitalized modules/tabs
+now correctly sort into capitalized modules/tabs rather than sorting
+independently below the capitalized modules/tabs.
+
+
+Module Filter 6.x-x.x, 2011-03-08
+---------------------------------
+#1085792 by greenSkin: Removed autocomplete functionality.
+
+
 Module Filter 6.x-x.x, 2010-10-24
 ---------------------------------
 by greenSkin: The count of enabled modules is no longer built via JavaScript

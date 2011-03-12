@@ -141,7 +141,7 @@ function theme_module_filter_system_modules_tabs($form) {
       // Set the key for the row to the module name so we can easily sort it.
       // Append the $key variable to the end of the row key to ensure a unique
       // key. http://drupal.org/node/840324
-      $rows[$form['name'][$key]['#value'] . $key] = array(
+      $rows[strtolower($form['name'][$key]['#value'] . $key)] = array(
         'data' => $row,
         'class' => $id .'-tab-content'
       );
@@ -151,8 +151,9 @@ function theme_module_filter_system_modules_tabs($form) {
   $tabs = array();
   foreach ($tab_counts as $package => $value) {
     $count = (variable_get('module_filter_count_enabled', 1)) ? '<span>'. t('!enabled of !total', array('!enabled' => $value['enabled'], '!total' => $value['total'])) .'</span>' : '';
-    $tabs[$package] = '<li'. (($value['id'] == 'all') ? ' class="active"' : '') .'><a id="'. $value['id'] .'-tab" class="project-tab" href="#'. str_replace('-', '_', $value['id']) .'">'. $package . $count .'</a></li>';
+    $tabs[strtolower($package)] = '<li'. (($value['id'] == 'all') ? ' class="active"' : '') .'><a id="'. $value['id'] .'-tab" class="project-tab" href="#'. str_replace('-', '_', $value['id']) .'">'. $package . $count .'</a></li>';
   }
+  ksort($tabs);
 
   ksort($rows);
   $output = '<div id="module-filter-wrapper">';
