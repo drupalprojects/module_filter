@@ -2,6 +2,7 @@
 Module Filter 6.x-x.x, 2011-03-13
 ---------------------------------
 #1090826 by greenSkin: Fixed update.php warning when updating to 6.x-1.6.
+by greenSkin: Fixed deleting set variables when module is uninstalled.
 
 
 Module Filter 6.x-x.x, 2011-03-12
