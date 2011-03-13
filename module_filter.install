@@ -22,8 +22,8 @@ function module_filter_update_6000() {
 function module_filter_update_6100() {
   $ret = array();
 
-  variable_del('module_filter_autocomplete')
-  $ret = array('success' => TRUE, 'query' => t('Delete variable "module_filter_autocomplete".'));
+  variable_del('module_filter_autocomplete');
+  $ret[] = array('success' => TRUE, 'query' => t('Delete variable "module_filter_autocomplete".'));
 
   return $ret;
 }
