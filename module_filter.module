@@ -41,7 +41,7 @@ function module_filter_menu() {
 /**
  * Implementation of hook_form_FORM_ID_alter().
  */
-function module_filter_form_system_modules_alter(&$form, $form_state) {
+function module_filter_form_system_modules_alter(&$form, &$form_state, $form_id) {
   // Don't alter the form when confirming.
   if (isset($form['confirm'])) {
     return;
@@ -55,12 +55,6 @@ function module_filter_form_system_modules_alter(&$form, $form_state) {
     '#type' => 'textfield',
     '#title' => t('Filter list')
   );
-
-  $form['module_filter_submit'] = array (
-        '#value' => t('Save configuration'),
-        '#type' => 'submit',
-  );
-
 
   $form['module_filter']['show'] = array(
     '#type' => 'checkboxes',
@@ -84,12 +78,25 @@ function module_filter_form_system_modules_alter(&$form, $form_state) {
       )
     );
 
+    $all = t('All');
+    $tab_counts = array($all => array('id' => 'all', 'enabled' => 0, 'total' => 0));
     $form['#packages'] = array();
     foreach (element_children($form['modules']) as $package) {
       // Add the package to $form['#packages']. Tabs are built from this.
       $form['#packages'][$package] = $package;
 
+      if (!isset($tab_counts[$package])) {
+        $tab_counts[$package] = array('enabled' => 0, 'total' => 0);
+      }
+
       foreach (element_children($form['modules'][$package]) as $module) {
+        $tab_counts[$all]['total']++;
+        $tab_counts[$package]['total']++;
+        if (!empty($form['modules'][$package][$module]['enable']['#default_value'])) {
+          $tab_counts[$all]['enabled']++;
+          $tab_counts[$package]['enabled']++;
+        }
+
         $modules[$module] = $form['modules'][$package][$module];
         $modules[$module]['#package'] = $package;
         $modules[$module]['#parents'] = array('modules', $package, $module);
@@ -101,6 +108,9 @@ function module_filter_form_system_modules_alter(&$form, $form_state) {
 
     // Replace the $form['modules'] with our $modules array.
     $form['modules'] = $modules;
+
+    // Add our $tab_counts array to the form.
+    $form['#tab_counts'] = $tab_counts;
   }
 
   $form['#theme'] = 'module_filter_system_modules';
