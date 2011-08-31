@@ -29,7 +29,7 @@ function module_filter_permission() {
 function module_filter_menu() {
   $items['admin/config/user-interface/modulefilter'] = array(
     'title' => 'Module filter',
-    'description' => 'Configure settings for Module Filter.',
+    'description' => 'Configure how the modules page looks and acts.',
     'access arguments' => array('administer module filter'),
     'page callback' => 'drupal_get_form',
     'page arguments' => array('module_filter_settings'),
