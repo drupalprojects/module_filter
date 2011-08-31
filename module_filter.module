@@ -53,7 +53,8 @@ function module_filter_form_system_modules_alter(&$form, &$form_state, $form_id)
   );
   $form['module_filter']['name'] = array(
     '#type' => 'textfield',
-    '#title' => t('Filter list')
+    '#title' => t('Filter list'),
+    '#size' => 45
   );
 
   $form['module_filter']['show'] = array(
@@ -63,55 +64,6 @@ function module_filter_form_system_modules_alter(&$form, &$form_state, $form_id)
     '#prefix' => '<div id="module-filter-show-wrapper">',
     '#suffix' => '</div>'
   );
-
-  if (variable_get('module_filter_tabs', 1)) {
-    // Remove the fieldsets for each package since we will be using tabs
-    // instead. Put all modules into one array.
-    $modules = array(
-      '#theme' => 'module_filter_modules_table',
-      '#header' => array(
-        array('data' => t('Enabled'), 'class' => 'checkbox'),
-        t('Name'),
-        t('Version'),
-        t('Description'),
-        array('data' => t('Operations'), 'colspan' => 3)
-      )
-    );
-
-    $all = t('All');
-    $tab_counts = array($all => array('id' => 'all', 'enabled' => 0, 'total' => 0));
-    $form['#packages'] = array();
-    foreach (element_children($form['modules']) as $package) {
-      // Add the package to $form['#packages']. Tabs are built from this.
-      $form['#packages'][$package] = $package;
-
-      if (!isset($tab_counts[$package])) {
-        $tab_counts[$package] = array('enabled' => 0, 'total' => 0);
-      }
-
-      foreach (element_children($form['modules'][$package]) as $module) {
-        $tab_counts[$all]['total']++;
-        $tab_counts[$package]['total']++;
-        if (!empty($form['modules'][$package][$module]['enable']['#default_value'])) {
-          $tab_counts[$all]['enabled']++;
-          $tab_counts[$package]['enabled']++;
-        }
-
-        $modules[$module] = $form['modules'][$package][$module];
-        $modules[$module]['#package'] = $package;
-        $modules[$module]['#parents'] = array('modules', $package, $module);
-      }
-    }
-
-    // Sort the array of modules alphabetically.
-    ksort($modules);
-
-    // Replace the $form['modules'] with our $modules array.
-    $form['modules'] = $modules;
-
-    // Add our $tab_counts array to the form.
-    $form['#tab_counts'] = $tab_counts;
-  }
 
   $form['#theme'] = 'module_filter_system_modules';
 }

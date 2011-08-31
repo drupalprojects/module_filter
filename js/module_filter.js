@@ -5,7 +5,7 @@
 
   Drupal.behaviors.moduleFilter = {
     attach: function() {
-      $("#module-filter-wrapper").show();
+      $("#module-filter-inputs").show();
       $('input[name="module_filter[name]"]').focus();
       $('input[name="module_filter[name]"]').keyup(function() {
         if (moduleFilterTextFilter != $(this).val()) {

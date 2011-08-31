@@ -22,11 +22,16 @@ function theme_module_filter_system_modules($variables) {
   $form = $variables['form'];
 
   drupal_add_css(drupal_get_path('module', 'module_filter') .'/css/module_filter.css');
+  drupal_add_js(drupal_get_path('module', 'module_filter') .'/js/module_filter.js');
+
+  // Hide module filter inputs by default.
+  $form['module_filter']['#prefix'] = '<div id="module-filter-inputs" style="display: none;">';
+  $form['module_filter']['#suffix'] = '</div>';
 
   $output = '';
   if (variable_get('module_filter_tabs', 1)) {
     drupal_add_css(drupal_get_path('module', 'module_filter') .'/css/module_filter_tab.css');
-    drupal_add_js(drupal_get_path('module', 'module_filter') .'/js/module_filter_tab.js');
+    // drupal_add_js(drupal_get_path('module', 'module_filter') .'/js/module_filter_tab.js');
 
     drupal_add_js(array('moduleFilter' => array('visualAid' => variable_get('module_filter_visual_aid', 1))), 'setting');
 
@@ -34,18 +39,89 @@ function theme_module_filter_system_modules($variables) {
       drupal_add_js(drupal_get_path('module', 'module_filter') .'/js/dynamic_position.js');
     }
 
-    $form['module_filter']['#size'] = 45;
     $output .= theme('module_filter_system_modules_tabs', $form);
   }
   else {
-    drupal_add_js(drupal_get_path('module', 'module_filter') .'/js/module_filter.js');
-    $form['module_filter']['#prefix'] = '<div id="module-filter-wrapper" style="display: none;">';
-    $form['module_filter']['#suffix'] = '</div>';
-    $output = drupal_render($form['module_filter']);
     $form['#theme'] = 'system_modules';
+
+    $output = drupal_render($form['module_filter']);
     $output .= drupal_render($form['modules']);
     $output .= drupal_render($form['actions']);
   }
+  return $output;
+}
+
+/**
+ * Theme callback for the modules tabbed form.
+ */
+function theme_module_filter_system_modules_tabs($variables) {
+  $form = $variables['form'];
+
+  $form['actions']['#prefix'] = '<div id="module-filter-submit">';
+  $form['actions']['#suffix'] = '</div>';
+
+  $header = array(
+    t('Enabled'),
+    t('Name'),
+    t('Version'),
+    t('Description')
+  );
+  $rows = array();
+  $flip = array('even' => 'odd', 'odd' => 'even');
+  foreach (element_children($form['modules']) as $package) {
+    $rows[] = array('data' => array(array('data' => '<h3>' . $form['modules'][$package]['#title'] . '</h3>', 'colspan' => 4)), 'class' => array('admin-package-title'));
+    $rows[] = array('data' => $header, 'class' => array('admin-package-header'));
+
+    $class = 'odd';
+    foreach (element_children($form['modules'][$package]) as $key) {
+      $module = &$form['modules'][$package][$key];
+      $row = array();
+      unset($module['enable']['#title']);
+      $row[] = array('class' => array('checkbox'), 'data' => drupal_render($module['enable']));
+      $label = '<label';
+      if (isset($module['enable']['#id'])) {
+        $label .= ' for="' . $module['enable']['#id'] . '"';
+      }
+      $row[] = $label . '><strong>' . drupal_render($module['name']) . '</strong></label>';
+      $row[] = '<div class="admin-version">' . drupal_render($module['version']) . '</div>';
+      // Add the description, along with any modules it requires and any
+      // operation links.
+      $description = drupal_render($module['description']);
+      $items = array();
+      foreach (array('help', 'permissions', 'configure') as $link) {
+        $data = drupal_render($module['links'][$link]);
+        if (!empty($data)) {
+          $items[] = array('data' => $data);
+        }
+      }
+      if (!empty($items)) {
+        $description .= '<div class="admin-operations">' . theme('item_list', array('items' => $items, 'attributes' => array('class' => array('links', 'inline')))) . '</div>';
+      }
+      $description .= drupal_render($module['links']);
+      if ($module['#requires']) {
+        $description .= '<div class="admin-requirements">' . t('Requires: !module-list', array('!module-list' => implode(', ', $module['#requires']))) . '</div>';
+      }
+      if ($module['#required_by']) {
+        $description .= '<div class="admin-requirements">' . t('Required by: !module-list', array('!module-list' => implode(', ', $module['#required_by']))) . '</div>';
+      }
+      $row[] = array('data' => $description, 'class' => array('description'));
+      $rows[] = array('data' => $row, 'no_striping' => TRUE, 'class' => array($class));
+      $class = $flip[$class];
+    }
+
+    // Set the package as printed.
+    $form['modules'][$package]['#printed'] = TRUE;
+  }
+
+  // Add first and last class to rows.
+  $rows[0]['class'][] = 'first';
+  $rows[count($rows) - 1]['class'][] = 'last';
+
+  $output = '<div id="module-filter-wrapper">';
+  $output .= '<div id="module-filter-modules">' . drupal_render($form['module_filter']);
+  $output .= theme('table', array('rows' => $rows));
+  $output .= '</div>';
+  $output .= drupal_render_children($form) . '</div>';
   return $output;
 }
 
@@ -90,35 +166,4 @@ function theme_module_filter_modules_table($variables) {
   }
 
   return theme('table', array('header' => $form['#header'], 'rows' => $rows, 'attributes' => array('class' => array('package'))));
-}
-
-/**
- * Theme callback for the modules tabbed form.
- */
-function theme_module_filter_system_modules_tabs($variables) {
-  $form = $variables['form'];
-
-  $count_enabled = variable_get('module_filter_count_enabled', 1);
-
-  // Display packages.
-  $all = t('All');
-  $all_count = ($count_enabled) ? '<span class="counts">' . t('!enabled of !total', array('!enabled' => $form['#tab_counts'][$all]['enabled'], '!total' => $form['#tab_counts'][$all]['total'])) . '</span>' : '';
-  $tabs = array('all' => '<li class="active"><a id="all-tab" class="project-tab" href="#all">' . $all . $all_count . '</a></li>');
-  foreach ($form['#packages'] as $package) {
-    $id = module_filter_get_id($package);
-
-    $count = ($count_enabled) ? '<span class="counts">' . t('!enabled of !total', array('!enabled' => $form['#tab_counts'][$package]['enabled'], '!total' => $form['#tab_counts'][$package]['total'])) . '</span>' : '';
-    $tabs[$id] = '<li><a id="' . $id . '-tab" class="project-tab" href="#' . str_replace('-', '_', $id) . '">' . $package . $count . '</a></li>';
-  }
-
-  $output = '<div id="module-filter-wrapper">';
-  $output .= '<div id="module-filter-left">';
-  $output .= '<div id="module-filter-tabs"><ul>'. implode($tabs) . '</ul></div>';
-  $output .= '<div id="module-filter-submit">' . drupal_render($form['actions']) . '</div></div>';
-  $output .= '<div id="module-filter-right"><div id="module-filter-squeeze">' . drupal_render($form['module_filter']);
-  $output .= drupal_render($form['modules']) . '</div></div>';
-  $output .= '<div class="clear-block"></div>';
-  $output .= '</div>';
-  $output .= drupal_render_children($form);
-  return $output;
 }
