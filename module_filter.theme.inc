@@ -24,16 +24,10 @@ function theme_module_filter_system_modules($variables) {
   drupal_add_css(drupal_get_path('module', 'module_filter') .'/css/module_filter.css');
   drupal_add_js(drupal_get_path('module', 'module_filter') .'/js/module_filter.js');
 
-  // Hide module filter inputs by default.
-  $form['module_filter']['#prefix'] = '<div id="module-filter-inputs" style="display: none;">';
-  $form['module_filter']['#suffix'] = '</div>';
-
   $output = '';
   if (variable_get('module_filter_tabs', 1)) {
     drupal_add_css(drupal_get_path('module', 'module_filter') .'/css/module_filter_tab.css');
     // drupal_add_js(drupal_get_path('module', 'module_filter') .'/js/module_filter_tab.js');
-
-    drupal_add_js(array('moduleFilter' => array('visualAid' => variable_get('module_filter_visual_aid', 1))), 'setting');
 
     if (variable_get('module_filter_dynamic_save_position', 0)) {
       drupal_add_js(drupal_get_path('module', 'module_filter') .'/js/dynamic_position.js');
@@ -43,6 +37,8 @@ function theme_module_filter_system_modules($variables) {
   }
   else {
     $form['#theme'] = 'system_modules';
+
+    drupal_add_js(drupal_get_path('module', 'module_filter') . '/js/modules.js');
 
     $output = drupal_render($form['module_filter']);
     $output .= drupal_render($form['modules']);
@@ -82,8 +78,8 @@ function theme_module_filter_system_modules_tabs($variables) {
       if (isset($module['enable']['#id'])) {
         $label .= ' for="' . $module['enable']['#id'] . '"';
       }
-      $row[] = $label . '><strong>' . drupal_render($module['name']) . '</strong></label>';
-      $row[] = '<div class="admin-version">' . drupal_render($module['version']) . '</div>';
+      $row[] = array('class' => array('name'), 'data' => $label . '><strong>' . drupal_render($module['name']) . '</strong></label>');
+      $row[] = array('class' => array('version'), 'data' => drupal_render($module['version']));
       // Add the description, along with any modules it requires and any
       // operation links.
       $description = drupal_render($module['description']);

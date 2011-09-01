@@ -1,104 +1,94 @@
-
 (function ($) {
-  var moduleFilterTimeOut;
-  var moduleFilterTextFilter = '';
 
-  Drupal.behaviors.moduleFilter = {
-    attach: function() {
-      $("#module-filter-inputs").show();
-      $('input[name="module_filter[name]"]').focus();
-      $('input[name="module_filter[name]"]').keyup(function() {
-        if (moduleFilterTextFilter != $(this).val()) {
-          moduleFilterTextFilter = this.value;
-          if (moduleFilterTimeOut) {
-            clearTimeout(moduleFilterTimeOut);
-          }
+Drupal.ModuleFilter = function(element, selector, options) {
+  var self = this;
 
-          moduleFilterTimeOut = setTimeout('moduleFilter("' + moduleFilterTextFilter + '")', 500);
-        }
-      });
+  this.element = element;
 
-      $('#edit-module-filter-show-enabled').change(function() {
-        moduleFilter($('input[name="module_filter[name]"]').val());
-      });
-      $('#edit-module-filter-show-disabled').change(function() {
-        moduleFilter($('input[name="module_filter[name]"]').val());
-      });
-      $('#edit-module-filter-show-required').change(function() {
-        moduleFilter($('input[name="module_filter[name]"]').val());
-      });
-      $('#edit-module-filter-show-unavailable').change(function() {
-        moduleFilter($('input[name="module_filter[name]"]').val());
-      });
-    }
-  }
+  this.settings = Drupal.settings.moduleFilter;
 
-  moduleFilter = function(string) {
-    stringLowerCase = string.toLowerCase();
+  this.selector = selector;
+  this.text = '';
 
-    $("fieldset table tbody tr td label > strong").each(function(i) {
-      var $row = $(this).parents('tr');
-      var module = $(this).text();
-      var moduleLowerCase = module.toLowerCase();
-      var $fieldset = $row.parents('fieldset');
+  this.options = $.extend({
+    striping: false,
+    childSelector: null,
+    rules: new Array()
+  }, options);
 
-      if (string != '') {
-        if ($fieldset.hasClass('collapsed')) {
-          $fieldset.removeClass('collapsed');
-        }
+  this.applyFilter = function() {
+    var startTime = new Date();
+    var textLowerCase = self.text.toLowerCase();
+    var flip = { even: 'odd', odd: 'even' };
+    var stripe = 'odd';
+
+    $(selector).each(function() {
+      var $item = $(this);
+      var result = (self.options.childSelector) ? $(self.options.childSelector, this) : $(this);
+      var name = result.text();
+      var nameLowerCase = name.toLowerCase();
+
+      if ($item.prev().length == 0) {
+        self.element.trigger('moduleFilter:start', $item);
       }
 
-      if (moduleLowerCase.match(stringLowerCase)) {
-        if (moduleFilterVisible($('td.checkbox input', $row))) {
-          if (!$row.is(':visible')) {
-            $row.show();
-            if ($fieldset.hasClass('collapsed')) {
-              $fieldset.removeClass('collapsed');
+      if (nameLowerCase.match(textLowerCase)) {
+        var rulesResult = true;
+        if (self.options.rules.length > 0) {
+          for (var i in self.options.rules) {
+            var func = self.options.rules[i];
+            rulesResult = func(self, $item);
+            if (rulesResult === null) {
+              continue;
             }
-            if (!$fieldset.is(':visible')) {
-              $fieldset.show();
+            else {
+              break;
             }
           }
         }
-        else {
-          $row.hide();
-          if ($row.siblings(':visible').html() == null) {
-            $fieldset.hide();
+        if (rulesResult == true) {
+          if (self.options.striping) {
+            $item.removeClass('odd even');
+            $item.addClass(stripe);
+            $item.show();
+            stripe = flip[stripe];
           }
+          $item.show();
+          if ($item.next().length == 0) {
+            self.element.trigger('moduleFilter:finish', $item);
+          }
+          return true;
         }
       }
-      else {
-        if ($row.is(':visible')) {
-          $row.hide();
-          if ($row.siblings(':visible').html() == null) {
-            $fieldset.hide();
-          }
-        }
+
+      $item.hide();
+      if ($item.next().length == 0) {
+        self.element.trigger('moduleFilter:finish', $item);
       }
     });
-  }
 
-  moduleFilterVisible = function(checkbox) {
-    if ($('#edit-module-filter-show-enabled').is(':checked')) {
-      if ($(checkbox).is(':checked') && !$(checkbox).is(':disabled')) {
-        return true;
-      }
+    var endTime = new Date();
+    if (console != undefined) {
+      console.log(endTime.getTime() - startTime.getTime());
     }
-    if ($('#edit-module-filter-show-disabled').is(':checked')) {
-      if (!$(checkbox).is(':checked') && !$(checkbox).is(':disabled')) {
-        return true;
+  };
+
+  $(self.element).keyup(function() {
+    if (self.text != $(this).val()) {
+      self.text = $(this).val();
+      if (self.timeOut) {
+        clearTimeout(self.timeOut);
       }
+
+      self.timeOut = setTimeout(self.applyFilter, 500);
     }
-    if ($('#edit-module-filter-show-required').is(':checked')) {
-      if ($(checkbox).is(':checked') && $(checkbox).is(':disabled')) {
-        return true;
-      }
-    }
-    if ($('#edit-module-filter-show-unavailable').is(':checked')) {
-      if (!$(checkbox).is(':checked') && $(checkbox).is(':disabled')) {
-        return true;
-      }
-    }
-    return false;
-  }
+  });
+};
+
+$.fn.moduleFilter = function(selector, options) {
+  $(this).parents('.module-filter-inputs-wrapper').show();
+  $(this).focus();
+  $(this).data('moduleFilter', new Drupal.ModuleFilter(this, selector, options));
+};
+
 })(jQuery);

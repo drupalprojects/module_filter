@@ -49,12 +49,29 @@ function module_filter_form_system_modules_alter(&$form, &$form_state, $form_id)
 
   $form['module_filter'] = array(
     '#tree' => TRUE,
-    '#weight' => -1
+    '#weight' => -1,
+    '#prefix' => '<div class="module-filter-inputs-wrapper" style="display: none;">',
+    '#suffix' => '</div>'
   );
   $form['module_filter']['name'] = array(
     '#type' => 'textfield',
     '#title' => t('Filter list'),
-    '#size' => 45
+    '#size' => 45,
+    '#attached' => array(
+      'js' => array(
+        array(
+          'data' => array(
+            'moduleFilter' => array(
+              'tabs' => variable_get('module_filter_tabs', 1),
+              'countEnabled' => variable_get('module_filter_count_enabled', 1),
+              'visualAid' => variable_get('module_filter_visual_aid', 1),
+              'dynamicPosition' => variable_get('module_filter_dynamic_save_position', 0)
+            )
+          ),
+          'type' => 'setting'
+        )
+      )
+    )
   );
 
   $form['module_filter']['show'] = array(
