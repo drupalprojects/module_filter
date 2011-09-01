@@ -4,34 +4,42 @@ Drupal.behaviors.moduleFilter = {
   attach: function(context) {
     $('.module-filter-inputs-wrapper', context).once('module-filter', function() {
       if (!Drupal.settings.moduleFilter.tabs) {
-        $('input[name="module_filter[name]"]', context).moduleFilter('#system-modules table tbody tr', {
+        var selector = '#system-modules table tbody tr';
+
+        $('input[name="module_filter[name]"]', context).moduleFilter(selector, {
+          delay: 300,
           striping: true,
           childSelector: 'td:nth(1)',
           rules: [
-            function(moduleFilter, row) {
+            function(moduleFilter, item) {
               if (moduleFilter.options.showEnabled) {
-                if ($('td.checkbox :checkbox', row).is(':checked') && !$('td.checkbox :checkbox', row).is(':disabled')) {
+                if (item.status && !item.disabled) {
                   return true;
                 }
               }
               if (moduleFilter.options.showDisabled) {
-                if (!$('td.checkbox :checkbox', row).is(':checked') && !$('td.checkbox :checkbox', row).is(':disabled')) {
+                if (!item.status && !item.disabled) {
                   return true;
                 }
               }
               if (moduleFilter.options.showRequired) {
-                if ($('td.checkbox :checkbox', row).is(':checked') && $('td.checkbox :checkbox', row).is(':disabled')) {
+                if (item.status && item.disabled) {
                   return true;
                 }
               }
               if (moduleFilter.options.showUnavailable) {
-                if (!$('td.checkbox :checkbox', row).is(':checked') && $('td.checkbox :checkbox', row).is(':disabled')) {
+                if (!item.status && item.disabled) {
                   return true;
                 }
               }
               return false;
             }
           ],
+          buildIndex: [function(moduleFilter, item) {
+            item.status = $('td.checkbox :checkbox', item.element).is(':checked');
+            item.disabled = $('td.checkbox :checkbox', item.element).is(':disabled');
+            return item;
+          }],
           showEnabled: $('#edit-module-filter-show-enabled').is(':checked'),
           showDisabled: $('#edit-module-filter-show-disabled').is(':checked'),
           showRequired: $('#edit-module-filter-show-required').is(':checked'),
@@ -73,5 +81,7 @@ Drupal.behaviors.moduleFilter = {
     });
   }
 }
+
+
 
 })(jQuery);
