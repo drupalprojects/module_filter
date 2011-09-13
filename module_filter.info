@@ -1,6 +1,7 @@
 name = Module filter
 description = "Filter the modules list."
 core = 7.x
+package = Administration
 
 files[] = module_filter.install
 files[] = module_filter.js
