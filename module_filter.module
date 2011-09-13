@@ -56,6 +56,7 @@ function module_filter_form_system_modules_alter(&$form, &$form_state, $form_id)
   $form['module_filter']['name'] = array(
     '#type' => 'textfield',
     '#title' => t('Filter list'),
+    '#default_value' => (isset($_GET['filter'])) ? $_GET['filter'] : '',
     '#size' => 45,
     '#attached' => array(
       'js' => array(
@@ -73,9 +74,15 @@ function module_filter_form_system_modules_alter(&$form, &$form_state, $form_id)
       )
     )
   );
+  $checkbox_defaults = array(
+    ((isset($_GET['enabled'])) ? $_GET['enabled'] : 1) ? 'enabled' : '',
+    ((isset($_GET['disabled'])) ? $_GET['disabled'] : 1) ? 'disabled' : '',
+    ((isset($_GET['required'])) ? $_GET['required'] : 1) ? 'required' : '',
+    ((isset($_GET['unavailable'])) ? $_GET['unavailable'] : 1) ? 'unavailable' : ''
+  );
   $form['module_filter']['show'] = array(
     '#type' => 'checkboxes',
-    '#default_value' => array('enabled', 'disabled', 'required', 'unavailable'),
+    '#default_value' => array_filter($checkbox_defaults),
     '#options' => array('enabled' => t('Enabled'), 'disabled' => t('Disabled'), 'required' => t('Required'), 'unavailable' => t('Unavailable')),
     '#prefix' => '<div id="module-filter-show-wrapper">',
     '#suffix' => '</div>'

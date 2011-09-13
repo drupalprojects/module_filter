@@ -10,7 +10,7 @@ Drupal.ModuleFilter.Filter = function(element, selector, options) {
   this.settings = Drupal.settings.moduleFilter;
 
   this.selector = selector;
-  this.text = '';
+  this.text = this.element.val();
 
   this.options = $.extend({
     delay: 500,
@@ -25,6 +25,9 @@ Drupal.ModuleFilter.Filter = function(element, selector, options) {
 
   // Add clear button.
   this.element.after('<div class="module-filter-clear"><a href="#" class="js-hide">' + Drupal.t('clear') + '</a></div>');
+  if (this.text) {
+    $('.module-filter-clear a', this.element.parent()).removeClass('js-hide');
+  }
   $('.module-filter-clear a', this.element.parent()).click(function() {
     self.element.val('');
     self.text = '';
