@@ -73,7 +73,6 @@ function module_filter_form_system_modules_alter(&$form, &$form_state, $form_id)
       )
     )
   );
-
   $form['module_filter']['show'] = array(
     '#type' => 'checkboxes',
     '#default_value' => array('enabled', 'disabled', 'required', 'unavailable'),
@@ -93,10 +92,6 @@ function module_filter_theme() {
     'module_filter_system_modules' => array(
       'render element' => 'form',
       'file' => 'module_filter.theme.inc'
-    ),
-    'module_filter_modules_table' => array(
-      'render element' => 'form',
-      'file' => 'module_filter.theme.inc',
     ),
     'module_filter_system_modules_tabs' => array(
       'render element' => 'form',

@@ -1,4 +1,17 @@
-
 #module-filter-show-wrapper .form-item {
   display: inline;
+}
+.module-filter-clear {
+  display: inline;
+  margin-left: 5px;
+  position: relative;
+}
+.module-filter-clear a {
+  font-size: 11px;
+  position: absolute;
+}
+.module-filter-no-results {
+  text-align: center;
+  text-transform: uppercase;
+  color: #888;
 }

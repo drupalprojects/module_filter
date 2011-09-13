@@ -21,13 +21,14 @@
 function theme_module_filter_system_modules($variables) {
   $form = $variables['form'];
 
-  drupal_add_css(drupal_get_path('module', 'module_filter') .'/css/module_filter.css');
-  drupal_add_js(drupal_get_path('module', 'module_filter') .'/js/module_filter.js');
+  drupal_add_css(drupal_get_path('module', 'module_filter') . '/css/module_filter.css');
+  drupal_add_js(drupal_get_path('module', 'module_filter') . '/js/module_filter.js');
+  drupal_add_js(drupal_get_path('module', 'module_filter') . '/js/modules.js');
 
   $output = '';
   if (variable_get('module_filter_tabs', 1)) {
     drupal_add_css(drupal_get_path('module', 'module_filter') .'/css/module_filter_tab.css');
-    // drupal_add_js(drupal_get_path('module', 'module_filter') .'/js/module_filter_tab.js');
+    drupal_add_js(drupal_get_path('module', 'module_filter') .'/js/module_filter_tab.js');
 
     if (variable_get('module_filter_dynamic_save_position', 0)) {
       drupal_add_js(drupal_get_path('module', 'module_filter') .'/js/dynamic_position.js');
@@ -38,12 +39,11 @@ function theme_module_filter_system_modules($variables) {
   else {
     $form['#theme'] = 'system_modules';
 
-    drupal_add_js(drupal_get_path('module', 'module_filter') . '/js/modules.js');
-
     $output = drupal_render($form['module_filter']);
     $output .= drupal_render($form['modules']);
     $output .= drupal_render($form['actions']);
   }
+
   return $output;
 }
 
@@ -101,7 +101,7 @@ function theme_module_filter_system_modules_tabs($variables) {
         $description .= '<div class="admin-requirements">' . t('Required by: !module-list', array('!module-list' => implode(', ', $module['#required_by']))) . '</div>';
       }
       $row[] = array('data' => $description, 'class' => array('description'));
-      $rows[] = array('data' => $row, 'no_striping' => TRUE, 'class' => array($class));
+      $rows[] = array('data' => $row, 'no_striping' => TRUE, 'class' => array(module_filter_get_id($package) . '-tab', 'module', $class));
       $class = $flip[$class];
     }
 
@@ -115,51 +115,8 @@ function theme_module_filter_system_modules_tabs($variables) {
 
   $output = '<div id="module-filter-wrapper">';
   $output .= '<div id="module-filter-modules">' . drupal_render($form['module_filter']);
-  $output .= theme('table', array('rows' => $rows));
+  $output .= theme('table', array('header' => $header, 'rows' => $rows));
   $output .= '</div>';
   $output .= drupal_render_children($form) . '</div>';
   return $output;
-}
-
-function theme_module_filter_modules_table($variables) {
-  $form = $variables['form'];
-
-  // Individual table headers.
-  $rows = array();
-  // Iterate through all the modules, which are
-  // children of this fieldset.
-  foreach (element_children($form) as $key) {
-    // Stick it into $module for easier accessing.
-    $module = $form[$key];
-    $row = array();
-    unset($module['enable']['#title']);
-    $row[] = array('class' => array('checkbox'), 'data' => drupal_render($module['enable']));
-    $label = '<label';
-    if (isset($module['enable']['#id'])) {
-      $label .= ' for="'. $module['enable']['#id'] .'"';
-    }
-    $row[] = $label .'><strong>' . drupal_render($module['name']) . '</strong></label>';
-    $row[] = drupal_render($module['version']);
-    // Add the description, along with any modules it requires.
-    $description = drupal_render($module['description']);
-    if ($module['#requires']) {
-      $description .= '<div class="admin-requirements">' . t('Requires: !module-list', array('!module-list' => implode(', ', $module['#requires']))) . '</div>';
-    }
-    if ($module['#required_by']) {
-      $description .= '<div class="admin-requirements">' . t('Required by: !module-list', array('!module-list' => implode(', ', $module['#required_by']))) . '</div>';
-    }
-    $row[] = array('data' => $description, 'class' => array('description'));
-    // Display links (such as help or permissions) in their own columns.
-    foreach (array('help', 'permissions', 'configure') as $key) {
-      $row[] = array('data' => drupal_render($module['links'][$key]), 'class' => array($key));
-    }
-
-    $id = module_filter_get_id($module['#package']);
-    $rows[] = array(
-      'data' => $row,
-      'class' => array($id .'-tab-content')
-    );
-  }
-
-  return theme('table', array('header' => $form['#header'], 'rows' => $rows, 'attributes' => array('class' => array('package'))));
 }
