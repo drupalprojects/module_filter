@@ -28,6 +28,7 @@ function theme_module_filter_system_modules($variables) {
   $output = '';
   if (variable_get('module_filter_tabs', 1)) {
     drupal_add_css(drupal_get_path('module', 'module_filter') .'/css/module_filter_tab.css');
+    drupal_add_js('misc/jquery.ba-bbq.js');
     drupal_add_js(drupal_get_path('module', 'module_filter') .'/js/module_filter_tab.js');
 
     if (variable_get('module_filter_dynamic_save_position', 0)) {

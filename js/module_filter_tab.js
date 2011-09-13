@@ -24,7 +24,8 @@ Drupal.behaviors.moduleFilterTabs = {
         var tabs = '<ul class="module-filter-tabs">';
         $('tr.admin-package-title', table).each(function(i) {
           var name = $.trim($(this).text());
-          tabs += '<li id="' + moduleGetID(name) + '-tab" class="project-tab"><a href="#"><strong>' + name + '</strong><span class="summary"></span></a></li>';
+          var id = moduleGetID(name);
+          tabs += '<li id="' + id + '-tab" class="project-tab"><a href="#' + id + '"><strong>' + name + '</strong><span class="summary"></span></a></li>';
           $(this).remove();
         });
         tabs += '</ul>';
@@ -32,25 +33,17 @@ Drupal.behaviors.moduleFilterTabs = {
 
         // Click event for tabs.
         $('ul.module-filter-tabs li a').click(function() {
-          if (Drupal.ModuleFilter.activeTab != undefined) {
-            Drupal.ModuleFilter.activeTab.removeClass('selected');
-            if (Drupal.ModuleFilter.activeTab.get(0) === $(this).parent().get(0)) {
-              // The active tab was clicked.
-              delete Drupal.ModuleFilter.activeTab;
-              moduleFilter.applyFilter();
-              return false;
-            }
+          if ($(this).parent().hasClass('selected')) {
+            // Clear the active tab.
+            window.location.hash = '';
+            return false;
           }
-          Drupal.ModuleFilter.activeTab = $(this).parent();
-          Drupal.ModuleFilter.activeTab.addClass('selected');
-          moduleFilter.applyFilter();
-          return false;
         });
 
         // Add filter rule to limit by active tab.
         moduleFilter.options.rules.push(function(moduleFilter, item) {
           if (Drupal.ModuleFilter.activeTab != undefined) {
-            if (!$(item.element).hasClass(Drupal.ModuleFilter.activeTab.attr('id'))) {
+            if (!$(item.element).hasClass(Drupal.ModuleFilter.activeTab.id + '-tab')) {
               return false;
             }
           }
@@ -74,9 +67,32 @@ Drupal.behaviors.moduleFilterTabs = {
           .removeClass('odd even')
           .filter(':odd').addClass('even').end()
           .filter(':even').addClass('odd');
+
+        $(window).bind('hashchange.module-filter', $.proxy(Drupal.ModuleFilter, 'eventHandlerOperateByURLFragment')).triggerHandler('hashchange.module-filter');
       });
     }
   }
 }
+
+Drupal.ModuleFilter.eventHandlerOperateByURLFragment = function(event) {
+  if (Drupal.ModuleFilter.activeTab != undefined) {
+    Drupal.ModuleFilter.activeTab.element.removeClass('selected');
+  }
+
+  var id = $.param.fragment();
+  if (id) {
+    Drupal.ModuleFilter.activeTab = {
+      id: id,
+      element: $('#' + id + '-tab')
+    };
+    Drupal.ModuleFilter.activeTab.element.addClass('selected');
+  }
+  else {
+    delete Drupal.ModuleFilter.activeTab;
+  }
+
+  var moduleFilter = $('input[name="module_filter[name]"]').data('moduleFilter');
+  moduleFilter.applyFilter();
+};
 
 })(jQuery);
