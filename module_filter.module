@@ -102,5 +102,6 @@ function module_filter_theme() {
 
 function module_filter_get_id($text) {
   $id = strtolower($text);
-  return preg_replace('/([^a-z])([\/(  )])*/', '-', $id);
+  $id = preg_replace('/([^a-z0-9]+)/', '-', $id);
+  return trim($id, '-');
 }

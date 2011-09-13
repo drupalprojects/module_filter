@@ -3,7 +3,9 @@
 
 moduleGetID = function(text) {
   var id = text.toLowerCase();
-  return id.replace(/([^a-z])([\/(  )])/g, '-');
+  id = id.replace(/[^a-z0-9]+/g, '-');
+  id = id.replace(/-$/, '');
+  return id;
 };
 
 Drupal.behaviors.moduleFilterTabs = {
