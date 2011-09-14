@@ -27,6 +27,9 @@
   font-size: 8px;
   float: right;
 }
+#module-filter-tabs li.selected span.visual-aid {
+  font-weight: bold;
+}
 #module-filter-tabs li a span.enabling {
   color: green;
 }
@@ -121,23 +124,29 @@ html.js #module-filter-modules table td {
 #module-filter-modules table thead {
   display: none;
 }
-tr.admin-package-title,
-tr.admin-package-title td {
+#module-filter-modules table tr.admin-package-title,
+#module-filter-modules table tr.admin-package-title td {
   border: none !important;
   border-top: 1px solid #ccc !important;
   background-color: transparent !important;
   padding: 10px 0 0;
 }
-tr.admin-package-title.first,
-tr.admin-package-title.first td {
+#module-filter-modules table tr.admin-package-title.first,
+#module-filter-modules table tr.admin-package-title.first td {
   border-top: none !important;
 }
-tr.admin-package-header td {
+#module-filter-modules table tr.admin-package-header td {
   border: 1px solid #ccc;
   text-transform: uppercase;
   background: #E1E2DC;
   font-weight: normal;
   padding: 3px 10px;
+}
+#module-filter-modules table tr.enabling {
+  background-color: #dfd;
+}
+#module-filter-modules table tr.disabling {
+  background-color: #fcc;
 }
 .admin-version {
   white-space: nowrap;
