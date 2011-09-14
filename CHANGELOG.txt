@@ -21,7 +21,7 @@ by greenSkin: Implemented module_filter element and using attached js and css
 by greenSkin: Filter input and checkboxes can now have their default values set
   based on query params.
 by greenSkin: Tabs now use URL fragments.
-by greenSkin: Fixed regular expression used to determin tab ID.
+by greenSkin: Fixed regular expression used to determine tab ID.
 by greenSkin: Tabs have been re-written and are functioning.
 by greenSkin: Added Module Filter to "Administration" package.
 by greenSkin: Improved filtering performance.
