@@ -25,7 +25,8 @@ Drupal.behaviors.moduleFilterTabs = {
         $('tr.admin-package-title', table).each(function(i) {
           var name = $.trim($(this).text());
           var id = moduleGetID(name);
-          tabs += '<li id="' + id + '-tab" class="project-tab"><a href="#' + id + '"><strong>' + name + '</strong><span class="summary"></span></a></li>';
+          var summary = (Drupal.settings.moduleFilter.countEnabled) ? Drupal.ModuleFilter.countSummary(id) : '';
+          tabs += '<li id="' + id + '-tab" class="project-tab"><a href="#' + id + '"><strong>' + name + '</strong><span class="summary">' + summary + '</span></a></li>';
           $(this).remove();
         });
         tabs += '</ul>';
@@ -96,5 +97,9 @@ Drupal.ModuleFilter.eventHandlerOperateByURLFragment = function(event) {
   var moduleFilter = $('input[name="module_filter[name]"]').data('moduleFilter');
   moduleFilter.applyFilter();
 };
+
+Drupal.ModuleFilter.countSummary = function(id) {
+  return Drupal.t('@enabled of @total', { '@enabled': Drupal.settings.moduleFilter.enabledCounts[id].enabled, '@total': Drupal.settings.moduleFilter.enabledCounts[id].total });
+}
 
 })(jQuery);

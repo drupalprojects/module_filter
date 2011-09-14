@@ -71,8 +71,12 @@ function theme_module_filter_system_modules_tabs($variables) {
     $rows[] = array('data' => $header, 'class' => array('admin-package-header'));
 
     $class = 'odd';
+    $enabled[$package] = array();
     foreach (element_children($form['modules'][$package]) as $key) {
       $module = &$form['modules'][$package][$key];
+
+      $enabled[$package][] = $module['enable']['#default_value'];
+
       $row = array();
       unset($module['enable']['#title']);
       $row[] = array('class' => array('checkbox'), 'data' => drupal_render($module['enable']));
@@ -109,6 +113,21 @@ function theme_module_filter_system_modules_tabs($variables) {
 
     // Set the package as printed.
     $form['modules'][$package]['#printed'] = TRUE;
+  }
+
+  if (variable_get('module_filter_count_enabled', 1)) {
+    $enabled_counts = array();
+    foreach ($enabled as $package => $value) {
+      $enabled_counts[module_filter_get_id($package)] = array(
+        'enabled' => count(array_filter($value)),
+        'total' => count($value),
+      );
+    }
+    drupal_add_js(array(
+      'moduleFilter' => array(
+        'enabledCounts' => $enabled_counts
+      )
+    ), 'setting');
   }
 
   // Add first and last class to rows.

@@ -23,6 +23,17 @@
   text-decoration: none;
   padding: 10px;
 }
+#module-filter-tabs li a span.visual-aid {
+  font-size: 8px;
+  float: right;
+}
+#module-filter-tabs li a span.enabling {
+  color: green;
+}
+#module-filter-tabs li a span.disabling {
+  color: red;
+  margin-left: 5px;
+}
 #module-filter-tabs li strong {
   font-size: 0.923em;
 }
@@ -42,11 +53,14 @@
   margin-right: -1px;
 }
 #module-filter-tabs li .summary {
-  display: block;
+  display: none;
   margin-bottom: 0;
   color: #666;
   font-size: 0.846em;
   padding-top: 0.4em;
+}
+#module-filter-tabs li.selected .summary {
+  display: block;
 }
 html.js #module-filter-submit {
   float: left;
