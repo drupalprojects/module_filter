@@ -36,7 +36,7 @@ function module_filter_settings() {
   $form['tabs']['module_filter_visual_aid'] = array(
     '#type' => 'checkbox',
     '#title' => t('Visuals for newly enabled and disabled modules'),
-    '#description' => t("Adds a basic count to tabs of modules being enabled/disabled and colors the module row pending it's being enabled or disabled"),
+    '#description' => t("Adds a basic count to tabs of modules being enabled/disabled and colors the module row pending it's being enabled or disabled."),
     '#default_value' => variable_get('module_filter_visual_aid', 1)
   );
   $form['tabs']['module_filter_dynamic_save_position'] = array(
