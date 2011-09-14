@@ -113,6 +113,7 @@ function form_process_module_filter($element, &$form_state) {
     '#default_value' => (isset($element['#default_value'])) ? $element['#default_value'] : ((isset($_GET['filter'])) ? $_GET['filter'] : ''),
     '#size' => (isset($element['#size'])) ? $element['#size'] : 45,
     '#weight' => (isset($element['#weight'])) ? $element['#weight'] : -10,
+    '#attributes' => ((isset($element['#attributes'])) ? $element['#attributes'] : array()) + array('autocomplete' => 'off'),
     '#attached' => array(
       'css' => array(
         drupal_get_path('module', 'module_filter') . '/css/module_filter.css'
