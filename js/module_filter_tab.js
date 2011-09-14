@@ -96,7 +96,7 @@ Drupal.ModuleFilter.Tab = function(element, id) {
   $('a', this.element).click(function() {
     if (self.element.hasClass('selected')) {
       // Clear the active tab.
-      window.location.hash = '';
+      window.location.hash = 'all';
       return false;
     }
   });
@@ -108,7 +108,7 @@ Drupal.ModuleFilter.eventHandlerOperateByURLFragment = function(event) {
   }
 
   var id = $.param.fragment();
-  if (id) {
+  if (id != 'all') {
     Drupal.ModuleFilter.activeTab = {
       id: id,
       element: $('#' + id + '-tab')
