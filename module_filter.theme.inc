@@ -6,6 +6,11 @@
  * @author greenSkin
  */
 
+function theme_module_filter($variables) {
+  $element = $variables['element'];
+  return '<div class="module-filter-inputs-wrapper" style="display: none;">' . drupal_render_children($element) . '</div>';
+}
+
 /**
  * A router theme function.
  *
@@ -21,18 +26,14 @@
 function theme_module_filter_system_modules($variables) {
   $form = $variables['form'];
 
-  drupal_add_css(drupal_get_path('module', 'module_filter') . '/css/module_filter.css');
-  drupal_add_js(drupal_get_path('module', 'module_filter') . '/js/module_filter.js');
-  drupal_add_js(drupal_get_path('module', 'module_filter') . '/js/modules.js');
-
   $output = '';
   if (variable_get('module_filter_tabs', 1)) {
-    drupal_add_css(drupal_get_path('module', 'module_filter') .'/css/module_filter_tab.css');
-    drupal_add_js('misc/jquery.ba-bbq.js');
-    drupal_add_js(drupal_get_path('module', 'module_filter') .'/js/module_filter_tab.js');
+    $form['module_filter']['#attached']['css'][] = drupal_get_path('module', 'module_filter') .'/css/module_filter_tab.css';
+    $form['module_filter']['#attached']['js'][] = 'misc/jquery.ba-bbq.js';
+    $form['module_filter']['#attached']['js'][] = drupal_get_path('module', 'module_filter') .'/js/module_filter_tab.js';
 
     if (variable_get('module_filter_dynamic_save_position', 0)) {
-      drupal_add_js(drupal_get_path('module', 'module_filter') .'/js/dynamic_position.js');
+      $form['module_filter']['#attached']['js'][] = drupal_get_path('module', 'module_filter') .'/js/dynamic_position.js';
     }
 
     $output .= theme('module_filter_system_modules_tabs', $form);
@@ -40,7 +41,7 @@ function theme_module_filter_system_modules($variables) {
   else {
     $form['#theme'] = 'system_modules';
 
-    $output = drupal_render($form['module_filter']);
+    $output .= drupal_render($form['module_filter']);
     $output .= drupal_render($form['modules']);
     $output .= drupal_render($form['actions']);
   }

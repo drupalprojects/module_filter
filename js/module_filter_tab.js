@@ -11,7 +11,7 @@ moduleGetID = function(text) {
 Drupal.behaviors.moduleFilterTabs = {
   attach: function(context) {
     if (Drupal.settings.moduleFilter.tabs) {
-      $('#module-filter-wrapper table', context).once('module-filter-tabs', function() {
+      $('#module-filter-wrapper table:not(.sticky-header)', context).once('module-filter-tabs', function() {
         var moduleFilter = $('input[name="module_filter[name]"]').data('moduleFilter');
         var table = $(this);
 
