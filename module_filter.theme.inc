@@ -32,7 +32,7 @@ function theme_module_filter_system_modules($variables) {
     $form['module_filter']['#attached']['js'][] = 'misc/jquery.ba-bbq.js';
     $form['module_filter']['#attached']['js'][] = drupal_get_path('module', 'module_filter') .'/js/module_filter_tab.js';
 
-    if (variable_get('module_filter_dynamic_save_position', 0)) {
+    if (variable_get('module_filter_dynamic_save_position', 1)) {
       $form['module_filter']['#attached']['js'][] = drupal_get_path('module', 'module_filter') .'/js/dynamic_position.js';
     }
 

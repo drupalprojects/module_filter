@@ -41,9 +41,9 @@ function module_filter_settings() {
   );
   $form['tabs']['module_filter_dynamic_save_position'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Save dynamic positioning'),
-    '#description' => t("DEVELOPMENTAL: For sites with lots of tabs, enable to help keep the 'Save configuration' button more accessible."),
-    '#default_value' => variable_get('module_filter_dynamic_save_position', 0)
+    '#title' => t('Dynamic Save position'),
+    '#description' => t("For sites with lots of tabs, enable to help keep the 'Save configuration' button more accessible."),
+    '#default_value' => variable_get('module_filter_dynamic_save_position', 1)
   );
   return system_settings_form($form);
 }

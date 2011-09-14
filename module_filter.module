@@ -125,7 +125,7 @@ function form_process_module_filter($element, &$form_state) {
               'tabs' => variable_get('module_filter_tabs', 1),
               'countEnabled' => variable_get('module_filter_count_enabled', 1),
               'visualAid' => variable_get('module_filter_visual_aid', 1),
-              'dynamicPosition' => variable_get('module_filter_dynamic_save_position', 0)
+              'dynamicPosition' => variable_get('module_filter_dynamic_save_position', 1)
             )
           ),
           'type' => 'setting'
