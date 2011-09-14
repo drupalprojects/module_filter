@@ -21,7 +21,7 @@ Drupal.behaviors.moduleFilterTabs = {
         $('tr.admin-package-header', table).remove();
 
         // Build tabs from package title rows.
-        var tabs = '<ul class="module-filter-tabs">';
+        var tabs = '<ul id="module-filter-tabs">';
         $('tr.admin-package-title', table).each(function(i) {
           var name = $.trim($(this).text());
           var id = moduleGetID(name);
@@ -32,7 +32,7 @@ Drupal.behaviors.moduleFilterTabs = {
         $('#module-filter-modules').before(tabs);
 
         // Click event for tabs.
-        $('ul.module-filter-tabs li a').click(function() {
+        $('#module-filter-tabs li a').click(function() {
           if ($(this).parent().hasClass('selected')) {
             // Clear the active tab.
             window.location.hash = '';
@@ -68,7 +68,7 @@ Drupal.behaviors.moduleFilterTabs = {
           .filter(':odd').addClass('even').end()
           .filter(':even').addClass('odd');
 
-        $('#module-filter-modules').css('min-height', $('ul.module-filter-tabs').height() + $('#module-filter-submit').height());
+        $('#module-filter-modules').css('min-height', $('#module-filter-tabs').height() + $('#module-filter-submit').height());
 
         $(window).bind('hashchange.module-filter', $.proxy(Drupal.ModuleFilter, 'eventHandlerOperateByURLFragment')).triggerHandler('hashchange.module-filter');
       });

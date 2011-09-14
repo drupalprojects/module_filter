@@ -1,4 +1,4 @@
-#module-filter-wrapper ul.module-filter-tabs {
+#module-filter-tabs {
   width: 240px;
   list-style: none;
   list-style-image: none;
@@ -9,7 +9,7 @@
   float: left;
   line-height: 1;
 }
-ul.module-filter-tabs li {
+#module-filter-tabs li {
   background: #eee;
   border: 1px solid #ccc;
   border-top: 0;
@@ -18,30 +18,30 @@ ul.module-filter-tabs li {
   margin: 0;
   min-width: 0;
 }
-ul.module-filter-tabs li a {
+#module-filter-tabs li a {
   display: block;
   text-decoration: none;
   padding: 10px;
 }
-ul.module-filter-tabs li strong {
+#module-filter-tabs li strong {
   font-size: 0.923em;
 }
-ul.module-filter-tabs li a:hover,
-ul.module-filter-tabs li a:focus {
+#module-filter-tabs li a:hover,
+#module-filter-tabs li a:focus {
   outline: 1px dotted;
   background: #d5d5d5;
   text-decoration: none;
   outline: 0;
 }
-ul.module-filter-tabs li.selected a,
-ul.module-filter-tabs li.selected a:hover,
-ul.module-filter-tabs li.selected a:focus,
-ul.module-filter-tabs li.selected a:active {
+#module-filter-tabs li.selected a,
+#module-filter-tabs li.selected a:hover,
+#module-filter-tabs li.selected a:focus,
+#module-filter-tabs li.selected a:active {
   background-color: #fff;
   border-right-width: 0;
   margin-right: -1px;
 }
-ul.module-filter-tabs li .summary {
+#module-filter-tabs li .summary {
   display: block;
   margin-bottom: 0;
   color: #666;
