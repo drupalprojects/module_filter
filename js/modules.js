@@ -4,7 +4,10 @@ Drupal.behaviors.moduleFilter = {
   attach: function(context) {
     $('.module-filter-inputs-wrapper', context).once('module-filter', function() {
       var filterInput = $('input[name="module_filter[name]"]', context);
-      var selector = '#system-modules table tbody tr.module';
+      var selector = '#system-modules table tbody tr';
+      if (Drupal.settings.moduleFilter.tabs) {
+        selector += '.module';
+      }
 
       filterInput.moduleFilter(selector, {
         wrapper: $('#module-filter-modules'),
@@ -49,20 +52,6 @@ Drupal.behaviors.moduleFilter = {
 
       var moduleFilter = filterInput.data('moduleFilter');
 
-      moduleFilter.element.bind('moduleFilter:start', function(e, item) {
-        var fieldset = $(item).parents('fieldset');
-        if ($(fieldset).is(':hidden')) {
-          fieldset.show();
-        }
-      });
-
-      moduleFilter.element.bind('moduleFilter:finish', function(e, item) {
-        var $item = $(item);
-        if (!$item.is(':visible') && $item.siblings().filter(':visible').length == 0) {
-          $item.parents('fieldset').hide();
-        }
-      });
-
       $('#edit-module-filter-show-enabled', context).change(function() {
         moduleFilter.options.showEnabled = $(this).is(':checked');
         moduleFilter.applyFilter();
@@ -79,6 +68,23 @@ Drupal.behaviors.moduleFilter = {
         moduleFilter.options.showUnavailable = $(this).is(':checked');
         moduleFilter.applyFilter();
       });
+
+      if (!Drupal.settings.moduleFilter.tabs) {
+        moduleFilter.element.bind('moduleFilter:start', function(e, item) {
+          $('#system-modules fieldset').show();
+        });
+
+        moduleFilter.element.bind('moduleFilter:finish', function(e, item) {
+          $('#system-modules fieldset').each(function(i) {
+            $fieldset = $(this);
+            if ($('tbody tr', $fieldset).filter(':visible').length == 0) {
+              $fieldset.hide();
+            }
+          });
+        });
+
+        moduleFilter.applyFilter();
+      }
     });
   }
 }
