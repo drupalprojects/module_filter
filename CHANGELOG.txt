@@ -1,4 +1,32 @@
-Module Filter 7.x-2.x, 2011-08-31
+Module Filter 7.x-2.x, 2011-09-14
 ---------------------------------
+by greenSkin: Fixed showing all modules by default when no hash is present.
+by greenSkin: Turned off autocomplete for filter textfield.
+by greenSkin: Now using "all" for hash when no tab is selected.
+by greenSkin: Implemented visual aids (displays number of modules being
+  enabled/disabled as well as coloring the modules row accordingly).
+by greenSkin: Implemented the enabled count (displays the number of enabled
+  modules of total for a package.
+by greenSkin: Updated tabs setting description.
+by greenSkin: Added missing period.
+by greenSkin: Made dynamic save position default to on. Updated element title
+  on admin page and removed "DEVELOPMENTAL" from description.
+by greenSkin: Improved fixed-top positioning when toolbar is enabled.
+by greenSkin: Added fixed classes for submit button wrapper.
+by greenSkin: Changed module-filter-tabs from a class to an id.
+by greenSkin: Fixed filter on modules page when tabs are disabled.
+by greenSkin: Set min-height to #module-filter-modules.
+by greenSkin: Implemented module_filter element and using attached js and css
+  more.
+by greenSkin: Filter input and checkboxes can now have their default values set
+  based on query params.
+by greenSkin: Tabs now use URL fragments.
+by greenSkin: Fixed regular expression used to determin tab ID.
+by greenSkin: Tabs have been re-written and are functioning.
+by greenSkin: Added Module Filter to "Administration" package.
+by greenSkin: Improved filtering performance.
+by greenSkin: New filter code.
+by greenSkin: Initial tab layout modified. Modules are all in one table but
+  look like they are in packages. All JavaScript has to do on load now is
+  remove the package name and header rows from tbody then sort the rows.
 by greenSkin: Modified the menu item's description.
-
