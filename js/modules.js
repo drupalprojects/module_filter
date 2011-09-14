@@ -87,6 +87,6 @@ Drupal.behaviors.moduleFilter = {
       }
     });
   }
-}
+};
 
 })(jQuery);

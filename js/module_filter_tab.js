@@ -85,7 +85,7 @@ Drupal.behaviors.moduleFilterTabs = {
       });
     }
   }
-}
+};
 
 Drupal.ModuleFilter.Tab = function(element, id) {
   var self = this;
@@ -100,7 +100,7 @@ Drupal.ModuleFilter.Tab = function(element, id) {
       return false;
     }
   });
-}
+};
 
 Drupal.ModuleFilter.eventHandlerOperateByURLFragment = function(event) {
   if (Drupal.ModuleFilter.activeTab != undefined) {
@@ -125,7 +125,7 @@ Drupal.ModuleFilter.eventHandlerOperateByURLFragment = function(event) {
 
 Drupal.ModuleFilter.countSummary = function(id) {
   return Drupal.t('@enabled of @total', { '@enabled': Drupal.settings.moduleFilter.enabledCounts[id].enabled, '@total': Drupal.settings.moduleFilter.enabledCounts[id].total });
-}
+};
 
 Drupal.ModuleFilter.Tab.prototype.updateEnabling = function(amount) {
   this.enabling = this.enabling || 0;
@@ -133,7 +133,7 @@ Drupal.ModuleFilter.Tab.prototype.updateEnabling = function(amount) {
   if (this.enabling == 0) {
     delete this.enabling;
   }
-}
+};
 
 Drupal.ModuleFilter.Tab.prototype.updateDisabling = function(amount) {
   this.disabling = this.disabling || 0;
@@ -141,7 +141,7 @@ Drupal.ModuleFilter.Tab.prototype.updateDisabling = function(amount) {
   if (this.disabling == 0) {
     delete this.disabling;
   }
-}
+};
 
 Drupal.ModuleFilter.Tab.prototype.updateVisualAid = function() {
   var visualAid = '';
@@ -158,7 +158,7 @@ Drupal.ModuleFilter.Tab.prototype.updateVisualAid = function() {
   }
 
   this.visualAid.empty().append(visualAid);
-}
+};
 
 Drupal.ModuleFilter.updateVisualAid = function(type, $row) {
   var id = $row.data('moduleFilterTabID');
@@ -206,6 +206,6 @@ Drupal.ModuleFilter.updateVisualAid = function(type, $row) {
   }
 
   tab.updateVisualAid();
-}
+};
 
 })(jQuery);

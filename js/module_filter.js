@@ -128,7 +128,7 @@ Drupal.ModuleFilter.Filter.prototype.buildIndex = function() {
     delete item;
   });
   this.index = index;
-}
+};
 
 $.fn.moduleFilter = function(selector, options) {
   var filterInput = this;
