@@ -1,5 +1,11 @@
 Module Filter 7.x-2.x, 2011-09-14
 ---------------------------------
+by greenSkin: Changed hook comment from using "Implementation of" to
+  "Implements".
+
+
+Module Filter 7.x-2.x, 2011-09-14
+---------------------------------
 by greenSkin: Fixed showing all modules by default when no hash is present.
 by greenSkin: Turned off autocomplete for filter textfield.
 by greenSkin: Now using "all" for hash when no tab is selected.

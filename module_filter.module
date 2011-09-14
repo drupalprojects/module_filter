@@ -12,7 +12,7 @@
  */
 
 /**
- * Implementation of hook_perm().
+ * Implements hook_perm().
  */
 function module_filter_permission() {
   return array(
@@ -24,7 +24,7 @@ function module_filter_permission() {
 }
 
 /**
- * Implementation of hook_menu().
+ * Implements hook_menu().
  */
 function module_filter_menu() {
   $items['admin/config/user-interface/modulefilter'] = array(
@@ -39,7 +39,7 @@ function module_filter_menu() {
 }
 
 /**
- * Implementation of hook_form_FORM_ID_alter().
+ * Implements hook_form_FORM_ID_alter().
  */
 function module_filter_form_system_modules_alter(&$form, &$form_state, $form_id) {
   // Don't alter the form when confirming.
@@ -87,7 +87,7 @@ function module_filter_element_info() {
 }
 
 /**
- * Implementation of hook_theme().
+ * Implements hook_theme().
  */
 function module_filter_theme() {
   return array(

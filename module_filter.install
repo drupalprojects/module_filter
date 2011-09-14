@@ -5,7 +5,7 @@
  */
 
 /**
- * Implementation of hook_uninstall().
+ * Implements hook_uninstall().
  */
 function module_filter_uninstall() {
   variable_del('module_filter_tabs');
@@ -15,7 +15,7 @@ function module_filter_uninstall() {
 }
 
 /**
- * Implementation of hook_update().
+ * Implements hook_update().
  */
 function module_filter_update_7100() {
   $ret = array();
