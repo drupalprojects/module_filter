@@ -108,7 +108,7 @@ Drupal.ModuleFilter.eventHandlerOperateByURLFragment = function(event) {
   }
 
   var id = $.param.fragment();
-  if (id != 'all') {
+  if (id && id != 'all') {
     Drupal.ModuleFilter.activeTab = {
       id: id,
       element: $('#' + id + '-tab')
