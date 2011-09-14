@@ -68,6 +68,8 @@ Drupal.behaviors.moduleFilterTabs = {
           .filter(':odd').addClass('even').end()
           .filter(':even').addClass('odd');
 
+        $('#module-filter-modules').css('min-height', $('ul.module-filter-tabs').height() + $('#module-filter-submit').height());
+
         $(window).bind('hashchange.module-filter', $.proxy(Drupal.ModuleFilter, 'eventHandlerOperateByURLFragment')).triggerHandler('hashchange.module-filter');
       });
     }
