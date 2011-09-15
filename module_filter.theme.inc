@@ -89,6 +89,12 @@ function theme_module_filter_system_modules_tabs($variables) {
       // Add the description, along with any modules it requires and any
       // operation links.
       $description = drupal_render($module['description']);
+      if ($module['#requires']) {
+        $description .= '<div class="admin-requirements">' . t('Requires: !module-list', array('!module-list' => implode(', ', $module['#requires']))) . '</div>';
+      }
+      if ($module['#required_by']) {
+        $description .= '<div class="admin-requirements">' . t('Required by: !module-list', array('!module-list' => implode(', ', $module['#required_by']))) . '</div>';
+      }
       $items = array();
       foreach (array('help', 'permissions', 'configure') as $link) {
         $data = drupal_render($module['links'][$link]);
@@ -100,12 +106,6 @@ function theme_module_filter_system_modules_tabs($variables) {
         $description .= '<div class="admin-operations">' . theme('item_list', array('items' => $items, 'attributes' => array('class' => array('links', 'inline')))) . '</div>';
       }
       $description .= drupal_render($module['links']);
-      if ($module['#requires']) {
-        $description .= '<div class="admin-requirements">' . t('Requires: !module-list', array('!module-list' => implode(', ', $module['#requires']))) . '</div>';
-      }
-      if ($module['#required_by']) {
-        $description .= '<div class="admin-requirements">' . t('Required by: !module-list', array('!module-list' => implode(', ', $module['#required_by']))) . '</div>';
-      }
       $row[] = array('data' => $description, 'class' => array('description'));
       $rows[] = array('data' => $row, 'no_striping' => TRUE, 'class' => array(module_filter_get_id($package) . '-tab', 'module', $class));
       $class = $flip[$class];
