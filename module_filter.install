@@ -15,8 +15,15 @@ function module_filter_uninstall() {
 }
 
 /**
- * Implements hook_update().
+ * Remove the 'module_filter_autocomplete' variable.
  */
 function module_filter_update_7100() {
   variable_del('module_filter_autocomplete');
+}
+
+/**
+ * Rebuild the menu.
+ */
+function module_filter_update_7200() {
+  menu_rebuild();
 }
