@@ -1,3 +1,4 @@
 name = Module filter
 description = "Filter the modules list."
 core = 6.x
+package = Administration
