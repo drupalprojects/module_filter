@@ -8,7 +8,7 @@
 
 function theme_module_filter($variables) {
   $element = $variables['element'];
-  return '<div class="module-filter-inputs-wrapper" style="display: none;">' . drupal_render_children($element) . '</div>';
+  return '<div class="module-filter-inputs-wrapper">' . drupal_render_children($element) . '</div>';
 }
 
 /**

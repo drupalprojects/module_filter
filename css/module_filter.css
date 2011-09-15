@@ -1,3 +1,6 @@
+.module-filter-inputs-wrapper {
+  display: none;
+}
 #module-filter-show-wrapper .form-item {
   display: inline;
 }
