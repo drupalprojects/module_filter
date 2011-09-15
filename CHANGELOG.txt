@@ -1,5 +1,7 @@
 Module Filter 7.x-2.x, 2011-09-15
 ---------------------------------
+by greenSkin: Only alter the menu item 'admin/reports/updates' if it first
+  exists.
 by greenSkin: Added update to force a menu rebuild. This is needed to let
   Module Filter alter the Update Status menu item in order to provide our
   filter on its page.

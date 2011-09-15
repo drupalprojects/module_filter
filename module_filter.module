@@ -42,10 +42,12 @@ function module_filter_menu() {
  * Implements hook_menu_alter().
  */
 function module_filter_menu_alter(&$items) {
-  // We route the updates report page through us.
-  $items['admin/reports/updates']['page callback'] = 'module_filter_update_status';
-  $items['admin/reports/updates']['file'] = 'module_filter.pages.inc';
-  $items['admin/reports/updates']['module'] = 'module_filter';
+  if (isset($items['admin/reports/updates'])) {
+    // We route the updates report page through us.
+    $items['admin/reports/updates']['page callback'] = 'module_filter_update_status';
+    $items['admin/reports/updates']['file'] = 'module_filter.pages.inc';
+    $items['admin/reports/updates']['module'] = 'module_filter';
+  }
 }
 
 /**
