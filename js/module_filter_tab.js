@@ -101,6 +101,15 @@ Drupal.ModuleFilter.Tab = function(element, id) {
       return false;
     }
   });
+
+  $('tr.' + this.id, $('#system-modules')).hover(
+    function() {
+      self.element.addClass('suggest');
+    },
+    function() {
+      self.element.removeClass('suggest');
+    }
+  );
 };
 
 Drupal.ModuleFilter.eventHandlerOperateByURLFragment = function(event) {
