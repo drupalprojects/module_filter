@@ -1,16 +1,8 @@
-Module Filter 6.x-1.x, 2011-09-15
+Module Filter 6.x-1.7, 2011-09-15
 ---------------------------------
 #1202170 by greenSkin: Added Module Filter to package "Administration".
-
-
-Module Filter 6.x-1.x, 2011-03-13
----------------------------------
 #1090826 by greenSkin: Fixed update.php warning when updating to 6.x-1.6.
 by greenSkin: Fixed deleting set variables when module is uninstalled.
-
-
-Module Filter 6.x-1.x, 2011-03-12
----------------------------------
 by greenSkin: When dynamic positioning is enabled, the 'Save configuration'
   button gets fixed to the top of the browser when scrolled below the tabs.
 by greenSkin: Left scrolling gets applied to the dynamic positioning of the
