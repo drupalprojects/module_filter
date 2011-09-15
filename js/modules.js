@@ -39,11 +39,13 @@ Drupal.behaviors.moduleFilter = {
             return false;
           }
         ],
-        buildIndex: [function(moduleFilter, item) {
-          item.status = $('td.checkbox :checkbox', item.element).is(':checked');
-          item.disabled = $('td.checkbox :checkbox', item.element).is(':disabled');
-          return item;
-        }],
+        buildIndex: [
+          function(moduleFilter, item) {
+            item.status = $('td.checkbox :checkbox', item.element).is(':checked');
+            item.disabled = $('td.checkbox :checkbox', item.element).is(':disabled');
+            return item;
+          }
+        ],
         showEnabled: $('#edit-module-filter-show-enabled').is(':checked'),
         showDisabled: $('#edit-module-filter-show-disabled').is(':checked'),
         showRequired: $('#edit-module-filter-show-required').is(':checked'),

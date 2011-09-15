@@ -91,8 +91,6 @@ Drupal.ModuleFilter.Filter = function(element, selector, options) {
 
   self.element.keyup(function() {
     if (self.text != $(this).val()) {
-      self.element.trigger('moduleFilter:keyup');
-
       self.text = $(this).val();
       if (self.timeOut) {
         clearTimeout(self.timeOut);
@@ -104,6 +102,8 @@ Drupal.ModuleFilter.Filter = function(element, selector, options) {
       else {
         self.element.parent().find('.module-filter-clear a').addClass('js-hide');
       }
+
+      self.element.trigger('moduleFilter:keyup');
 
       self.timeOut = setTimeout(self.applyFilter, self.options.delay);
     }

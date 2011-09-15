@@ -39,6 +39,16 @@ function module_filter_menu() {
 }
 
 /**
+ * Implements hook_menu_alter().
+ */
+function module_filter_menu_alter(&$items) {
+  // We route the updates report page through us.
+  $items['admin/reports/updates']['page callback'] = 'module_filter_update_status';
+  $items['admin/reports/updates']['file'] = 'module_filter.pages.inc';
+  $items['admin/reports/updates']['module'] = 'module_filter';
+}
+
+/**
  * Implements hook_form_FORM_ID_alter().
  */
 function module_filter_form_system_modules_alter(&$form, &$form_state, $form_id) {
