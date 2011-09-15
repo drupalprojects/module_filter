@@ -54,7 +54,7 @@ Drupal.behaviors.moduleFilterTabs = {
         // Add filter rule to limit by active tab.
         moduleFilter.options.rules.push(function(moduleFilter, item) {
           if (Drupal.ModuleFilter.activeTab != undefined) {
-            if (!$(item.element).hasClass(Drupal.ModuleFilter.activeTab.id + '-tab')) {
+            if (!$(item.element).hasClass(Drupal.ModuleFilter.activeTab.id)) {
               return false;
             }
           }
@@ -90,7 +90,8 @@ Drupal.behaviors.moduleFilterTabs = {
 Drupal.ModuleFilter.Tab = function(element, id) {
   var self = this;
 
-  this.id = id.substring(0, id.length - 4);
+  this.id = id;
+  this.hash = id.substring(0, id.length - 4);
   this.element = element;
 
   $('a', this.element).click(function() {
@@ -107,12 +108,9 @@ Drupal.ModuleFilter.eventHandlerOperateByURLFragment = function(event) {
     Drupal.ModuleFilter.activeTab.element.removeClass('selected');
   }
 
-  var id = $.param.fragment();
-  if (id && id != 'all') {
-    Drupal.ModuleFilter.activeTab = {
-      id: id,
-      element: $('#' + id + '-tab')
-    };
+  var hash = $.param.fragment();
+  if (hash && hash != 'all') {
+    Drupal.ModuleFilter.activeTab = Drupal.ModuleFilter.tabs[hash + '-tab'];
     Drupal.ModuleFilter.activeTab.element.addClass('selected');
   }
   else {
