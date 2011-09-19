@@ -230,18 +230,22 @@ Drupal.ModuleFilter.Tab.prototype.updateVisualAid = function() {
     for (var i in this.enabling) {
       enabling.push(this.enabling[i]);
     }
-    enabling.sort();
-    visualAid += '<span class="enabling">+' + enabling.join('</span>, <span class="enabling">') + '</span>';
+    if (enabling.length > 0) {
+      enabling.sort();
+      visualAid += '<span class="enabling">+' + enabling.join('</span>, <span class="enabling">') + '</span>';
+    }
   }
   if (this.disabling != undefined) {
     for (var i in this.disabling) {
       disabling.push(this.disabling[i]);
     }
-    disabling.sort();
-    if (enabling.length > 0) {
-      visualAid += '<br />';
+    if (disabling.length > 0) {
+      disabling.sort();
+      if (enabling.length > 0) {
+        visualAid += '<br />';
+      }
+      visualAid += '<span class="disabling">-' + disabling.join('</span>, <span class="disabling">') + '</span>';
     }
-    visualAid += '<span class="disabling">-' + disabling.join('</span>, <span class="disabling">') + '</span>';
   }
 
   if (this.visualAid == undefined) {

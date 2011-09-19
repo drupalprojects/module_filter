@@ -1,5 +1,7 @@
 Module Filter 7.x-2.x, 2011-09-19
 ---------------------------------
+by greenSkin: Fixed visual aid for enabling/disabling modules. Previously had
+  failed to remove +/- from tab summary.
 by Kiphaas7, greenSkin: Tabs can now be configured to hide when they contain
   no results.
 by Kiphaas7, greenSkin: Added result info to tabs. When a filter is performed,
