@@ -43,13 +43,17 @@ Drupal.behaviors.moduleFilterTabs = {
           Drupal.ModuleFilter.tabs[id] = new Drupal.ModuleFilter.Tab($tab, id);
         });
 
-        if (Drupal.settings.moduleFilter.visualAid) {
-          $('#module-filter-modules tbody td.checkbox input').change(function() {
-            var $checkbox = $(this);
+        $('#module-filter-modules tbody td.checkbox input').change(function() {
+          var $checkbox = $(this);
+          var key = $checkbox.parents('tr').data('indexKey');
+
+          moduleFilter.index[key].status = $checkbox.is(':checked');
+
+          if (Drupal.settings.moduleFilter.visualAid) {
             var type = ($checkbox.is(':checked')) ? 'enable' : 'disable';
             Drupal.ModuleFilter.updateVisualAid(type, $checkbox.parents('tr'));
-          });
-        }
+          }
+        });
 
         // Add filter rule to limit by active tab.
         moduleFilter.options.rules.push(function(moduleFilter, item) {

@@ -124,6 +124,7 @@ Drupal.ModuleFilter.Filter.prototype.buildIndex = function() {
       var func = self.options.buildIndex[j];
       item = $.extend(func(self, item), item);
     }
+    $(this).data('indexKey', i);
     index.push(item);
     delete item;
   });
