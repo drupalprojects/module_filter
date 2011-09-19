@@ -79,7 +79,7 @@ Drupal.ModuleFilter.Filter = function(element, selector, options) {
     });
     self.element.trigger('moduleFilter:finish', { results: self.results });
 
-    if (self.results) {
+    if (self.results.length > 0) {
       self.options.wrapper.find('.module-filter-no-results').remove();
     }
     else {

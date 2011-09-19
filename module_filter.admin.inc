@@ -35,9 +35,15 @@ function module_filter_settings() {
   );
   $form['tabs']['module_filter_visual_aid'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Visuals for newly enabled and disabled modules'),
-    '#description' => t("Adds a basic count to tabs of modules being enabled/disabled and colors the module row pending it's being enabled or disabled."),
+    '#title' => t('Visual aids'),
+    '#description' => t('When enabling/disabling modules, the module name will display in the tab summary.<br />When filtering, a count of results for each tab will be presented.'),
     '#default_value' => variable_get('module_filter_visual_aid', 1)
+  );
+  $form['tabs']['module_filter_hide_empty_tabs'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Hide tabs with no results'),
+    '#description' => t('When a filter returns no results for a tab, the tab is hidden. This is dependent on visual aids being enabled.'),
+    '#default_value' => variable_get('module_filter_hide_empty_tabs', 0)
   );
   $form['tabs']['module_filter_dynamic_save_position'] = array(
     '#type' => 'checkbox',

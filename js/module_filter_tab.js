@@ -128,43 +128,71 @@ Drupal.ModuleFilter.eventHandlerOperateByURLFragment = function(event) {
 
   var moduleFilter = $('input[name="module_filter[name]"]').data('moduleFilter');
 
-  moduleFilter.element.bind('moduleFilter:finish', function(e, data) {
-    if (moduleFilter.text) {
-      var results = {};
+  if (Drupal.settings.moduleFilter.visualAid) {
+    moduleFilter.element.bind('moduleFilter:finish', function(e, data) {
+      if (moduleFilter.text) {
+        var textLowerCase = moduleFilter.text;
+        var results = {};
 
-      // Determine results per tab.
-      $('#system-modules table tbody tr:visible').each(function() {
-        var id = Drupal.ModuleFilter.getTabID($(this));
-        if (id) {
-          if (results[id] == undefined) {
-            results[id] = 0;
+        // Determine results per tab.
+        $('#system-modules table tbody tr').each(function() {
+          var name = $('td:nth(1)', $(this)).text().toLowerCase();
+          if (name.indexOf(textLowerCase) >= 0) {
+            var id = Drupal.ModuleFilter.getTabID($(this));
+            if (id) {
+              if (results[id] == undefined) {
+                results[id] = 0;
+              }
+              results[id]++;
+            }
           }
-          results[id]++;
+        });
+
+        // Add result info to tabs.
+        for (var id in results) {
+          var tab = Drupal.ModuleFilter.tabs[id];
+
+          if (tab.resultInfo == undefined) {
+            var resultInfo = '<span class="result-info"></span>'
+            $('a', tab.element).prepend(resultInfo);
+            tab.resultInfo = $('span.result-info', tab.element);
+          }
+
+          tab.resultInfo.empty().append(results[id]);
         }
-      });
 
-      // Add result info to tabs.
-      for (var id in results) {
-        var tab = Drupal.ModuleFilter.tabs[id];
-
-        if (tab.resultInfo == undefined) {
-          var resultInfo = '<span class="result-info"></span>'
-          $('a', tab.element).prepend(resultInfo);
-          tab.resultInfo = $('span.result-info', tab.element);
+        if (Drupal.settings.moduleFilter.hideEmptyTabs) {
+          for (var id in Drupal.ModuleFilter.tabs) {
+            if (results[id] != undefined) {
+              Drupal.ModuleFilter.tabs[id].element.show();
+            }
+            else if (Drupal.ModuleFilter.activeTab == undefined || Drupal.ModuleFilter.activeTab.id != id) {
+              Drupal.ModuleFilter.tabs[id].element.hide();
+            }
+          }
         }
-
-        tab.resultInfo.empty().append(results[id]);
       }
-    }
-    else {
-      // Remove result info from tabs.
-      for (var i in Drupal.ModuleFilter.tabs) {
-        if (Drupal.ModuleFilter.tabs[i].resultInfo != undefined) {
-          Drupal.ModuleFilter.tabs[i].resultInfo.empty();
+      else {
+        // Empty result info from tabs.
+        for (var i in Drupal.ModuleFilter.tabs) {
+          if (Drupal.ModuleFilter.tabs[i].resultInfo != undefined) {
+            Drupal.ModuleFilter.tabs[i].resultInfo.empty();
+          }
+        }
+
+        if (Drupal.settings.moduleFilter.hideEmptyTabs) {
+          $('#module-filter-tabs li').show();
         }
       }
-    }
-  });
+
+      if (Drupal.settings.moduleFilter.hideEmptyTabs) {
+        // Trigger window scroll. When the save buttons dynamic position is enabled
+        // we need this to ensure the save button's position updates with the new
+        // height of the tabs.
+        $(window).trigger('scroll');
+      }
+    });
+  }
 
   moduleFilter.applyFilter();
 };
