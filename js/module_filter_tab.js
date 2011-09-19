@@ -75,36 +75,41 @@ Drupal.behaviors.moduleFilterTabs = {
 
         $('#module-filter-modules').css('min-height', $('#module-filter-tabs').height() + $('#module-filter-submit').height());
 
-        moduleFilter.element.bind('moduleFilter:finish', function(e, data) {
-          if (Drupal.ModuleFilter.activeTab != undefined) {
-            // Hide modules not in the active tab.
-            $('#system-modules table tbody tr').filter(':not(.' + Drupal.ModuleFilter.activeTab.id + ')').addClass('js-hide').end().filter('.' + Drupal.ModuleFilter.activeTab.id + ':not(.js-hide)').removeClass('js-hide');
+        moduleFilter.element.bind('moduleFilter:start', function() {
+          moduleFilter.tabResults = {};
+
+          // Empty result info from tabs.
+          for (var i in Drupal.ModuleFilter.tabs) {
+            if (Drupal.ModuleFilter.tabs[i].resultInfo != undefined) {
+              Drupal.ModuleFilter.tabs[i].resultInfo.empty();
+            }
           }
+        });
+
+        // Add filter rule to limit by active tab.
+        moduleFilter.options.rules.push(function(filter, item) {
+          var id = Drupal.ModuleFilter.getTabID(item.element);
 
           if (Drupal.settings.moduleFilter.visualAid) {
-            // Empty result info from tabs.
-            for (var i in Drupal.ModuleFilter.tabs) {
-              if (Drupal.ModuleFilter.tabs[i].resultInfo != undefined) {
-                Drupal.ModuleFilter.tabs[i].resultInfo.empty();
-              }
+            if (filter.tabResults[id] == undefined) {
+              filter.tabResults[id] = 0;
             }
+            filter.tabResults[id]++;
+          }
 
+          if (Drupal.ModuleFilter.activeTab != undefined) {
+            if (id != Drupal.ModuleFilter.activeTab.id) {
+              return false;
+            }
+          }
+          return true;
+        });
+
+        moduleFilter.element.bind('moduleFilter:finish', function(e, data) {
+          if (Drupal.settings.moduleFilter.visualAid) {
             if (moduleFilter.text) {
-              var results = {};
-
-              // Determine results per tab.
-              for (var i in data.results) {
-                var id = Drupal.ModuleFilter.getTabID(data.results[i]);
-                if (id) {
-                  if (results[id] == undefined) {
-                    results[id] = 0;
-                  }
-                  results[id]++;
-                }
-              }
-
               // Add result info to tabs.
-              for (var id in results) {
+              for (var id in moduleFilter.tabResults) {
                 var tab = Drupal.ModuleFilter.tabs[id];
 
                 if (tab.resultInfo == undefined) {
@@ -113,12 +118,12 @@ Drupal.behaviors.moduleFilterTabs = {
                   tab.resultInfo = $('span.result-info', tab.element);
                 }
 
-                tab.resultInfo.append(results[id]);
+                tab.resultInfo.append(moduleFilter.tabResults[id]);
               }
 
               if (Drupal.settings.moduleFilter.hideEmptyTabs) {
                 for (var id in Drupal.ModuleFilter.tabs) {
-                  if (results[id] != undefined) {
+                  if (moduleFilter.tabResults[id] != undefined) {
                     Drupal.ModuleFilter.tabs[id].element.show();
                   }
                   else if (Drupal.ModuleFilter.activeTab == undefined || Drupal.ModuleFilter.activeTab.id != id) {
