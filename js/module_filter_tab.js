@@ -55,16 +55,6 @@ Drupal.behaviors.moduleFilterTabs = {
           }
         });
 
-        // Add filter rule to limit by active tab.
-        moduleFilter.options.rules.push(function(moduleFilter, item) {
-          if (Drupal.ModuleFilter.activeTab != undefined) {
-            if (!$(item.element).hasClass(Drupal.ModuleFilter.activeTab.id)) {
-              return false;
-            }
-          }
-          return true;
-        });
-
         // Move the submit button just below the tabs.
         $('#module-filter-modules').before($('#module-filter-submit'));
 
@@ -84,6 +74,74 @@ Drupal.behaviors.moduleFilterTabs = {
           .filter(':even').addClass('odd');
 
         $('#module-filter-modules').css('min-height', $('#module-filter-tabs').height() + $('#module-filter-submit').height());
+
+        moduleFilter.element.bind('moduleFilter:finish', function(e, data) {
+          if (Drupal.ModuleFilter.activeTab != undefined) {
+            // Hide modules not in the active tab.
+            $('#system-modules table tbody tr').filter(':not(.' + Drupal.ModuleFilter.activeTab.id + ')').addClass('js-hide').end().filter('.' + Drupal.ModuleFilter.activeTab.id + ':not(.js-hide)').removeClass('js-hide');
+          }
+
+          if (Drupal.settings.moduleFilter.visualAid) {
+            // Empty result info from tabs.
+            for (var i in Drupal.ModuleFilter.tabs) {
+              if (Drupal.ModuleFilter.tabs[i].resultInfo != undefined) {
+                Drupal.ModuleFilter.tabs[i].resultInfo.empty();
+              }
+            }
+
+            if (moduleFilter.text) {
+              var results = {};
+
+              // Determine results per tab.
+              for (var i in data.results) {
+                var id = Drupal.ModuleFilter.getTabID(data.results[i]);
+                if (id) {
+                  if (results[id] == undefined) {
+                    results[id] = 0;
+                  }
+                  results[id]++;
+                }
+              }
+
+              // Add result info to tabs.
+              for (var id in results) {
+                var tab = Drupal.ModuleFilter.tabs[id];
+
+                if (tab.resultInfo == undefined) {
+                  var resultInfo = '<span class="result-info"></span>'
+                  $('a', tab.element).prepend(resultInfo);
+                  tab.resultInfo = $('span.result-info', tab.element);
+                }
+
+                tab.resultInfo.append(results[id]);
+              }
+
+              if (Drupal.settings.moduleFilter.hideEmptyTabs) {
+                for (var id in Drupal.ModuleFilter.tabs) {
+                  if (results[id] != undefined) {
+                    Drupal.ModuleFilter.tabs[id].element.show();
+                  }
+                  else if (Drupal.ModuleFilter.activeTab == undefined || Drupal.ModuleFilter.activeTab.id != id) {
+                    Drupal.ModuleFilter.tabs[id].element.hide();
+                  }
+                }
+              }
+            }
+            else {
+              // Make sure all tabs are visible.
+              if (Drupal.settings.moduleFilter.hideEmptyTabs) {
+                $('#module-filter-tabs li').show();
+              }
+            }
+
+            if (Drupal.settings.moduleFilter.hideEmptyTabs) {
+              // Trigger window scroll. When the save buttons dynamic position is enabled
+              // we need this to ensure the save button's position updates with the new
+              // height of the tabs.
+              $(window).trigger('scroll');
+            }
+          }
+        });
 
         $(window).bind('hashchange.module-filter', $.proxy(Drupal.ModuleFilter, 'eventHandlerOperateByURLFragment')).triggerHandler('hashchange.module-filter');
       });
@@ -131,73 +189,6 @@ Drupal.ModuleFilter.eventHandlerOperateByURLFragment = function(event) {
   }
 
   var moduleFilter = $('input[name="module_filter[name]"]').data('moduleFilter');
-
-  if (Drupal.settings.moduleFilter.visualAid) {
-    moduleFilter.element.bind('moduleFilter:finish', function(e, data) {
-      if (moduleFilter.text) {
-        var textLowerCase = moduleFilter.text;
-        var results = {};
-
-        // Determine results per tab.
-        $('#system-modules table tbody tr').each(function() {
-          var name = $('td:nth(1)', $(this)).text().toLowerCase();
-          if (name.indexOf(textLowerCase) >= 0) {
-            var id = Drupal.ModuleFilter.getTabID($(this));
-            if (id) {
-              if (results[id] == undefined) {
-                results[id] = 0;
-              }
-              results[id]++;
-            }
-          }
-        });
-
-        // Add result info to tabs.
-        for (var id in results) {
-          var tab = Drupal.ModuleFilter.tabs[id];
-
-          if (tab.resultInfo == undefined) {
-            var resultInfo = '<span class="result-info"></span>'
-            $('a', tab.element).prepend(resultInfo);
-            tab.resultInfo = $('span.result-info', tab.element);
-          }
-
-          tab.resultInfo.empty().append(results[id]);
-        }
-
-        if (Drupal.settings.moduleFilter.hideEmptyTabs) {
-          for (var id in Drupal.ModuleFilter.tabs) {
-            if (results[id] != undefined) {
-              Drupal.ModuleFilter.tabs[id].element.show();
-            }
-            else if (Drupal.ModuleFilter.activeTab == undefined || Drupal.ModuleFilter.activeTab.id != id) {
-              Drupal.ModuleFilter.tabs[id].element.hide();
-            }
-          }
-        }
-      }
-      else {
-        // Empty result info from tabs.
-        for (var i in Drupal.ModuleFilter.tabs) {
-          if (Drupal.ModuleFilter.tabs[i].resultInfo != undefined) {
-            Drupal.ModuleFilter.tabs[i].resultInfo.empty();
-          }
-        }
-
-        if (Drupal.settings.moduleFilter.hideEmptyTabs) {
-          $('#module-filter-tabs li').show();
-        }
-      }
-
-      if (Drupal.settings.moduleFilter.hideEmptyTabs) {
-        // Trigger window scroll. When the save buttons dynamic position is enabled
-        // we need this to ensure the save button's position updates with the new
-        // height of the tabs.
-        $(window).trigger('scroll');
-      }
-    });
-  }
-
   moduleFilter.applyFilter();
 };
 
