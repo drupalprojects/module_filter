@@ -41,13 +41,13 @@ Drupal.ModuleFilter.Filter = function(element, selector, options) {
     var textLowerCase = self.text.toLowerCase();
     var flip = { even: 'odd', odd: 'even' };
     var stripe = 'odd';
-    self.results = 0;
+    self.results = new Array();
 
     if (self.index == undefined) {
       self.buildIndex();
     }
 
-    self.element.trigger('moduleFilter:start', self.index[0].element);
+    self.element.trigger('moduleFilter:start');
 
     $.each(self.index, function(key, value) {
       var $item = value.element;
@@ -70,14 +70,14 @@ Drupal.ModuleFilter.Filter = function(element, selector, options) {
             stripe = flip[stripe];
           }
           $item.removeClass('js-hide');
-          self.results++;
+          self.results.push($item);
           return true;
         }
       }
 
       $item.addClass('js-hide');
     });
-    self.element.trigger('moduleFilter:finish', self.index[self.index.length - 1].element);
+    self.element.trigger('moduleFilter:finish', { results: self.results });
 
     if (self.results) {
       self.options.wrapper.find('.module-filter-no-results').remove();

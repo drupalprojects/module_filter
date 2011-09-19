@@ -67,13 +67,13 @@ Drupal.behaviors.moduleFilterUpdateStatus = {
         moduleFilter.applyFilter();
       });
 
-      moduleFilter.element.bind('moduleFilter:start', function(e, item) {
+      moduleFilter.element.bind('moduleFilter:start', function() {
         $('table.update').each(function() {
           $(this).show().prev('h3').show();
         });
       });
 
-      moduleFilter.element.bind('moduleFilter:finish', function(e, item) {
+      moduleFilter.element.bind('moduleFilter:finish', function(e, data) {
         $('table.update').each(function() {
           var $table = $(this);
           if ($('tbody tr', $(this)).filter(':visible').length == 0) {

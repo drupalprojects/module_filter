@@ -127,6 +127,45 @@ Drupal.ModuleFilter.eventHandlerOperateByURLFragment = function(event) {
   }
 
   var moduleFilter = $('input[name="module_filter[name]"]').data('moduleFilter');
+
+  moduleFilter.element.bind('moduleFilter:finish', function(e, data) {
+    if (moduleFilter.text) {
+      var results = {};
+
+      // Determine results per tab.
+      $('#system-modules table tbody tr:visible').each(function() {
+        var id = Drupal.ModuleFilter.getTabID($(this));
+        if (id) {
+          if (results[id] == undefined) {
+            results[id] = 0;
+          }
+          results[id]++;
+        }
+      });
+
+      // Add result info to tabs.
+      for (var id in results) {
+        var tab = Drupal.ModuleFilter.tabs[id];
+
+        if (tab.resultInfo == undefined) {
+          var resultInfo = '<span class="result-info"></span>'
+          $('a', tab.element).prepend(resultInfo);
+          tab.resultInfo = $('span.result-info', tab.element);
+        }
+
+        tab.resultInfo.empty().append(results[id]);
+      }
+    }
+    else {
+      // Remove result info from tabs.
+      for (var i in Drupal.ModuleFilter.tabs) {
+        if (Drupal.ModuleFilter.tabs[i].resultInfo != undefined) {
+          Drupal.ModuleFilter.tabs[i].resultInfo.empty();
+        }
+      }
+    }
+  });
+
   moduleFilter.applyFilter();
 };
 
@@ -185,7 +224,7 @@ Drupal.ModuleFilter.Tab.prototype.updateVisualAid = function() {
   this.visualAid.empty().append(visualAid);
 };
 
-Drupal.ModuleFilter.updateVisualAid = function(type, $row) {
+Drupal.ModuleFilter.getTabID = function($row) {
   var id = $row.data('moduleFilterTabID');
   if (!id) {
     // Find the tab ID.
@@ -193,9 +232,16 @@ Drupal.ModuleFilter.updateVisualAid = function(type, $row) {
     for (var i in classes) {
       if (Drupal.ModuleFilter.tabs[classes[i]] != undefined) {
         id = classes[i];
+        break;
       }
     }
+    $row.data('moduleFilterTabID', id);
   }
+  return id;
+};
+
+Drupal.ModuleFilter.updateVisualAid = function(type, $row) {
+  var id = Drupal.ModuleFilter.getTabID($row);
 
   if (!id) {
     return false;

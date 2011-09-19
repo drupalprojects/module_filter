@@ -72,11 +72,11 @@ Drupal.behaviors.moduleFilter = {
       });
 
       if (!Drupal.settings.moduleFilter.tabs) {
-        moduleFilter.element.bind('moduleFilter:start', function(e, item) {
+        moduleFilter.element.bind('moduleFilter:start', function() {
           $('#system-modules fieldset').show();
         });
 
-        moduleFilter.element.bind('moduleFilter:finish', function(e, item) {
+        moduleFilter.element.bind('moduleFilter:finish', function(e, data) {
           $('#system-modules fieldset').each(function(i) {
             $fieldset = $(this);
             if ($('tbody tr', $fieldset).filter(':visible').length == 0) {
