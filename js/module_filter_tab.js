@@ -29,7 +29,7 @@ Drupal.behaviors.moduleFilterTabs = {
         $('tr.admin-package-title', table).each(function(i) {
           var name = $.trim($(this).text());
           var id = moduleGetID(name);
-          var summary = (Drupal.settings.moduleFilter.countEnabled) ? Drupal.ModuleFilter.countSummary(id) : '';
+          var summary = (Drupal.settings.moduleFilter.countEnabled) ? '<span class="count">' + Drupal.ModuleFilter.countSummary(id) + '</span>' : '';
           tabs += '<li id="' + id + '-tab" class="project-tab"><a href="#' + id + '"><strong>' + name + '</strong><span class="summary">' + summary + '</span></a></li>';
           $(this).remove();
         });
@@ -134,33 +134,51 @@ Drupal.ModuleFilter.countSummary = function(id) {
   return Drupal.t('@enabled of @total', { '@enabled': Drupal.settings.moduleFilter.enabledCounts[id].enabled, '@total': Drupal.settings.moduleFilter.enabledCounts[id].total });
 };
 
-Drupal.ModuleFilter.Tab.prototype.updateEnabling = function(amount) {
-  this.enabling = this.enabling || 0;
-  this.enabling += amount;
-  if (this.enabling == 0) {
-    delete this.enabling;
+Drupal.ModuleFilter.Tab.prototype.updateEnabling = function(name, remove) {
+  this.enabling = this.enabling || {};
+  if (!remove) {
+    this.enabling[name] = name;
+  }
+  else {
+    delete this.enabling[name];
   }
 };
 
-Drupal.ModuleFilter.Tab.prototype.updateDisabling = function(amount) {
-  this.disabling = this.disabling || 0;
-  this.disabling += amount;
-  if (this.disabling == 0) {
-    delete this.disabling;
+Drupal.ModuleFilter.Tab.prototype.updateDisabling = function(name, remove) {
+  this.disabling = this.disabling || {};
+  if (!remove) {
+    this.disabling[name] = name;
+  }
+  else {
+    delete this.disabling[name];
   }
 };
 
 Drupal.ModuleFilter.Tab.prototype.updateVisualAid = function() {
   var visualAid = '';
+  var enabling = new Array();
+  var disabling = new Array();
+
   if (this.enabling != undefined) {
-    visualAid += '<span class="enabling">' + Drupal.t('+@count', { '@count': this.enabling });
+    for (var i in this.enabling) {
+      enabling.push(this.enabling[i]);
+    }
+    enabling.sort();
+    visualAid += '<span class="enabling">+' + enabling.join('</span>, <span class="enabling">') + '</span>';
   }
   if (this.disabling != undefined) {
-    visualAid += '<span class="disabling">' + Drupal.t('-@count', { '@count': this.disabling });
+    for (var i in this.disabling) {
+      disabling.push(this.disabling[i]);
+    }
+    disabling.sort();
+    if (enabling.length > 0) {
+      visualAid += '<br />';
+    }
+    visualAid += '<span class="disabling">-' + disabling.join('</span>, <span class="disabling">') + '</span>';
   }
 
   if (this.visualAid == undefined) {
-    $('a', this.element).prepend('<span class="visual-aid"></span>');
+    $('a span.summary', this.element).append('<span class="visual-aid"></span>');
     this.visualAid = $('span.visual-aid', this.element);
   }
 
@@ -189,24 +207,24 @@ Drupal.ModuleFilter.updateVisualAid = function(type, $row) {
     case 'enable':
       if (Drupal.ModuleFilter.disabling[id + name] != undefined) {
         delete Drupal.ModuleFilter.disabling[id + name];
-        tab.updateDisabling(-1);
+        tab.updateDisabling(name, true);
         $row.removeClass('disabling');
       }
       else {
         Drupal.ModuleFilter.enabling[id + name] = name;
-        tab.updateEnabling(1);
+        tab.updateEnabling(name);
         $row.addClass('enabling');
       }
       break;
     case 'disable':
       if (Drupal.ModuleFilter.enabling[id + name] != undefined) {
         delete Drupal.ModuleFilter.enabling[id + name];
-        tab.updateEnabling(-1);
+        tab.updateEnabling(name, true);
         $row.removeClass('enabling');
       }
       else {
         Drupal.ModuleFilter.disabling[id + name] = name;
-        tab.updateDisabling(1);
+        tab.updateDisabling(name);
         $row.addClass('disabling');
       }
       break;
