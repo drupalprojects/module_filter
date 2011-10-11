@@ -1,5 +1,6 @@
 Module Filter 7.x-2.x, 2011-10-11
 ---------------------------------
+by greenSkin: Added README.txt.
 by greenSkin: Fixed table row striping.
 by greenSkin: Fixed regular expression to not require an operator be at the
   beginning. Make filter queries filter with AND instead of OR. Each query will
