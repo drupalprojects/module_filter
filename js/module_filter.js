@@ -3,14 +3,13 @@
 Drupal.ModuleFilter = {};
 
 Drupal.ModuleFilter.explode = function(text) {
-  var textArray = text.match(/\w+|"[^"]+"/g);
+  var textArray = text.match(/(\w+:(\w+|"[^"]+"))|\w+|"[^"]+"/g);
   if (!textArray) {
     textArray = new Array();
   }
   var i = textArray.length;
   while (i--) {
     textArray[i] = textArray[i].replace(/"/g, "");
-    textArray[i] = textArray[i].toLowerCase();
   }
   return textArray;
 };
@@ -18,11 +17,14 @@ Drupal.ModuleFilter.explode = function(text) {
 Drupal.ModuleFilter.Filter = function(element, selector, options) {
   var self = this;
 
+  this.flip = { even: 'odd', odd: 'even' };
+
   this.element = element;
 
   this.settings = Drupal.settings.moduleFilter;
 
   this.selector = selector;
+  this.text = $(this.selector).val();
 
   this.options = $.extend({
     delay: 500,
@@ -42,28 +44,50 @@ Drupal.ModuleFilter.Filter = function(element, selector, options) {
   }
   $('.module-filter-clear a', this.element.parent()).click(function() {
     self.element.val('');
-    self.updateText();
+    self.text = '';
+    delete self.queries;
     self.applyFilter();
     self.element.focus();
     $(this).addClass('js-hide');
     return false;
   });
 
-  this.updateText = function() {
-    self.text = self.element.val();
-    self.textQueries = Drupal.ModuleFilter.explode(self.text);
-    if (self.textQueries.length <= 0) {
+  this.updateQueries = function() {
+    var queryStrings = Drupal.ModuleFilter.explode(self.text);
+
+    self.queries = new Array();
+    for (var i in queryStrings) {
+      var query = { operator: 'text', string: queryStrings[i] };
+
+      if (self.operators != undefined) {
+        // Check if an operator is possibly used.
+        if (queryStrings[i].indexOf(':') > 0) {
+          // Determine operator used.
+          var args = queryStrings[i].split(':', 2);
+          var operator = args.shift();
+          if (self.operators[operator] != undefined) {
+            query.operator = operator;
+            query.string = args.shift();
+          }
+        }
+      }
+
+      query.string = query.string.toLowerCase();
+
+      self.queries.push(query);
+    }
+
+    if (self.queries.length <= 0) {
       // Add a blank string query.
-      self.textQueries.push('');
+      self.queries.push({ operator: 'text', string: '' });
     }
   };
 
-  this.updateText();
-
   this.applyFilter = function() {
-    var flip = { even: 'odd', odd: 'even' };
-    var stripe = 'odd';
+    self.stripe = 'odd';
     self.results = new Array();
+
+    self.updateQueries();
 
     if (self.index == undefined) {
       self.buildIndex();
@@ -71,39 +95,29 @@ Drupal.ModuleFilter.Filter = function(element, selector, options) {
 
     self.element.trigger('moduleFilter:start');
 
-    $.each(self.index, function(key, value) {
-      var $item = value.element;
-      var hideItem = true;
+    $.each(self.index, function(key, item) {
+      var $item = item.element;
 
-      $.each(self.textQueries, function(textKey, text) {
-        if (value.text.indexOf(text) >= 0) {
-          var rulesResult = true;
-          if (self.options.rules.length > 0) {
-            for (var i in self.options.rules) {
-              var func = self.options.rules[i];
-              rulesResult = func(self, value);
-              if (rulesResult === false) {
-                break;
-              }
+      for (var i in self.queries) {
+        var query = self.queries[i];
+        if (query.operator == 'text') {
+          if (item.text.indexOf(query.string) >= 0) {
+            if (self.processRules(item) == true) {
+              return true;
             }
-          }
-          if (rulesResult == true) {
-            if (self.options.striping) {
-              $item.removeClass('odd even')
-                .addClass(stripe);
-              stripe = flip[stripe];
-            }
-            $item.removeClass('js-hide');
-            self.results.push($item);
-            hideItem = false;
-            return true;
           }
         }
-      });
-
-      if (hideItem) {
-        $item.addClass('js-hide');
+        else {
+          var func = self.operators[query.operator];
+          if (func(query.string, self, item)) {
+            if (self.processRules(item) == true) {
+              return true;
+            }
+          }
+        }
       }
+
+      $item.addClass('js-hide');
     });
     self.element.trigger('moduleFilter:finish', { results: self.results });
 
@@ -119,10 +133,11 @@ Drupal.ModuleFilter.Filter = function(element, selector, options) {
 
   self.element.keyup(function() {
     if (self.text != $(this).val()) {
-      self.updateText();
       if (self.timeOut) {
         clearTimeout(self.timeOut);
       }
+
+      self.text = $(this).val();
 
       if (self.text) {
         self.element.parent().find('.module-filter-clear a').removeClass('js-hide');
@@ -157,6 +172,31 @@ Drupal.ModuleFilter.Filter.prototype.buildIndex = function() {
     delete item;
   });
   this.index = index;
+};
+
+Drupal.ModuleFilter.Filter.prototype.processRules = function(item) {
+  var self = this;
+  var $item = item.element;
+  var rulesResult = true;
+  if (self.options.rules.length > 0) {
+    for (var i in self.options.rules) {
+      var func = self.options.rules[i];
+      rulesResult = func(self, item);
+      if (rulesResult === false) {
+        break;
+      }
+    }
+  }
+  if (rulesResult == true) {
+    if (self.options.striping) {
+      $item.removeClass('odd even')
+        .addClass(self.stripe);
+      self.stripe = self.flip[self.stripe];
+    }
+    $item.removeClass('js-hide');
+    self.results.push($item);
+    return true;
+  }
 };
 
 $.fn.moduleFilter = function(selector, options) {
