@@ -3,7 +3,7 @@
 Drupal.ModuleFilter = {};
 
 Drupal.ModuleFilter.explode = function(string) {
-  var queryArray = string.match(/(^[a-zA-Z]+\:(\w+|"[^"]+")*)|\w+|"[^"]+"/g);
+  var queryArray = string.match(/([a-zA-Z]+\:(\w+|"[^"]+")*)|\w+|"[^"]+"/g);
   if (!queryArray) {
     queryArray = new Array();
   }
@@ -97,27 +97,42 @@ Drupal.ModuleFilter.Filter = function(element, selector, options) {
 
     $.each(self.index, function(key, item) {
       var $item = item.element;
+      var hideItem = true;
 
       for (var i in self.queries) {
         var query = self.queries[i];
         if (query.operator == 'text') {
-          if (item.text.indexOf(query.string) >= 0) {
-            if (self.processRules(item) == true) {
-              return true;
-            }
+          if (item.text.indexOf(query.string) < 0) {
+            hideItem = true;
+            break;
           }
+
+          var rulesResult = self.processRules(item);
+          hideItem = (rulesResult == true) ? false : true;
         }
         else {
           var func = self.operators[query.operator];
-          if (func(query.string, self, item)) {
-            if (self.processRules(item) == true) {
-              return true;
-            }
+          if (!(func(query.string, self, item))) {
+            hideItem = true;
+            break;
           }
+
+          var rulesResult = self.processRules(item);
+          hideItem = (rulesResult == true) ? false : true;
+        }
+        if (item.text == 'views ui') {
+          console.log(query.operator);
+          console.log(rulesResult);
+          console.log(hideItem);
+        }
+        if (hideItem == true) {
+          break;
         }
       }
 
-      $item.addClass('js-hide');
+      if (hideItem == true) {
+        $item.addClass('js-hide');
+      }
     });
     self.element.trigger('moduleFilter:finish', { results: self.results });
 
@@ -182,7 +197,7 @@ Drupal.ModuleFilter.Filter.prototype.processRules = function(item) {
     for (var i in self.options.rules) {
       var func = self.options.rules[i];
       rulesResult = func(self, item);
-      if (rulesResult === false) {
+      if (rulesResult == false) {
         break;
       }
     }
@@ -195,8 +210,8 @@ Drupal.ModuleFilter.Filter.prototype.processRules = function(item) {
     }
     $item.removeClass('js-hide');
     self.results.push($item);
-    return true;
   }
+  return rulesResult;
 };
 
 $.fn.moduleFilter = function(selector, options) {

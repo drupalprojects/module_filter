@@ -86,30 +86,29 @@ Drupal.behaviors.moduleFilterTabs = {
           }
         });
 
-        // Add filter rule to limit by active tab.
-        moduleFilter.options.rules.push(function(filter, item) {
-          var id = Drupal.ModuleFilter.getTabID(item.element);
-
-          if (Drupal.settings.moduleFilter.visualAid) {
-            if (filter.tabResults[id] == undefined) {
-              filter.tabResults[id] = { items: {}, count: 0 };
-            }
-            if (filter.tabResults[id].items[item.key] == undefined) {
-              filter.tabResults[id].items[item.key] = item;
-              filter.tabResults[id].count++;
-            }
-          }
-
-          if (Drupal.ModuleFilter.activeTab != undefined) {
-            if (id != Drupal.ModuleFilter.activeTab.id) {
-              return false;
-            }
-          }
-          return true;
-        });
-
         moduleFilter.element.bind('moduleFilter:finish', function(e, data) {
           if (Drupal.settings.moduleFilter.visualAid) {
+            $.each(moduleFilter.index, function(key, item) {
+              if (!item.element.hasClass('js-hide')) {
+                var id = Drupal.ModuleFilter.getTabID(item.element);
+
+                if (moduleFilter.tabResults[id] == undefined) {
+                  moduleFilter.tabResults[id] = { items: {}, count: 0 };
+                }
+                if (moduleFilter.tabResults[id].items[item.key] == undefined) {
+                  moduleFilter.tabResults[id].items[item.key] = item;
+                  moduleFilter.tabResults[id].count++;
+                }
+
+                if (Drupal.ModuleFilter.activeTab != undefined) {
+                  if (id != Drupal.ModuleFilter.activeTab.id) {
+                    // The item is not in the active tab, so hide it.
+                    item.element.addClass('js-hide');
+                  }
+                }
+              }
+            });
+
             if (moduleFilter.text) {
               // Add result info to tabs.
               for (var id in moduleFilter.tabResults) {
