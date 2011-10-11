@@ -92,9 +92,12 @@ Drupal.behaviors.moduleFilterTabs = {
 
           if (Drupal.settings.moduleFilter.visualAid) {
             if (filter.tabResults[id] == undefined) {
-              filter.tabResults[id] = 0;
+              filter.tabResults[id] = { items: {}, count: 0 };
             }
-            filter.tabResults[id]++;
+            if (filter.tabResults[id].items[item.key] == undefined) {
+              filter.tabResults[id].items[item.key] = item;
+              filter.tabResults[id].count++;
+            }
           }
 
           if (Drupal.ModuleFilter.activeTab != undefined) {
@@ -118,7 +121,7 @@ Drupal.behaviors.moduleFilterTabs = {
                   tab.resultInfo = $('span.result-info', tab.element);
                 }
 
-                tab.resultInfo.append(moduleFilter.tabResults[id]);
+                tab.resultInfo.append(moduleFilter.tabResults[id].count);
               }
 
               if (Drupal.settings.moduleFilter.hideEmptyTabs) {

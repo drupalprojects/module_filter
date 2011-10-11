@@ -1,3 +1,9 @@
+Module Filter 7.x-2.x, 2011-10-11
+---------------------------------
+by greenSkin: Filter now processes multiple queries separated by spaces. Use
+  quotes for a single query that includes space(s).
+
+
 Module Filter 7.x-2.x, 2011-09-19
 ---------------------------------
 by greenSkin: Fixed not updating the index when a module is enabled/disabled.

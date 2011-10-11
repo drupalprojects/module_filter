@@ -2,6 +2,19 @@
 
 Drupal.ModuleFilter = {};
 
+Drupal.ModuleFilter.explode = function(text) {
+  var textArray = text.match(/\w+|"[^"]+"/g);
+  if (!textArray) {
+    textArray = new Array();
+  }
+  var i = textArray.length;
+  while (i--) {
+    textArray[i] = textArray[i].replace(/"/g, "");
+    textArray[i] = textArray[i].toLowerCase();
+  }
+  return textArray;
+};
+
 Drupal.ModuleFilter.Filter = function(element, selector, options) {
   var self = this;
 
@@ -10,7 +23,6 @@ Drupal.ModuleFilter.Filter = function(element, selector, options) {
   this.settings = Drupal.settings.moduleFilter;
 
   this.selector = selector;
-  this.text = this.element.val();
 
   this.options = $.extend({
     delay: 500,
@@ -30,15 +42,25 @@ Drupal.ModuleFilter.Filter = function(element, selector, options) {
   }
   $('.module-filter-clear a', this.element.parent()).click(function() {
     self.element.val('');
-    self.text = '';
+    self.updateText();
     self.applyFilter();
     self.element.focus();
     $(this).addClass('js-hide');
     return false;
   });
 
+  this.updateText = function() {
+    self.text = self.element.val();
+    self.textQueries = Drupal.ModuleFilter.explode(self.text);
+    if (self.textQueries.length <= 0) {
+      // Add a blank string query.
+      self.textQueries.push('');
+    }
+  };
+
+  this.updateText();
+
   this.applyFilter = function() {
-    var textLowerCase = self.text.toLowerCase();
     var flip = { even: 'odd', odd: 'even' };
     var stripe = 'odd';
     self.results = new Array();
@@ -51,31 +73,37 @@ Drupal.ModuleFilter.Filter = function(element, selector, options) {
 
     $.each(self.index, function(key, value) {
       var $item = value.element;
+      var hideItem = true;
 
-      if (value.text.indexOf(textLowerCase) >= 0) {
-        var rulesResult = true;
-        if (self.options.rules.length > 0) {
-          for (var i in self.options.rules) {
-            var func = self.options.rules[i];
-            rulesResult = func(self, value);
-            if (rulesResult === false) {
-              break;
+      $.each(self.textQueries, function(textKey, text) {
+        if (value.text.indexOf(text) >= 0) {
+          var rulesResult = true;
+          if (self.options.rules.length > 0) {
+            for (var i in self.options.rules) {
+              var func = self.options.rules[i];
+              rulesResult = func(self, value);
+              if (rulesResult === false) {
+                break;
+              }
             }
           }
-        }
-        if (rulesResult == true) {
-          if (self.options.striping) {
-            $item.removeClass('odd even')
-              .addClass(stripe);
-            stripe = flip[stripe];
+          if (rulesResult == true) {
+            if (self.options.striping) {
+              $item.removeClass('odd even')
+                .addClass(stripe);
+              stripe = flip[stripe];
+            }
+            $item.removeClass('js-hide');
+            self.results.push($item);
+            hideItem = false;
+            return true;
           }
-          $item.removeClass('js-hide');
-          self.results.push($item);
-          return true;
         }
-      }
+      });
 
-      $item.addClass('js-hide');
+      if (hideItem) {
+        $item.addClass('js-hide');
+      }
     });
     self.element.trigger('moduleFilter:finish', { results: self.results });
 
@@ -91,7 +119,7 @@ Drupal.ModuleFilter.Filter = function(element, selector, options) {
 
   self.element.keyup(function() {
     if (self.text != $(this).val()) {
-      self.text = $(this).val();
+      self.updateText();
       if (self.timeOut) {
         clearTimeout(self.timeOut);
       }
