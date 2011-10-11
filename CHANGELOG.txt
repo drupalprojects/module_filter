@@ -1,5 +1,6 @@
 Module Filter 7.x-2.x, 2011-10-11
 ---------------------------------
+by greenSkin: Added "description:" operator.
 by greenSkin: Added operator support to filter. Added "requires:" and
   "requiredBy:" operators.
 by greenSkin: Filter now processes multiple queries separated by spaces. Use

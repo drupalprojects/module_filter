@@ -55,20 +55,19 @@ Drupal.behaviors.moduleFilter = {
       var moduleFilter = filterInput.data('moduleFilter');
 
       moduleFilter.operators = {
-        requires: function(name, moduleFilter, item) {
-          if (item.requires == undefined) {
-            var requirements = Drupal.ModuleFilter.getRequirements(item.element);
-            item.requires = requirements.requires;
-            item.requiredBy = requirements.requiredBy;
+        description: function(string, moduleFilter, item) {
+          if (item.description == undefined) {
+            var description = $('.description', item.element).clone();
+            $('.admin-requirements', description).remove();
+            $('.admin-operations', description).remove();
+            item.description = description.text().toLowerCase();
           }
 
-          for (var i in item.requires) {
-            if (item.requires[i].indexOf(name) >= 0) {
-              return true;
-            }
+          if (item.description.indexOf(string) >= 0) {
+            return true;
           }
         },
-        requiredBy: function(name, moduleFilter, item) {
+        requiredBy: function(string, moduleFilter, item) {
           if (item.requiredBy == undefined) {
             var requirements = Drupal.ModuleFilter.getRequirements(item.element);
             item.requires = requirements.requires;
@@ -76,7 +75,20 @@ Drupal.behaviors.moduleFilter = {
           }
 
           for (var i in item.requiredBy) {
-            if (item.requiredBy[i].indexOf(name) >= 0) {
+            if (item.requiredBy[i].indexOf(string) >= 0) {
+              return true;
+            }
+          }
+        },
+        requires: function(string, moduleFilter, item) {
+          if (item.requires == undefined) {
+            var requirements = Drupal.ModuleFilter.getRequirements(item.element);
+            item.requires = requirements.requires;
+            item.requiredBy = requirements.requiredBy;
+          }
+
+          for (var i in item.requires) {
+            if (item.requires[i].indexOf(string) >= 0) {
               return true;
             }
           }
