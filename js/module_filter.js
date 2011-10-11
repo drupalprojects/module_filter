@@ -2,16 +2,16 @@
 
 Drupal.ModuleFilter = {};
 
-Drupal.ModuleFilter.explode = function(text) {
-  var textArray = text.match(/(\w+:(\w+|"[^"]+"))|\w+|"[^"]+"/g);
-  if (!textArray) {
-    textArray = new Array();
+Drupal.ModuleFilter.explode = function(string) {
+  var queryArray = string.match(/(^[a-zA-Z]+\:(\w+|"[^"]+")*)|\w+|"[^"]+"/g);
+  if (!queryArray) {
+    queryArray = new Array();
   }
-  var i = textArray.length;
+  var i = queryArray.length;
   while (i--) {
-    textArray[i] = textArray[i].replace(/"/g, "");
+    queryArray[i] = queryArray[i].replace(/"/g, "");
   }
-  return textArray;
+  return queryArray;
 };
 
 Drupal.ModuleFilter.Filter = function(element, selector, options) {
