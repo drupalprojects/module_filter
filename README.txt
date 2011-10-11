@@ -48,37 +48,40 @@ There are several benefits to using the tabs view over the standard view for
 the modules page. I've listed the key benefits below as well as additional
 information that pertains to each.
 
-1. The increased ease of browsing between packages.
+1.  The increased ease of browsing between packages.
 
-2. Allows all modules to be listed alphabetically outside of their package,
-   making it all the easier to find the module by name rather than package it
-   happens to be in.
+2.  Allows all modules to be listed alphabetically outside of their package,
+    making it all the easier to find the module by name rather than package it
+    happens to be in.
 
-3. The operations for a module are moved within the description column giving
-   the description more "elbow room".
+3.  The operations for a module are moved within the description column giving
+    the description more "elbow room".
 
-4. Filtering is restricted to within the active tab or globally when no tab is
-   selected. By default no tab is selected which will list all modules. When a
-   tab is active and you want to get back to the 'all' state click on the
-   active tab to deselect it.
+4.  Filtering is restricted to within the active tab or globally when no tab is
+    selected. By default no tab is selected which will list all modules. When a
+    tab is active and you want to get back to the 'all' state click on the
+    active tab to deselect it.
 
-5. The number of enabled modules per tab is shown on the active tab. (Can be
-   disabled on configuration page)
+5.  The number of enabled modules per tab is shown on the active tab. (Can be
+    disabled on configuration page)
 
-6. Nice visual aids become available showing what modules are to be
-   enabled/disabled and the number of matching modules in each tab when
-   filtering. (Can be disabled on configuration page)
+6.  Nice visual aids become available showing what modules are to be
+    enabled/disabled and the number of matching modules in each tab when
+    filtering. (Can be disabled on configuration page)
 
-7. The save configuration button becomes more accessible, either staying at the
-   bottom of the window when the tabs exceed past the bottom and at the top
-   when scrolling past the tabs. (Can be disabled on configuration page)
+7.  The save configuration button becomes more accessible, either staying at
+    the bottom of the window when the tabs exceed past the bottom and at the
+    top when scrolling past the tabs. (Can be disabled on configuration page)
 
-8. When filtering, tabs that do not contain matches can be hidden. (Can be
-   enabled on configuration page)
+8.  When filtering, tabs that do not contain matches can be hidden. (Can be
+    enabled on configuration page)
 
-9. Tab states are remembered like individual pages allowing you to move forward
-   and backward within your selections via your browsers forward/backward
-   buttons.
+9.  Tab states are remembered like individual pages allowing you to move
+    forward and backward within your selections via your browsers
+    forward/backward buttons.
+
+10. When viewing all modules (no active tab) and mousing over modules it's tab
+    becomes highlighted to signify which tab it belongs to.
 
 Filter operators
 ----------------
