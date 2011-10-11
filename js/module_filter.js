@@ -17,8 +17,6 @@ Drupal.ModuleFilter.explode = function(string) {
 Drupal.ModuleFilter.Filter = function(element, selector, options) {
   var self = this;
 
-  this.flip = { even: 'odd', odd: 'even' };
-
   this.element = element;
 
   this.settings = Drupal.settings.moduleFilter;
@@ -84,7 +82,6 @@ Drupal.ModuleFilter.Filter = function(element, selector, options) {
   };
 
   this.applyFilter = function() {
-    self.stripe = 'odd';
     self.results = new Array();
 
     self.updateQueries();
@@ -120,11 +117,6 @@ Drupal.ModuleFilter.Filter = function(element, selector, options) {
           var rulesResult = self.processRules(item);
           hideItem = (rulesResult == true) ? false : true;
         }
-        if (item.text == 'views ui') {
-          console.log(query.operator);
-          console.log(rulesResult);
-          console.log(hideItem);
-        }
         if (hideItem == true) {
           break;
         }
@@ -134,7 +126,12 @@ Drupal.ModuleFilter.Filter = function(element, selector, options) {
         $item.addClass('js-hide');
       }
     });
+
     self.element.trigger('moduleFilter:finish', { results: self.results });
+
+    if (self.options.striping) {
+      self.stripe();
+    }
 
     if (self.results.length > 0) {
       self.options.wrapper.find('.module-filter-no-results').remove();
@@ -203,15 +200,24 @@ Drupal.ModuleFilter.Filter.prototype.processRules = function(item) {
     }
   }
   if (rulesResult == true) {
-    if (self.options.striping) {
-      $item.removeClass('odd even')
-        .addClass(self.stripe);
-      self.stripe = self.flip[self.stripe];
-    }
     $item.removeClass('js-hide');
     self.results.push($item);
   }
   return rulesResult;
+};
+
+Drupal.ModuleFilter.Filter.prototype.stripe = function() {
+  var self = this;
+  var flip = { even: 'odd', odd: 'even' };
+  var stripe = 'odd';
+
+  $.each(self.index, function(key, item) {
+    if (!item.element.hasClass('js-hide')) {
+      item.element.removeClass('odd even')
+        .addClass(stripe);
+      stripe = flip[stripe];
+    }
+  });
 };
 
 $.fn.moduleFilter = function(selector, options) {
