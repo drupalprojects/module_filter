@@ -84,7 +84,7 @@ function theme_module_filter_system_modules_tabs($variables) {
       if (isset($module['enable']['#id'])) {
         $label .= ' for="' . $module['enable']['#id'] . '"';
       }
-      $row[] = array('class' => array('name'), 'data' => $label . '><strong>' . drupal_render($module['name']) . '</strong></label>');
+      $row[] = array('class' => array('name'), 'data' => $label . '><strong>' . drupal_render($module['name']) . '</strong><br><span class="module-machine-name">(' . $key . ')</span></label>');
       $row[] = array('class' => array('version'), 'data' => drupal_render($module['version']));
       // Add the description, along with any modules it requires and any
       // operation links.
