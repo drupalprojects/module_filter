@@ -30,7 +30,7 @@ Drupal.behaviors.moduleFilterTabs = {
           var name = $.trim($(this).text());
           var id = moduleGetID(name);
           var summary = (Drupal.settings.moduleFilter.countEnabled) ? '<span class="count">' + Drupal.ModuleFilter.countSummary(id) + '</span>' : '';
-          tabs += '<li id="' + id + '-tab" class="project-tab"><a href="#' + id + '"><strong>' + name + '</strong><span class="summary">' + summary + '</span></a></li>';
+          tabs += '<li id="' + id + '-tab" class="project-tab"><a href="#' + id + '" class="overlay-exclude"><strong>' + name + '</strong><span class="summary">' + summary + '</span></a></li>';
           $(this).remove();
         });
         tabs += '</ul>';
@@ -150,7 +150,12 @@ Drupal.behaviors.moduleFilterTabs = {
           }
         });
 
-        $(window).bind('hashchange.module-filter', $.proxy(Drupal.ModuleFilter, 'eventHandlerOperateByURLFragment')).triggerHandler('hashchange.module-filter');
+        if (Drupal.settings.moduleFilter.useURLFragment) {
+          $(window).bind('hashchange.module-filter', $.proxy(Drupal.ModuleFilter, 'eventHandlerOperateByURLFragment')).triggerHandler('hashchange.module-filter');
+        }
+        else {
+          moduleFilter.applyFilter();
+        }
       });
     }
   }
@@ -164,6 +169,12 @@ Drupal.ModuleFilter.Tab = function(element, id) {
   this.element = element;
 
   $('a', this.element).click(function() {
+    if (!Drupal.settings.moduleFilter.useURLFragment) {
+      var hash = (!self.element.hasClass('selected')) ? self.hash : 'all';
+      Drupal.ModuleFilter.selectTab(hash);
+      return false;
+    }
+
     if (self.element.hasClass('selected')) {
       // Clear the active tab.
       window.location.hash = 'all';
@@ -181,12 +192,11 @@ Drupal.ModuleFilter.Tab = function(element, id) {
   );
 };
 
-Drupal.ModuleFilter.eventHandlerOperateByURLFragment = function(event) {
+Drupal.ModuleFilter.selectTab = function(hash) {
   if (Drupal.ModuleFilter.activeTab != undefined) {
     Drupal.ModuleFilter.activeTab.element.removeClass('selected');
   }
 
-  var hash = $.param.fragment();
   if (hash && hash != 'all') {
     Drupal.ModuleFilter.activeTab = Drupal.ModuleFilter.tabs[hash + '-tab'];
     Drupal.ModuleFilter.activeTab.element.addClass('selected');
@@ -197,6 +207,11 @@ Drupal.ModuleFilter.eventHandlerOperateByURLFragment = function(event) {
 
   var moduleFilter = $('input[name="module_filter[name]"]').data('moduleFilter');
   moduleFilter.applyFilter();
+};
+
+Drupal.ModuleFilter.eventHandlerOperateByURLFragment = function(event) {
+  var hash = $.param.fragment();
+  Drupal.ModuleFilter.selectTab(hash);
 };
 
 Drupal.ModuleFilter.countSummary = function(id) {
