@@ -1,5 +1,6 @@
 Module Filter 7.x-2.x, 2011-11-20
 ---------------------------------
+#1259876 by greenSkin: Filter criteria remembered after save.
 by greenSkin: Remove deprecated function moduleGetID() from JavaScript code.
 by greenSkin: Filter now uses OR instead of AND when filtering multiply
   queries.

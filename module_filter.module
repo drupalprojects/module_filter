@@ -82,6 +82,7 @@ function module_filter_form_system_modules_alter(&$form, &$form_state, $form_id)
   );
 
   $form['#theme'] = 'module_filter_system_modules';
+  $form['#submit'][] = 'module_filter_system_modules_submit_redirect';
 }
 
 /**
@@ -149,6 +150,22 @@ function form_process_module_filter($element, &$form_state) {
     )
   );
   return $element;
+}
+
+function module_filter_system_modules_submit_redirect($form, &$form_state) {
+  $query = array();
+  if (!empty($form_state['values']['module_filter']['name'])) {
+    $query['filter'] = $form_state['values']['module_filter']['name'];
+  }
+  $query['enabled'] = (int)(!empty($form_state['values']['module_filter']['show']['enabled']));
+  $query['disabled'] = (int)(!empty($form_state['values']['module_filter']['show']['disabled']));
+  $query['required'] = (int)(!empty($form_state['values']['module_filter']['show']['required']));
+  $query['unavailable'] = (int)(!empty($form_state['values']['module_filter']['show']['unavailable']));
+
+  $form_state['redirect'] = array(
+    'admin/modules',
+    array('query' => $query),
+  );
 }
 
 function module_filter_get_id($text) {

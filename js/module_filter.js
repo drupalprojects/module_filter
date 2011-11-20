@@ -18,11 +18,11 @@ Drupal.ModuleFilter.Filter = function(element, selector, options) {
   var self = this;
 
   this.element = element;
+  this.text = $(this.element).val();
 
   this.settings = Drupal.settings.moduleFilter;
 
   this.selector = selector;
-  this.text = $(this.selector).val();
 
   this.options = $.extend({
     delay: 500,
