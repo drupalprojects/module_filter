@@ -84,28 +84,28 @@ Drupal.behaviors.moduleFilterTabs = {
         });
 
         moduleFilter.element.bind('moduleFilter:finish', function(e, data) {
-          if (Drupal.settings.moduleFilter.visualAid) {
-            $.each(moduleFilter.index, function(key, item) {
-              if (!item.element.hasClass('js-hide')) {
-                var id = Drupal.ModuleFilter.getTabID(item.element);
+          $.each(moduleFilter.index, function(key, item) {
+            if (!item.element.hasClass('js-hide')) {
+              var id = Drupal.ModuleFilter.getTabID(item.element);
 
-                if (moduleFilter.tabResults[id] == undefined) {
-                  moduleFilter.tabResults[id] = { items: {}, count: 0 };
-                }
-                if (moduleFilter.tabResults[id].items[item.key] == undefined) {
-                  moduleFilter.tabResults[id].items[item.key] = item;
-                  moduleFilter.tabResults[id].count++;
-                }
+              if (moduleFilter.tabResults[id] == undefined) {
+                moduleFilter.tabResults[id] = { items: {}, count: 0 };
+              }
+              if (moduleFilter.tabResults[id].items[item.key] == undefined) {
+                moduleFilter.tabResults[id].items[item.key] = item;
+                moduleFilter.tabResults[id].count++;
+              }
 
-                if (Drupal.ModuleFilter.activeTab != undefined) {
-                  if (id != Drupal.ModuleFilter.activeTab.id) {
-                    // The item is not in the active tab, so hide it.
-                    item.element.addClass('js-hide');
-                  }
+              if (Drupal.ModuleFilter.activeTab != undefined) {
+                if (id != Drupal.ModuleFilter.activeTab.id) {
+                  // The item is not in the active tab, so hide it.
+                  item.element.addClass('js-hide');
                 }
               }
-            });
+            }
+          });
 
+          if (Drupal.settings.moduleFilter.visualAid) {
             if (moduleFilter.text) {
               // Add result info to tabs.
               for (var id in moduleFilter.tabResults) {
@@ -144,6 +144,11 @@ Drupal.behaviors.moduleFilterTabs = {
               // height of the tabs.
               $(window).trigger('scroll');
             }
+          }
+
+          if ((Drupal.ModuleFilter.activeTab == undefined && moduleFilter.results.length <= 0) || (Drupal.ModuleFilter.activeTab != undefined && moduleFilter.tabResults[Drupal.ModuleFilter.activeTab.id] == undefined)) {
+            // The current tab contains no results.
+            moduleFilter.results = 0;
           }
         });
 
