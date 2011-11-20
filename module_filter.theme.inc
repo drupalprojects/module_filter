@@ -64,10 +64,14 @@ function theme_module_filter_system_modules_tabs($variables) {
     t('Version'),
     t('Description')
   );
+  $package_ids = array();
   $rows = array();
   $flip = array('even' => 'odd', 'odd' => 'even');
   foreach (element_children($form['modules']) as $package) {
-    $rows[] = array('data' => array(array('data' => '<h3>' . $form['modules'][$package]['#title'] . '</h3>', 'colspan' => 4)), 'class' => array('admin-package-title'));
+    $package_id = module_filter_get_id($package);
+    $package_ids[] = $package_id;
+
+    $rows[] = array('data' => array(array('data' => '<h3>' . $form['modules'][$package]['#title'] . '</h3>', 'colspan' => 4)), 'id' => $package_id, 'class' => array('admin-package-title'));
     $rows[] = array('data' => $header, 'class' => array('admin-package-header'));
 
     $class = 'odd';
@@ -125,7 +129,8 @@ function theme_module_filter_system_modules_tabs($variables) {
     }
     drupal_add_js(array(
       'moduleFilter' => array(
-        'enabledCounts' => $enabled_counts
+        'packageIDs' => $package_ids,
+        'enabledCounts' => $enabled_counts,
       )
     ), 'setting');
   }

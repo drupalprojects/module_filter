@@ -26,13 +26,17 @@ Drupal.behaviors.moduleFilterTabs = {
 
         // Build tabs from package title rows.
         var tabs = '<ul id="module-filter-tabs">';
-        $('tr.admin-package-title', table).each(function(i) {
-          var name = $.trim($(this).text());
-          var id = moduleGetID(name);
+        for (var i in Drupal.settings.moduleFilter.packageIDs) {
+          var id = Drupal.settings.moduleFilter.packageIDs[i];
+
+          var $row = $('#' + id);
+          var name = $.trim($row.text());
+          $row.remove();
+
           var summary = (Drupal.settings.moduleFilter.countEnabled) ? '<span class="count">' + Drupal.ModuleFilter.countSummary(id) + '</span>' : '';
           tabs += '<li id="' + id + '-tab" class="project-tab"><a href="#' + id + '" class="overlay-exclude"><strong>' + name + '</strong><span class="summary">' + summary + '</span></a></li>';
-          $(this).remove();
-        });
+          $row.remove();
+        }
         tabs += '</ul>';
         $('#module-filter-modules').before(tabs);
 
