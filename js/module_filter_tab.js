@@ -1,13 +1,6 @@
 
 (function ($) {
 
-moduleGetID = function(text) {
-  var id = text.toLowerCase();
-  id = id.replace(/[^a-z0-9]+/g, '-');
-  id = id.replace(/-$/, '');
-  return id;
-};
-
 Drupal.ModuleFilter.tabs = {};
 Drupal.ModuleFilter.enabling = {};
 Drupal.ModuleFilter.disabling = {};
