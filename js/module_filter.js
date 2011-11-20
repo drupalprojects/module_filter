@@ -94,37 +94,28 @@ Drupal.ModuleFilter.Filter = function(element, selector, options) {
 
     $.each(self.index, function(key, item) {
       var $item = item.element;
-      var hideItem = true;
 
       for (var i in self.queries) {
         var query = self.queries[i];
         if (query.operator == 'text') {
           if (item.text.indexOf(query.string) < 0) {
-            hideItem = true;
-            break;
+            continue;
           }
-
-          var rulesResult = self.processRules(item);
-          hideItem = (rulesResult == true) ? false : true;
         }
         else {
           var func = self.operators[query.operator];
           if (!(func(query.string, self, item))) {
-            hideItem = true;
-            break;
+            continue;
           }
-
-          var rulesResult = self.processRules(item);
-          hideItem = (rulesResult == true) ? false : true;
         }
-        if (hideItem == true) {
-          break;
+
+        var rulesResult = self.processRules(item);
+        if (rulesResult == true) {
+          return true;
         }
       }
 
-      if (hideItem == true) {
-        $item.addClass('js-hide');
-      }
+      $item.addClass('js-hide');
     });
 
     self.element.trigger('moduleFilter:finish', { results: self.results });
