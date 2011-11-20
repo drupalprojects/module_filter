@@ -1,3 +1,9 @@
+Module Filter 7.x-2.x, 2011-11-20
+---------------------------------
+#1344214 by eMPee584: Fixed Notice: Undefined index: #default_value in
+  theme_module_filter_system_modules_tabs().
+
+
 Module Filter 7.x-2.x, 2011-10-30
 ---------------------------------
 #1170388 by greenSkin: Fixed confict with Overlay module. Added class

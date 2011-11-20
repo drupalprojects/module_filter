@@ -75,7 +75,7 @@ function theme_module_filter_system_modules_tabs($variables) {
     foreach (element_children($form['modules'][$package]) as $key) {
       $module = &$form['modules'][$package][$key];
 
-      $enabled[$package][] = $module['enable']['#default_value'];
+      $enabled[$package][] = isset($module['enable']['#default_value']) ? $module['enable']['#default_value'] : '';
 
       $row = array();
       unset($module['enable']['#title']);
