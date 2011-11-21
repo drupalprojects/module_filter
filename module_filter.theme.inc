@@ -64,7 +64,12 @@ function theme_module_filter_system_modules_tabs($variables) {
     t('Version'),
     t('Description')
   );
-  $package_ids = array();
+  $package_ids = array('all', 'new');
+  $enabled['all'] = $enabled['new'] = array();
+
+  // Determine what modules are new (within a week).
+  $new_modules = module_filter_new_modules();
+
   $rows = array();
   $flip = array('even' => 'odd', 'odd' => 'even');
   foreach (element_children($form['modules']) as $package) {
@@ -74,12 +79,16 @@ function theme_module_filter_system_modules_tabs($variables) {
     $rows[] = array('data' => array(array('data' => '<h3>' . $form['modules'][$package]['#title'] . '</h3>', 'colspan' => 4)), 'id' => $package_id, 'class' => array('admin-package-title'));
     $rows[] = array('data' => $header, 'class' => array('admin-package-header'));
 
-    $class = 'odd';
+    $stripe = 'odd';
     $enabled[$package] = array();
     foreach (element_children($form['modules'][$package]) as $key) {
       $module = &$form['modules'][$package][$key];
 
-      $enabled[$package][] = isset($module['enable']['#default_value']) ? $module['enable']['#default_value'] : '';
+      $is_enabled = isset($module['enable']['#default_value']) ? $module['enable']['#default_value'] : '';
+      $enabled['all'][] = $enabled[$package][] = $is_enabled;
+      if (isset($new_modules[$key])) {
+        $enabled['new'][] = $is_enabled;
+      }
 
       $row = array();
       unset($module['enable']['#title']);
@@ -111,8 +120,13 @@ function theme_module_filter_system_modules_tabs($variables) {
       }
       $description .= drupal_render($module['links']);
       $row[] = array('data' => $description, 'class' => array('description'));
-      $rows[] = array('data' => $row, 'no_striping' => TRUE, 'class' => array(module_filter_get_id($package) . '-tab', 'module', $class));
-      $class = $flip[$class];
+
+      $class = array(module_filter_get_id($package) . '-tab', 'module', $stripe);
+      if (isset($new_modules[$key])) {
+        $class[] = 'new';
+      }
+      $rows[] = array('data' => $row, 'no_striping' => TRUE, 'class' => $class);
+      $stripe = $flip[$stripe];
     }
 
     // Set the package as printed.

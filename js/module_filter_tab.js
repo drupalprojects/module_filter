@@ -22,13 +22,23 @@ Drupal.behaviors.moduleFilterTabs = {
         for (var i in Drupal.settings.moduleFilter.packageIDs) {
           var id = Drupal.settings.moduleFilter.packageIDs[i];
 
-          var $row = $('#' + id);
-          var name = $.trim($row.text());
-          $row.remove();
+          var name = id;
+          switch (id) {
+            case 'all':
+              name = Drupal.t('All');
+              break;
+            case 'new':
+              name = Drupal.t('New');
+              break;
+            default: 
+              var $row = $('#' + id);
+              name = $.trim($row.text());
+              $row.remove();
+              break;
+          }
 
           var summary = (Drupal.settings.moduleFilter.countEnabled) ? '<span class="count">' + Drupal.ModuleFilter.countSummary(id) + '</span>' : '';
           tabs += '<li id="' + id + '-tab" class="project-tab"><a href="#' + id + '" class="overlay-exclude"><strong>' + name + '</strong><span class="summary">' + summary + '</span></a></li>';
-          $row.remove();
         }
         tabs += '</ul>';
         $('#module-filter-modules').before(tabs);
@@ -73,7 +83,10 @@ Drupal.behaviors.moduleFilterTabs = {
         $('#module-filter-modules').css('min-height', $('#module-filter-tabs').height() + $('#module-filter-submit').height());
 
         moduleFilter.element.bind('moduleFilter:start', function() {
-          moduleFilter.tabResults = {};
+          moduleFilter.tabResults = {
+            'all-tab': { items: {}, count: 0 },
+            'new-tab': { items: {}, count: 0 }
+          };
 
           // Empty result info from tabs.
           for (var i in Drupal.ModuleFilter.tabs) {
@@ -92,12 +105,20 @@ Drupal.behaviors.moduleFilterTabs = {
                 moduleFilter.tabResults[id] = { items: {}, count: 0 };
               }
               if (moduleFilter.tabResults[id].items[item.key] == undefined) {
+                // All tab
+                moduleFilter.tabResults['all-tab'].count++;
+
+                // New tab
+                if (item.element.hasClass('new')) {
+                  moduleFilter.tabResults['new-tab'].count++;
+                }
+
                 moduleFilter.tabResults[id].items[item.key] = item;
                 moduleFilter.tabResults[id].count++;
               }
 
-              if (Drupal.ModuleFilter.activeTab != undefined) {
-                if (id != Drupal.ModuleFilter.activeTab.id) {
+              if (Drupal.ModuleFilter.activeTab != undefined && Drupal.ModuleFilter.activeTab.id != 'all-tab') {
+                if ((Drupal.ModuleFilter.activeTab.id == 'new-tab' && !item.element.hasClass('new')) && id != Drupal.ModuleFilter.activeTab.id) {
                   // The item is not in the active tab, so hide it.
                   item.element.addClass('js-hide');
                 }
@@ -199,13 +220,8 @@ Drupal.ModuleFilter.selectTab = function(hash) {
     Drupal.ModuleFilter.activeTab.element.removeClass('selected');
   }
 
-  if (hash && hash != 'all') {
-    Drupal.ModuleFilter.activeTab = Drupal.ModuleFilter.tabs[hash + '-tab'];
-    Drupal.ModuleFilter.activeTab.element.addClass('selected');
-  }
-  else {
-    delete Drupal.ModuleFilter.activeTab;
-  }
+  Drupal.ModuleFilter.activeTab = Drupal.ModuleFilter.tabs[hash + '-tab'];
+  Drupal.ModuleFilter.activeTab.element.addClass('selected');
 
   var moduleFilter = $('input[name="module_filter[name]"]').data('moduleFilter');
   moduleFilter.applyFilter();

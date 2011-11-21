@@ -1,5 +1,7 @@
 Module Filter 7.x-2.x, 2011-11-21
 ---------------------------------
+by greenSkin: Added the "All" tab back. Added a "New" tab that lists modules
+  installed within the last week.
 by greenSkin: Fixed "No Results" not showing within selected tabs.
 #1259876 by greenSkin: Filter criteria remembered after save.
 by greenSkin: Remove deprecated function moduleGetID() from JavaScript code.
