@@ -1,10 +1,6 @@
 Module Filter 7.x-2.x, 2011-11-21
 ---------------------------------
 by greenSkin: Fixed "No Results" not showing within selected tabs.
-
-
-Module Filter 7.x-2.x, 2011-11-20
----------------------------------
 #1259876 by greenSkin: Filter criteria remembered after save.
 by greenSkin: Remove deprecated function moduleGetID() from JavaScript code.
 by greenSkin: Filter now uses OR instead of AND when filtering multiply
@@ -13,10 +9,6 @@ by greenSkin: Filter now uses OR instead of AND when filtering multiply
   undefined.
 #1344214 by eMPee584: Fixed Notice: Undefined index: #default_value in
   theme_module_filter_system_modules_tabs().
-
-
-Module Filter 7.x-2.x, 2011-10-30
----------------------------------
 #1170388 by greenSkin: Fixed confict with Overlay module. Added class
   "overlay-exclude" to tab links. Added setting to toggle the use of a URL
   fragment when selecting tabs.
