@@ -167,7 +167,7 @@ Drupal.behaviors.moduleFilterTabs = {
             }
           }
 
-          if ((Drupal.ModuleFilter.activeTab == undefined && moduleFilter.results.length <= 0) || (Drupal.ModuleFilter.activeTab != undefined && moduleFilter.tabResults[Drupal.ModuleFilter.activeTab.id] == undefined)) {
+          if ((Drupal.ModuleFilter.activeTab != undefined && (moduleFilter.tabResults[Drupal.ModuleFilter.activeTab.id] == undefined || moduleFilter.tabResults[Drupal.ModuleFilter.activeTab.id].count <= 0))) {
             // The current tab contains no results.
             moduleFilter.results = 0;
           }
