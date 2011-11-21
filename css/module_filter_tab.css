@@ -159,6 +159,10 @@ html.js #module-filter-modules table td {
 #module-filter-modules table tr.disabling {
   background-color: #fcc;
 }
+#module-filter-modules span.module-machine-name {
+  font-size: 0.9em;
+  font-weight: normal;
+}
 .admin-version {
   white-space: nowrap;
 }
