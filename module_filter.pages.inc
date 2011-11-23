@@ -29,12 +29,6 @@ function module_filter_update_status_form($form, &$form_state) {
       ),
     ),
   );
-  $checkbox_defaults = array(
-    ((isset($_GET['ok'])) ? $_GET['ok'] : 1) ? 'ok' : '',
-    ((isset($_GET['warning'])) ? $_GET['warning'] : 1) ? 'warning' : '',
-    ((isset($_GET['error'])) ? $_GET['error'] : 1) ? 'error' : '',
-    ((isset($_GET['unknown'])) ? $_GET['unknown'] : 1) ? 'unknown' : '',
-  );
   $form['module_filter']['show'] = array(
     '#type' => 'radios',
     '#default_value' => (isset($_GET['show']) && in_array($_GET['show'], array('all', 'updates', 'security', 'unknown'))) ? $_GET['show'] : 'all',
