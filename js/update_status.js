@@ -10,17 +10,24 @@ Drupal.behaviors.moduleFilterUpdateStatus = {
         childSelector: 'div.project a',
         rules: [
           function(moduleFilter, item) {
-            if (moduleFilter.options.showOk && item.state == 'ok') {
-              return true;
-            }
-            if (moduleFilter.options.showWarning && item.state == 'warning') {
-              return true;
-            }
-            if (moduleFilter.options.showError && item.state == 'error') {
-              return true;
-            }
-            if (moduleFilter.options.showUnknown && item.state == 'unknown') {
-              return true;
+            switch (moduleFilter.options.show) {
+              case 'all':
+                return true;
+              case 'updates':
+                if (item.state == 'warning' || item.state == 'error') {
+                  return true;
+                }
+                break;
+              case 'security':
+                if (item.state == 'error') {
+                  return true;
+                }
+                break;
+              case 'unknown':
+                if (item.state == 'unknown') {
+                  return true;
+                }
+                break;
             }
             return false;
           }
@@ -42,28 +49,13 @@ Drupal.behaviors.moduleFilterUpdateStatus = {
             return item;
           }
         ],
-        showOk: $('#edit-module-filter-show-ok', context).is(':checked'),
-        showWarning: $('#edit-module-filter-show-warning', context).is(':checked'),
-        showError: $('#edit-module-filter-show-error', context).is(':checked'),
-        showUnknown: $('#edit-module-filter-show-unknown', context).is(':checked')
+        show: $('#edit-module-filter-show input[name="module_filter[show]"]', context).val()
       });
 
       var moduleFilter = filterInput.data('moduleFilter');
 
-      $('#edit-module-filter-show-ok', context).change(function() {
-        moduleFilter.options.showOk = $(this).is(':checked');
-        moduleFilter.applyFilter();
-      });
-      $('#edit-module-filter-show-warning', context).change(function() {
-        moduleFilter.options.showWarning = $(this).is(':checked');
-        moduleFilter.applyFilter();
-      });
-      $('#edit-module-filter-show-error', context).change(function() {
-        moduleFilter.options.showError = $(this).is(':checked');
-        moduleFilter.applyFilter();
-      });
-      $('#edit-module-filter-show-unknown', context).change(function() {
-        moduleFilter.options.showUnknown = $(this).is(':checked');
+      $('#edit-module-filter-show input[name="module_filter[show]"]', context).change(function() {
+        moduleFilter.options.show = $(this).val();
         moduleFilter.applyFilter();
       });
 

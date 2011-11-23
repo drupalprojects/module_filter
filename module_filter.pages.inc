@@ -36,9 +36,9 @@ function module_filter_update_status_form($form, &$form_state) {
     ((isset($_GET['unknown'])) ? $_GET['unknown'] : 1) ? 'unknown' : '',
   );
   $form['module_filter']['show'] = array(
-    '#type' => 'checkboxes',
-    '#default_value' => array_filter($checkbox_defaults),
-    '#options' => array('ok' => t('Up-to-Date'), 'warning' => t('Update available'), 'error' => t('Security update'), 'unknown' => t('Unknown')),
+    '#type' => 'radios',
+    '#default_value' => (isset($_GET['show']) && in_array($_GET['show'], array('all', 'updates', 'security', 'unknown'))) ? $_GET['show'] : 'all',
+    '#options' => array('all' => t('All'), 'updates' => t('Update available'), 'security' => t('Security update'), 'unknown' => t('Unknown')),
     '#prefix' => '<div id="module-filter-show-wrapper">',
     '#suffix' => '</div>'
   );
