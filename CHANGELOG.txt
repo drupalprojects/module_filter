@@ -1,4 +1,4 @@
-Module Filter 7.x-x.x, 2011-11-23
+Module Filter 7.x-2.x, 2011-11-23
 ---------------------------------
 by greenSkin: Simplified filter rules for updates page. Instead of checkboxes,
   now using radios.
