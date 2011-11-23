@@ -1,5 +1,7 @@
 Module Filter 7.x-x.x, 2011-11-23
 ---------------------------------
+by greenSkin: Fixed "All" tab to be selected by default when the page is first
+  loaded.
 #1350124 by greenSkin: Fixed filtering on package tab.
 
 

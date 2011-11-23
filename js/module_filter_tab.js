@@ -177,7 +177,7 @@ Drupal.behaviors.moduleFilterTabs = {
           $(window).bind('hashchange.module-filter', $.proxy(Drupal.ModuleFilter, 'eventHandlerOperateByURLFragment')).triggerHandler('hashchange.module-filter');
         }
         else {
-          moduleFilter.applyFilter();
+          Drupal.ModuleFilter.selectTab('all');
         }
       });
     }
@@ -216,6 +216,10 @@ Drupal.ModuleFilter.Tab = function(element, id) {
 };
 
 Drupal.ModuleFilter.selectTab = function(hash) {
+  if (!hash) {
+    hash = 'all';
+  }
+
   if (Drupal.ModuleFilter.activeTab != undefined) {
     Drupal.ModuleFilter.activeTab.element.removeClass('selected');
   }
