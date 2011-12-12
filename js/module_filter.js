@@ -134,25 +134,39 @@ Drupal.ModuleFilter.Filter = function(element, selector, options) {
     }
   };
 
-  self.element.keyup(function() {
-    if (self.text != $(this).val()) {
-      if (self.timeOut) {
-        clearTimeout(self.timeOut);
-      }
+  self.element.keyup(function(e) {
+    switch (e.which) {
+      case 13:
+        if (self.timeOut) {
+          clearTimeout(self.timeOut);
+        }
+        self.applyFilter();
+        break;
+      default:
+        if (self.text != $(this).val()) {
+          if (self.timeOut) {
+            clearTimeout(self.timeOut);
+          }
 
-      self.text = $(this).val();
+          self.text = $(this).val();
 
-      if (self.text) {
-        self.element.parent().find('.module-filter-clear a').removeClass('js-hide');
-      }
-      else {
-        self.element.parent().find('.module-filter-clear a').addClass('js-hide');
-      }
+          if (self.text) {
+            self.element.parent().find('.module-filter-clear a').removeClass('js-hide');
+          }
+          else {
+            self.element.parent().find('.module-filter-clear a').addClass('js-hide');
+          }
 
-      self.element.trigger('moduleFilter:keyup');
+          self.element.trigger('moduleFilter:keyup');
 
-      self.timeOut = setTimeout(self.applyFilter, self.options.delay);
+          self.timeOut = setTimeout(self.applyFilter, self.options.delay);
+        }
+        break;
     }
+  });
+
+  self.element.keypress(function(e) {
+    if (e.which == 13) e.preventDefault();
   });
 };
 
