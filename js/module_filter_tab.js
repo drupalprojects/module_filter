@@ -21,14 +21,28 @@
       // Move anchors to top of tabs.
       $('a.anchor', $('#module-filter-left')).remove().prependTo('#module-filter-tabs');
 
-      $('input[name="module_filter[name]"]').keyup(function() {
-        if (Drupal.ModuleFilter.textFilter != $(this).val()) {
-          Drupal.ModuleFilter.textFilter = this.value;
-          if (Drupal.ModuleFilter.timeout) {
-            clearTimeout(Drupal.ModuleFilter.timeout);
-          }
-          Drupal.ModuleFilter.timeout = setTimeout('Drupal.ModuleFilter.filter("' + Drupal.ModuleFilter.textFilter + '")', 500);
+      $('input[name="module_filter[name]"]').keyup(function(e) {
+        switch (e.which) {
+          case 13:
+            if (Drupal.ModuleFilter.timeout) {
+              clearTimeout(Drupal.ModuleFilter.timeout);
+            }
+
+            Drupal.ModuleFilter.filter(Drupal.ModuleFilter.textFilter);
+            break;
+          default:
+            if (Drupal.ModuleFilter.textFilter != $(this).val()) {
+              Drupal.ModuleFilter.textFilter = this.value;
+              if (Drupal.ModuleFilter.timeout) {
+                clearTimeout(Drupal.ModuleFilter.timeout);
+              }
+              Drupal.ModuleFilter.timeout = setTimeout('Drupal.ModuleFilter.filter("' + Drupal.ModuleFilter.textFilter + '")', 500);
+            }
+            break;
         }
+      });
+      $('input[name="module_filter[name]"]').keypress(function(e) {
+        if (e.which == 13) e.preventDefault();
       });
 
       Drupal.ModuleFilter.showEnabled = $('#edit-module-filter-show-enabled').is(':checked');

@@ -7,15 +7,29 @@
     attach: function() {
       $("#module-filter-wrapper").show();
       $('input[name="module_filter[name]"]').focus();
-      $('input[name="module_filter[name]"]').keyup(function() {
-        if (moduleFilterTextFilter != $(this).val()) {
-          moduleFilterTextFilter = this.value;
-          if (moduleFilterTimeOut) {
-            clearTimeout(moduleFilterTimeOut);
-          }
+      $('input[name="module_filter[name]"]').keyup(function(e) {
+        switch (e.which) {
+          case 13:
+            if (moduleFilterTimeOut) {
+              clearTimeout(moduleFilterTimeOut);
+            }
 
-          moduleFilterTimeOut = setTimeout('moduleFilter("' + moduleFilterTextFilter + '")', 500);
+            moduleFilter(moduleFilterTextFilter);
+            break;
+          default:
+            if (moduleFilterTextFilter != $(this).val()) {
+              moduleFilterTextFilter = this.value;
+              if (moduleFilterTimeOut) {
+                clearTimeout(moduleFilterTimeOut);
+              }
+
+              moduleFilterTimeOut = setTimeout('moduleFilter("' + moduleFilterTextFilter + '")', 500);
+            }
+            break;
         }
+      });
+      $('input[name="module_filter[name]"]').keypress(function(e) {
+        if (e.which == 13) e.preventDefault();
       });
 
       $('#edit-module-filter-show-enabled').change(function() {
