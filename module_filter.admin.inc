@@ -57,5 +57,19 @@ function module_filter_settings() {
     '#description' => t('Use URL fragment when navigating between tabs. This lets you use the browsers back/forward buttons to navigate through the tabs you selected.') . '<br />' . t('When the Overlay module is enabled this functionality will not be used since overlay relies on the URL fragment.'),
     '#default_value' => variable_get('module_filter_use_url_fragment', 1)
   );
+
+  $form['update'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Update status'),
+    '#collapsible' => TRUE,
+    '#collapsed' => (module_exists('update')) ? FALSE : TRUE,
+  );
+  $form['update']['module_filter_remember_update_state'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Remember the last selected filter.'),
+    '#description' => t('When enabled, the last state (All, Update available, Security update, Unknown) will be remembered.'),
+    '#default_value' => variable_get('module_filter_remember_update_state', 0),
+  );
+
   return system_settings_form($form);
 }
