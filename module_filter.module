@@ -184,8 +184,8 @@ function module_filter_new_modules() {
 
   $new_modules = array();
   foreach ($visible_files as $filename => $module) {
-    $mtime = filemtime($module->filename);
-    if (($mtime - strtotime('-1 week')) > 0) {
+    $ctime = filectime($module->filename);
+    if (($ctime - strtotime('-1 week')) > 0) {
       $new_modules[$filename] = module_filter_get_id($filename);
     }
   }
