@@ -54,8 +54,17 @@ Drupal.behaviors.moduleFilterUpdateStatus = {
 
       var moduleFilter = filterInput.data('moduleFilter');
 
+      if (Drupal.settings.moduleFilter.rememberUpdateState) {
+        var updateShow = Drupal.ModuleFilter.getState('updateShow');
+        if (updateShow) {
+          moduleFilter.options.show = updateShow;
+          $('#edit-module-filter-show input[name="module_filter[show]"][value="' + updateShow + '"]', context).click();
+        }
+      }
+
       $('#edit-module-filter-show input[name="module_filter[show]"]', context).change(function() {
         moduleFilter.options.show = $(this).val();
+        Drupal.ModuleFilter.setState('updateShow', moduleFilter.options.show);
         moduleFilter.applyFilter();
       });
 

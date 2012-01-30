@@ -12,6 +12,7 @@ function module_filter_uninstall() {
   variable_del('module_filter_count_enabled');
   variable_del('module_filter_visual_aid');
   variable_del('module_filter_dynamic_save_position');
+  variable_del('module_filter_remember_update_state');
 }
 
 /**
