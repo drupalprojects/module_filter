@@ -123,7 +123,7 @@ function theme_module_filter_system_modules_tabs($variables) {
 
       $class = array(module_filter_get_id($package) . '-tab', 'module', $stripe);
       if (isset($new_modules[$key])) {
-        $class[] = 'new';
+        $class[] = 'new-module';
       }
       $rows[] = array('data' => $row, 'no_striping' => TRUE, 'class' => $class);
       $stripe = $flip[$stripe];

@@ -109,7 +109,7 @@ Drupal.behaviors.moduleFilterTabs = {
                 moduleFilter.tabResults['all-tab'].count++;
 
                 // New tab
-                if (item.element.hasClass('new')) {
+                if (item.element.hasClass('new-module')) {
                   moduleFilter.tabResults['new-tab'].count++;
                 }
 
@@ -118,7 +118,7 @@ Drupal.behaviors.moduleFilterTabs = {
               }
 
               if (Drupal.ModuleFilter.activeTab != undefined && Drupal.ModuleFilter.activeTab.id != 'all-tab') {
-                if ((Drupal.ModuleFilter.activeTab.id == 'new-tab' && !item.element.hasClass('new')) || (Drupal.ModuleFilter.activeTab.id != 'new-tab' && id != Drupal.ModuleFilter.activeTab.id)) {
+                if ((Drupal.ModuleFilter.activeTab.id == 'new-tab' && !item.element.hasClass('new-module')) || (Drupal.ModuleFilter.activeTab.id != 'new-tab' && id != Drupal.ModuleFilter.activeTab.id)) {
                   // The item is not in the active tab, so hide it.
                   item.element.addClass('js-hide');
                 }
