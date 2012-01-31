@@ -179,6 +179,19 @@ Drupal.behaviors.moduleFilterTabs = {
         else {
           Drupal.ModuleFilter.selectTab('all');
         }
+
+        if (Drupal.settings.moduleFilter.useSwitch) {
+          $('td.checkbox div.form-item').hide();
+          $('td.checkbox').each(function(i) {
+            var $cell = $(this);
+            $('.toggle-enable', $cell).removeClass('js-hide').click(function() {
+              $(this).toggleClass('off');
+              $('div.form-item input', $cell).change().click();
+            });
+          });
+        }
+
+        $('#module-filter-modules').css({ 'margin-left': '240px', 'border': '1px solid #ccc' });
       });
     }
   }

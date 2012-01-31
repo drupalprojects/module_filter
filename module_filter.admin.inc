@@ -57,6 +57,12 @@ function module_filter_settings() {
     '#description' => t('Use URL fragment when navigating between tabs. This lets you use the browsers back/forward buttons to navigate through the tabs you selected.') . '<br />' . t('When the Overlay module is enabled this functionality will not be used since overlay relies on the URL fragment.'),
     '#default_value' => variable_get('module_filter_use_url_fragment', 1)
   );
+  $form['tabs']['module_filter_use_switch'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Use switch instead of checkbox'),
+    '#description' => t('This is purely cosmetic (at least for now). Displays a ON/OFF switch rather than a checkbox to enable/disable modules.<br /><strong>Modules will not actually be enabled/disabled until the form is saved.</strong>'),
+    '#default_value' => variable_get('module_filter_use_switch', 1),
+  );
 
   $form['update'] = array(
     '#type' => 'fieldset',

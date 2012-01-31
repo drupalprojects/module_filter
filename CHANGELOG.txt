@@ -1,5 +1,15 @@
 Module Filter 7.x-2.x, 2012-01-30
 ---------------------------------
+by greenSkin: Added setting to toggle between using the switch or checkbox for
+  enabling/disabling modules.
+by greenSkin: Centered enable switch.
+by greenSkin: Moved couple styles to be applied via JavaScript instead of CSS
+  so they get applied once the initial loading has finished.
+by greenSkin: Implemented a "switch" look instead of checkboxes.
+
+
+Module Filter 7.x-2.x, 2012-01-30
+---------------------------------
 by greenSkin: Remember last selected state on "Available updates" page.
 by greenSkin: Switched to using filectime() rather than filemtime() for
   determining new modules.
