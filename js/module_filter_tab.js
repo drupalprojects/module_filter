@@ -185,8 +185,10 @@ Drupal.behaviors.moduleFilterTabs = {
           $('td.checkbox').each(function(i) {
             var $cell = $(this);
             $('.toggle-enable', $cell).removeClass('js-hide').click(function() {
-              $(this).toggleClass('off');
-              $('div.form-item input', $cell).click().change();
+              if (!$(this).hasClass('disabled')) {
+                $(this).toggleClass('off');
+                $('div.form-item input', $cell).click().change();
+              }
             });
           });
         }
@@ -332,7 +334,7 @@ Drupal.ModuleFilter.updateVisualAid = function(type, $row) {
   }
 
   var tab = Drupal.ModuleFilter.tabs[id];
-  var name = $('td:nth(1)', $row).text();
+  var name = $('td:nth(1) strong', $row).text();
   switch (type) {
     case 'enable':
       if (Drupal.ModuleFilter.disabling[id + name] != undefined) {
