@@ -1,5 +1,6 @@
 Module Filter 7.x-2.x, xxxx-xx-xx
 ---------------------------------
+by greenSkin: Centered enable switch.
 by greenSkin: Moved couple styles to be applied via JavaScript instead of CSS
   so they get applied once the initial loading has finished.
 by greenSkin: Implemented a "switch" look instead of checkboxes.
