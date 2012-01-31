@@ -92,7 +92,7 @@ function theme_module_filter_system_modules_tabs($variables) {
 
       $row = array();
       unset($module['enable']['#title']);
-      $row[] = array('class' => array('checkbox'), 'data' => drupal_render($module['enable']));
+      $row[] = array('class' => array('checkbox'), 'data' => '<div class="js-hide toggle-enable ' . ($is_enabled ? 'enabled' : 'disabled off') . '"><div>&nbsp;</div></div>' . drupal_render($module['enable']));
       $label = '<label';
       if (isset($module['enable']['#id'])) {
         $label .= ' for="' . $module['enable']['#id'] . '"';
