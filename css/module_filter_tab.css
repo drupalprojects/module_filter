@@ -192,6 +192,9 @@ html.js #module-filter-modules table td {
   -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.50) inset;
   box-shadow: 0 0 10px rgba(0,0,0,0.50) inset;
   background-clip: padding-box;
+  background-image: -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(50%, red), color-stop(50%, orange), color-stop(100%, orange));
+  background-image: -moz-linear-gradient(left, red 50%, orange 50%, orange 100%);
+  background-image: linear-gradient(left, red 50%, orange 50%, orange 100%);
 }
 .toggle-enable.enabled {
   background-image: -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(50%, orange), color-stop(50%, green), color-stop(100%, green));
@@ -199,9 +202,9 @@ html.js #module-filter-modules table td {
   background-image: linear-gradient(left, orange 50%, green 50%, green 100%);
 }
 .toggle-enable.disabled {
-  background-image: -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(50%, red), color-stop(50%, orange), color-stop(100%, orange));
-  background-image: -moz-linear-gradient(left, red 50%, orange 50%, orange 100%);
-  background-image: linear-gradient(left, red 50%, orange 50%, orange 100%);
+  background: #ccc;
+  border-color: #ddd;
+  cursor: auto;
 }
 .toggle-enable div {
   position: relative;
@@ -220,6 +223,11 @@ html.js #module-filter-modules table td {
   -mox-transition: left 0.2s;
   -o-transition: left 0.2s;
   transition: left 0.2s;
+}
+.toggle-enable.disabled div {
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0%, #FEFEFE), color-stop(100%, #EEEEEE));
+  background-image: -moz-linear-gradient(top, #FEFEFE 0%, #EEEEEE 100%);
+  background-image: linear-gradient(top, #FEFEFE 0%, #EEEEEE 100%);
 }
 .toggle-enable div:after,
 .toggle-enable div:before {

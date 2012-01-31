@@ -185,8 +185,10 @@ Drupal.behaviors.moduleFilterTabs = {
           $('td.checkbox').each(function(i) {
             var $cell = $(this);
             $('.toggle-enable', $cell).removeClass('js-hide').click(function() {
-              $(this).toggleClass('off');
-              $('div.form-item input', $cell).click().change();
+              if (!$(this).hasClass('disabled')) {
+                $(this).toggleClass('off');
+                $('div.form-item input', $cell).click().change();
+              }
             });
           });
         }
