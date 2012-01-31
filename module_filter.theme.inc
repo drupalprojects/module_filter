@@ -32,10 +32,6 @@ function theme_module_filter_system_modules($variables) {
     $form['module_filter']['#attached']['js'][] = 'misc/jquery.ba-bbq.js';
     $form['module_filter']['#attached']['js'][] = drupal_get_path('module', 'module_filter') .'/js/module_filter_tab.js';
 
-    if (variable_get('module_filter_dynamic_save_position', 1)) {
-      $form['module_filter']['#attached']['js'][] = drupal_get_path('module', 'module_filter') .'/js/dynamic_position.js';
-    }
-
     $output .= theme('module_filter_system_modules_tabs', $form);
   }
   else {
@@ -160,7 +156,8 @@ function theme_module_filter_system_modules_tabs($variables) {
   $output = '<div id="module-filter-wrapper">';
   $output .= '<div id="module-filter-modules">' . drupal_render($form['module_filter']);
   $output .= theme('table', array('header' => $header, 'rows' => $rows));
+  $output .= drupal_render_children($form);
   $output .= '</div>';
-  $output .= drupal_render_children($form) . '</div>';
+  $output .= '</div>';
   return $output;
 }
