@@ -108,10 +108,6 @@ html.js #module-filter-submit.fixed-top {
 html.js #module-filter-submit.fixed-bottom {
   bottom: 0;
 }
-html.js #module-filter-modules {
-  margin-left: 240px;
-  border: 1px solid #ccc;
-}
 html.js .module-filter-inputs-wrapper {
   text-align: center;
 }
