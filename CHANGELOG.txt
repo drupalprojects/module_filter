@@ -1,5 +1,7 @@
 Module Filter 7.x-2.x, 2012-01-30
 ---------------------------------
+by greenSkin: No longer including machine name in the tab summary of modules to
+  enable/disable.
 by greenSkin: Made switches honor disabled checkboxes. A disabled switch can
   not be turned on or off.
 by greenSkin: Added setting to toggle between using the switch or checkbox for
