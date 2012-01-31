@@ -186,7 +186,7 @@ Drupal.behaviors.moduleFilterTabs = {
             var $cell = $(this);
             $('.toggle-enable', $cell).removeClass('js-hide').click(function() {
               $(this).toggleClass('off');
-              $('div.form-item input', $cell).change().click();
+              $('div.form-item input', $cell).click().change();
             });
           });
         }
