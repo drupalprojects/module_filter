@@ -150,6 +150,9 @@ function form_process_module_filter($element, &$form_state) {
       )
     )
   );
+  if (variable_get('module_filter_remember_update_state', 0)) {
+    $element['name']['#attached']['js'][] = 'misc/jquery.cookie.js';
+  }
   return $element;
 }
 
