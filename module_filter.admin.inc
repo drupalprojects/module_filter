@@ -45,12 +45,6 @@ function module_filter_settings() {
     '#description' => t('When a filter returns no results for a tab, the tab is hidden. This is dependent on visual aids being enabled.'),
     '#default_value' => variable_get('module_filter_hide_empty_tabs', 0)
   );
-  $form['tabs']['module_filter_dynamic_save_position'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Dynamic Save position'),
-    '#description' => t("For sites with lots of tabs, enable to help keep the 'Save configuration' button more accessible."),
-    '#default_value' => variable_get('module_filter_dynamic_save_position', 1)
-  );
   $form['tabs']['module_filter_use_url_fragment'] = array(
     '#type' => 'checkbox',
     '#title' => t('Use URL fragment'),

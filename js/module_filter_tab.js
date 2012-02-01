@@ -62,9 +62,6 @@ Drupal.behaviors.moduleFilterTabs = {
           }
         });
 
-        // Move the submit button just below the tabs.
-        $('#module-filter-modules').before($('#module-filter-submit'));
-
         // Sort rows.
         var rows = $('tbody tr.module', table).get();
         rows.sort(function(a, b) {
@@ -79,8 +76,6 @@ Drupal.behaviors.moduleFilterTabs = {
           .removeClass('odd even')
           .filter(':odd').addClass('even').end()
           .filter(':even').addClass('odd');
-
-        $('#module-filter-modules').css('min-height', $('#module-filter-tabs').height() + $('#module-filter-submit').height());
 
         moduleFilter.element.bind('moduleFilter:start', function() {
           moduleFilter.tabResults = {
@@ -157,13 +152,6 @@ Drupal.behaviors.moduleFilterTabs = {
               if (Drupal.settings.moduleFilter.hideEmptyTabs) {
                 $('#module-filter-tabs li').show();
               }
-            }
-
-            if (Drupal.settings.moduleFilter.hideEmptyTabs) {
-              // Trigger window scroll. When the save buttons dynamic position is enabled
-              // we need this to ensure the save button's position updates with the new
-              // height of the tabs.
-              $(window).trigger('scroll');
             }
           }
 

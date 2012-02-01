@@ -1,3 +1,11 @@
+Module Filter 7.x-2.x, xxxx-xx-xx
+---------------------------------
+#1424034 by greenSkin: Now adds the jquery.cookie.js file when needed.
+by greenSkin: Removed tweaks to the save configuration button in favor
+  http://drupal.org/project/page_actions.
+by greenSkin: Updated hook_uninstall to del all Module Filter variables.
+
+
 Module Filter 7.x-2.x, 2012-01-30
 ---------------------------------
 by greenSkin: No longer including machine name in the tab summary of modules to
