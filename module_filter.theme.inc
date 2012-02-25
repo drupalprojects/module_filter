@@ -76,12 +76,12 @@ function theme_module_filter_system_modules_tabs($variables) {
     $rows[] = array('data' => $header, 'class' => array('admin-package-header'));
 
     $stripe = 'odd';
-    $enabled[$package] = array();
+    $enabled[$package_id] = array();
     foreach (element_children($form['modules'][$package]) as $key) {
       $module = &$form['modules'][$package][$key];
 
       $is_enabled = isset($module['enable']['#default_value']) ? $module['enable']['#default_value'] : '';
-      $enabled['all'][] = $enabled[$package][] = $is_enabled;
+      $enabled['all'][] = $enabled[$package_id][] = $is_enabled;
       if (isset($new_modules[$key])) {
         $enabled['new'][] = $is_enabled;
       }
@@ -135,8 +135,8 @@ function theme_module_filter_system_modules_tabs($variables) {
 
   if (variable_get('module_filter_count_enabled', 1)) {
     $enabled_counts = array();
-    foreach ($enabled as $package => $value) {
-      $enabled_counts[module_filter_get_id($package)] = array(
+    foreach ($enabled as $package_id => $value) {
+      $enabled_counts[$package_id] = array(
         'enabled' => count(array_filter($value)),
         'total' => count($value),
       );

@@ -1,3 +1,8 @@
+Module Filter 7.x-2.x, 2012-02-24
+---------------------------------
+by greenSkin: Performance tweak to counting the number of enabled modules.
+
+
 Module Filter 7.x-2.x, 2012-02-01
 ---------------------------------
 by greenSkin: Base new modules on the filectime of their .info file.
