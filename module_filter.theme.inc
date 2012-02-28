@@ -103,7 +103,7 @@ function theme_module_filter_system_modules_tabs($variables) {
   // Display packages.
   $all = t('All');
   $all_count = ($count_enabled) ? '<span class="counts">' . t('!enabled of !total', array('!enabled' => $form['#tab_counts'][$all]['enabled'], '!total' => $form['#tab_counts'][$all]['total'])) . '</span>' : '';
-  $tabs = array('all' => '<li class="active"><a id="all-tab" class="project-tab" href="#all">' . $all . $all_count . '</a></li>');
+  $tabs = array('all' => '<li class="active"><a id="all-tab" class="project-tab overlay-exclude" href="#all">' . $all . $all_count . '</a></li>');
   foreach ($form['#packages'] as $package) {
     $id = module_filter_get_id($package);
 
