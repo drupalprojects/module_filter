@@ -108,7 +108,7 @@ function theme_module_filter_system_modules_tabs($variables) {
     $id = module_filter_get_id($package);
 
     $count = ($count_enabled) ? '<span class="counts">' . t('!enabled of !total', array('!enabled' => $form['#tab_counts'][$package]['enabled'], '!total' => $form['#tab_counts'][$package]['total'])) . '</span>' : '';
-    $tabs[$id] = '<li><a id="' . $id . '-tab" class="project-tab" href="#' . str_replace('-', '_', $id) . '">' . $package . $count . '</a></li>';
+    $tabs[$id] = '<li><a id="' . $id . '-tab" class="project-tab overlay-exclude" href="#' . str_replace('-', '_', $id) . '">' . $package . $count . '</a></li>';
   }
 
   $output = '<div id="module-filter-wrapper">';
