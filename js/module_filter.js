@@ -93,23 +93,25 @@
   }
 
   moduleFilterVisible = function(checkbox) {
-    if ($('#edit-module-filter-show-enabled').is(':checked')) {
-      if ($(checkbox).is(':checked') && !$(checkbox).is(':disabled')) {
-        return true;
+    if (checkbox.length > 0) {
+      if ($('#edit-module-filter-show-enabled').is(':checked')) {
+        if ($(checkbox).is(':checked') && !$(checkbox).is(':disabled')) {
+          return true;
+        }
       }
-    }
-    if ($('#edit-module-filter-show-disabled').is(':checked')) {
-      if (!$(checkbox).is(':checked') && !$(checkbox).is(':disabled')) {
-        return true;
+      if ($('#edit-module-filter-show-disabled').is(':checked')) {
+        if (!$(checkbox).is(':checked') && !$(checkbox).is(':disabled')) {
+          return true;
+        }
       }
-    }
-    if ($('#edit-module-filter-show-required').is(':checked')) {
-      if ($(checkbox).is(':checked') && $(checkbox).is(':disabled')) {
-        return true;
+      if ($('#edit-module-filter-show-required').is(':checked')) {
+        if ($(checkbox).is(':checked') && $(checkbox).is(':disabled')) {
+          return true;
+        }
       }
     }
     if ($('#edit-module-filter-show-unavailable').is(':checked')) {
-      if (!$(checkbox).is(':checked') && $(checkbox).is(':disabled')) {
+      if (checkbox.length == 0 || ($(checkbox).size() > 0 && !$(checkbox).is(':checked') && $(checkbox).is(':disabled'))) {
         return true;
       }
     }

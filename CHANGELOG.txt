@@ -1,5 +1,7 @@
 Module Filter 7.x-1.x, xxxx-xx-xx
 ---------------------------------
+#1033012 by greenSkin: Hide incompatible module rows when the 'Unavailable'
+  checkbox is unchecked.
 #1170388 by greenSkin: Fixed conflict with Overlay module. Added class
   "overlay-exclude" to tab links.
 #1124218 by jyee, greenSkin: Suppress form submission when hitting the enter

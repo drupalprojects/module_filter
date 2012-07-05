@@ -92,23 +92,25 @@
   }
 
   Drupal.ModuleFilter.visible = function(checkbox) {
-    if (Drupal.ModuleFilter.showEnabled) {
-      if ($(checkbox).is(':checked') && !$(checkbox).is(':disabled')) {
-        return true;
+    if (checkbox.length > 0) {
+      if (Drupal.ModuleFilter.showEnabled) {
+        if ($(checkbox).is(':checked') && !$(checkbox).is(':disabled')) {
+          return true;
+        }
       }
-    }
-    if (Drupal.ModuleFilter.showDisabled) {
-      if (!$(checkbox).is(':checked') && !$(checkbox).is(':disabled')) {
-        return true;
+      if (Drupal.ModuleFilter.showDisabled) {
+        if (!$(checkbox).is(':checked') && !$(checkbox).is(':disabled')) {
+          return true;
+        }
       }
-    }
-    if (Drupal.ModuleFilter.showRequired) {
-      if ($(checkbox).is(':checked') && $(checkbox).is(':disabled')) {
-        return true;
+      if (Drupal.ModuleFilter.showRequired) {
+        if ($(checkbox).is(':checked') && $(checkbox).is(':disabled')) {
+          return true;
+        }
       }
     }
     if (Drupal.ModuleFilter.showUnavailable) {
-      if (!$(checkbox).is(':checked') && $(checkbox).is(':disabled')) {
+      if (checkbox.length == 0 || (!$(checkbox).is(':checked') && $(checkbox).is(':disabled'))) {
         return true;
       }
     }
