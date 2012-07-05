@@ -16,23 +16,25 @@ Drupal.behaviors.moduleFilter = {
         childSelector: 'td:nth(1)',
         rules: [
           function(moduleFilter, item) {
-            if (moduleFilter.options.showEnabled) {
-              if (item.status && !item.disabled) {
-                return true;
+            if (!item.unavailable) {
+              if (moduleFilter.options.showEnabled) {
+                if (item.status && !item.disabled) {
+                  return true;
+                }
               }
-            }
-            if (moduleFilter.options.showDisabled) {
-              if (!item.status && !item.disabled) {
-                return true;
+              if (moduleFilter.options.showDisabled) {
+                if (!item.status && !item.disabled) {
+                  return true;
+                }
               }
-            }
-            if (moduleFilter.options.showRequired) {
-              if (item.status && item.disabled) {
-                return true;
+              if (moduleFilter.options.showRequired) {
+                if (item.status && item.disabled) {
+                  return true;
+                }
               }
             }
             if (moduleFilter.options.showUnavailable) {
-              if (!item.status && item.disabled) {
+              if (item.unavailable || (!item.status && item.disabled)) {
                 return true;
               }
             }
@@ -41,8 +43,16 @@ Drupal.behaviors.moduleFilter = {
         ],
         buildIndex: [
           function(moduleFilter, item) {
-            item.status = $('td.checkbox :checkbox', item.element).is(':checked');
-            item.disabled = $('td.checkbox :checkbox', item.element).is(':disabled');
+            var $checkbox = $('td.checkbox :checkbox', item.element);
+            if ($checkbox.size() > 0) {
+              item.status = $checkbox.is(':checked');
+              item.disabled = $checkbox.is(':disabled');
+            }
+            else {
+              item.status = false;
+              item.disabled = true;
+              item.unavailable = true;
+            }
             return item;
           }
         ],

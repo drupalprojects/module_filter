@@ -1,3 +1,9 @@
+Module Filter 7.x-2.x, xxxx-xx-xx
+---------------------------------
+#1033012 by greenSkin: Hide incompatible module rows when the 'Unavailable'
+  checkbox is unchecked.
+
+
 Module Filter 7.x-2.x, 2012-02-24
 ---------------------------------
 by greenSkin: Performance tweak to counting the number of enabled modules.
