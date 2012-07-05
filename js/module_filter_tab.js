@@ -232,15 +232,17 @@ Drupal.ModuleFilter.selectTab = function(hash) {
     hash = 'all';
   }
 
-  if (Drupal.ModuleFilter.activeTab != undefined) {
-    Drupal.ModuleFilter.activeTab.element.removeClass('selected');
+  if (Drupal.ModuleFilter.tabs[hash + '-tab']) {
+    if (Drupal.ModuleFilter.activeTab != undefined) {
+      Drupal.ModuleFilter.activeTab.element.removeClass('selected');
+    }
+
+    Drupal.ModuleFilter.activeTab = Drupal.ModuleFilter.tabs[hash + '-tab'];
+    Drupal.ModuleFilter.activeTab.element.addClass('selected');
+
+    var moduleFilter = $('input[name="module_filter[name]"]').data('moduleFilter');
+    moduleFilter.applyFilter();
   }
-
-  Drupal.ModuleFilter.activeTab = Drupal.ModuleFilter.tabs[hash + '-tab'];
-  Drupal.ModuleFilter.activeTab.element.addClass('selected');
-
-  var moduleFilter = $('input[name="module_filter[name]"]').data('moduleFilter');
-  moduleFilter.applyFilter();
 };
 
 Drupal.ModuleFilter.eventHandlerOperateByURLFragment = function(event) {
