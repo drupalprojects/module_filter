@@ -1,5 +1,7 @@
 Module Filter 7.x-2.x, xxxx-xx-xx
 ---------------------------------
+#1429248 by klonos, greenSkin: Fixed Modules page table header overlaps
+  admin_menu().
 #1494694 by greenSkin: Added Let me decide if I want the cursor to focus on the
   search box or not.
 #1515256 by catmat, greenSkin: Fixed Tabbed theme may remove functional
