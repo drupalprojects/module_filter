@@ -136,6 +136,7 @@ function form_process_module_filter($element, &$form_state) {
         array(
           'data' => array(
             'moduleFilter' => array(
+              'setFocus' => variable_get('module_filter_set_focus', 1),
               'tabs' => variable_get('module_filter_tabs', 1),
               'countEnabled' => variable_get('module_filter_count_enabled', 1),
               'visualAid' => variable_get('module_filter_visual_aid', 1),

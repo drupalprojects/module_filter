@@ -14,9 +14,16 @@
  * Settings form for module filter.
  */
 function module_filter_settings() {
+  $form['module_filter_set_focus'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Set focus to filter field on page load'),
+    '#description' => t('Currently has no affect when using Overlay module.'),
+    '#default_value' => variable_get('module_filter_set_focus', 1),
+  );
+
   $form['module_filter_tabs'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Tabs'),
+    '#title' => t('Enhance the modules page with tabs'),
     '#description' => t('Alternate tabbed theme that restructures packages into tabs.'),
     '#default_value' => variable_get('module_filter_tabs', 1)
   );

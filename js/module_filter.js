@@ -264,7 +264,9 @@ Drupal.ModuleFilter.Filter.prototype.stripe = function() {
 $.fn.moduleFilter = function(selector, options) {
   var filterInput = this;
   filterInput.parents('.module-filter-inputs-wrapper').show();
-  filterInput.focus();
+  if (Drupal.settings.moduleFilter.setFocus) {
+    filterInput.focus();
+  }
   filterInput.data('moduleFilter', new Drupal.ModuleFilter.Filter(this, selector, options));
 };
 
