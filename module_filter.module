@@ -136,10 +136,12 @@ function form_process_module_filter($element, &$form_state) {
         array(
           'data' => array(
             'moduleFilter' => array(
+              'setFocus' => variable_get('module_filter_set_focus', 1),
               'tabs' => variable_get('module_filter_tabs', 1),
               'countEnabled' => variable_get('module_filter_count_enabled', 1),
               'visualAid' => variable_get('module_filter_visual_aid', 1),
               'hideEmptyTabs' => variable_get('module_filter_hide_empty_tabs', 0),
+              'dynamicPosition' => (!module_exists('page_actions')) ? variable_get('module_filter_dynamic_save_position', 1) : FALSE,
               'useURLFragment' => variable_get('module_filter_use_url_fragment', 1),
               'useSwitch' => variable_get('module_filter_use_switch', 1),
               'rememberUpdateState' => variable_get('module_filter_remember_update_state', 0),

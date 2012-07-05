@@ -32,6 +32,11 @@ function theme_module_filter_system_modules($variables) {
     $form['module_filter']['#attached']['js'][] = 'misc/jquery.ba-bbq.js';
     $form['module_filter']['#attached']['js'][] = drupal_get_path('module', 'module_filter') .'/js/module_filter_tab.js';
 
+    if (!module_exists('page_actions') && variable_get('module_filter_dynamic_save_position', 1)) {
+      $form['module_filter']['#attached']['css'][] = drupal_get_path('module', 'module_filter') .'/css/dynamic_position.css';
+      $form['module_filter']['#attached']['js'][] = drupal_get_path('module', 'module_filter') .'/js/dynamic_position.js';
+    }
+
     $output .= theme('module_filter_system_modules_tabs', $form);
   }
   else {
@@ -72,27 +77,32 @@ function theme_module_filter_system_modules_tabs($variables) {
     $package_id = module_filter_get_id($package);
     $package_ids[] = $package_id;
 
-    $rows[] = array('data' => array(array('data' => '<h3>' . $form['modules'][$package]['#title'] . '</h3>', 'colspan' => 4)), 'id' => $package_id, 'class' => array('admin-package-title'));
+    // Package title and header.
+    $rows[] = array('data' => array(array('data' => '<h3>' . $form['modules'][$package]['#title'] . '</h3>', 'colspan' => 4)), 'id' => $package_id . '-package', 'class' => array('admin-package-title'));
     $rows[] = array('data' => $header, 'class' => array('admin-package-header'));
 
     $stripe = 'odd';
-    $enabled[$package] = array();
+    $enabled[$package_id] = array();
     foreach (element_children($form['modules'][$package]) as $key) {
       $module = &$form['modules'][$package][$key];
 
       $is_enabled = isset($module['enable']['#default_value']) ? $module['enable']['#default_value'] : '';
-      $enabled['all'][] = $enabled[$package][] = $is_enabled;
+      $enabled['all'][] = $enabled[$package_id][] = $is_enabled;
       if (isset($new_modules[$key])) {
         $enabled['new'][] = $is_enabled;
       }
 
       $row = array();
-      unset($module['enable']['#title']);
-      $class = ($is_enabled ? 'enabled' : 'off');
-      if (!empty($module['enable']['#disabled'])) {
-        $class .= ' disabled';
+      $toggle_enable = '';
+      if (isset($module['enable']['#type']) && $module['enable']['#type'] == 'checkbox') {
+        unset($module['enable']['#title']);
+        $class = ($is_enabled ? 'enabled' : 'off');
+        if (!empty($module['enable']['#disabled'])) {
+          $class .= ' disabled';
+        }
+        $toggle_enable = '<div class="js-hide toggle-enable ' . $class . '"><div>&nbsp;</div></div>';
       }
-      $row[] = array('class' => array('checkbox'), 'data' => '<div class="js-hide toggle-enable ' . $class . '"><div>&nbsp;</div></div>' . drupal_render($module['enable']));
+      $row[] = array('class' => array('checkbox'), 'data' => $toggle_enable . drupal_render($module['enable']));
       $label = '<label';
       if (isset($module['enable']['#id'])) {
         $label .= ' for="' . $module['enable']['#id'] . '"';
@@ -135,8 +145,8 @@ function theme_module_filter_system_modules_tabs($variables) {
 
   if (variable_get('module_filter_count_enabled', 1)) {
     $enabled_counts = array();
-    foreach ($enabled as $package => $value) {
-      $enabled_counts[module_filter_get_id($package)] = array(
+    foreach ($enabled as $package_id => $value) {
+      $enabled_counts[$package_id] = array(
         'enabled' => count(array_filter($value)),
         'total' => count($value),
       );

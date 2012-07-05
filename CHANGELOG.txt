@@ -1,3 +1,27 @@
+Module Filter 7.x-2.x, 2012-07-04
+---------------------------------
+#1320796 by greenSkin: Added some validation checks before trying to select a
+  tab in case the tab does not actually exist.
+#1429248 by klonos, greenSkin: Fixed Modules page table header overlaps
+  admin_menu().
+#1494694 by greenSkin: Added Let me decide if I want the cursor to focus on the
+  search box or not.
+#1515256 by catmat, greenSkin: Fixed Tabbed theme may remove functional
+  content.
+by greenSkin: Integrated dynamic positioning of the save button back in, but
+  if the module page_actions is enabled we let it handle the save button. See
+  issue #1424994.
+by greenSkin: Clicking on module name now affects the toggle switch.
+by greenSkin: Do not render the switch for incompatible modules.
+#1033012 by greenSkin: Hide incompatible module rows when the 'Unavailable'
+  checkbox is unchecked.
+
+
+Module Filter 7.x-2.x, 2012-02-24
+---------------------------------
+by greenSkin: Performance tweak to counting the number of enabled modules.
+
+
 Module Filter 7.x-2.x, 2012-02-01
 ---------------------------------
 by greenSkin: Base new modules on the filectime of their .info file.

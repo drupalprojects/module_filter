@@ -31,7 +31,7 @@ Drupal.behaviors.moduleFilterTabs = {
               name = Drupal.t('New');
               break;
             default: 
-              var $row = $('#' + id);
+              var $row = $('#' + id + '-package');
               name = $.trim($row.text());
               $row.remove();
               break;
@@ -76,6 +76,8 @@ Drupal.behaviors.moduleFilterTabs = {
           .removeClass('odd even')
           .filter(':odd').addClass('even').end()
           .filter(':even').addClass('odd');
+
+        Drupal.ModuleFilter.adjustHeight();
 
         moduleFilter.element.bind('moduleFilter:start', function() {
           moduleFilter.tabResults = {
@@ -145,6 +147,7 @@ Drupal.behaviors.moduleFilterTabs = {
                     Drupal.ModuleFilter.tabs[id].element.hide();
                   }
                 }
+                Drupal.ModuleFilter.adjustHeight();
               }
             }
             else {
@@ -172,10 +175,16 @@ Drupal.behaviors.moduleFilterTabs = {
           $('td.checkbox div.form-item').hide();
           $('td.checkbox').each(function(i) {
             var $cell = $(this);
-            $('.toggle-enable', $cell).removeClass('js-hide').click(function() {
+            var $switch = $('.toggle-enable', $cell);
+            $switch.removeClass('js-hide').click(function() {
               if (!$(this).hasClass('disabled')) {
                 $(this).toggleClass('off');
-                $('div.form-item input', $cell).click().change();
+                $(':checkbox', $cell).click();
+              }
+            });
+            $(':checkbox', $cell).change(function() {
+              if (!$switch.hasClass('disabled')) {
+                $switch.toggleClass('off');
               }
             });
           });
@@ -223,15 +232,17 @@ Drupal.ModuleFilter.selectTab = function(hash) {
     hash = 'all';
   }
 
-  if (Drupal.ModuleFilter.activeTab != undefined) {
-    Drupal.ModuleFilter.activeTab.element.removeClass('selected');
+  if (Drupal.ModuleFilter.tabs[hash + '-tab']) {
+    if (Drupal.ModuleFilter.activeTab != undefined) {
+      Drupal.ModuleFilter.activeTab.element.removeClass('selected');
+    }
+
+    Drupal.ModuleFilter.activeTab = Drupal.ModuleFilter.tabs[hash + '-tab'];
+    Drupal.ModuleFilter.activeTab.element.addClass('selected');
+
+    var moduleFilter = $('input[name="module_filter[name]"]').data('moduleFilter');
+    moduleFilter.applyFilter();
   }
-
-  Drupal.ModuleFilter.activeTab = Drupal.ModuleFilter.tabs[hash + '-tab'];
-  Drupal.ModuleFilter.activeTab.element.addClass('selected');
-
-  var moduleFilter = $('input[name="module_filter[name]"]').data('moduleFilter');
-  moduleFilter.applyFilter();
 };
 
 Drupal.ModuleFilter.eventHandlerOperateByURLFragment = function(event) {
@@ -352,5 +363,14 @@ Drupal.ModuleFilter.updateVisualAid = function(type, $row) {
 
   tab.updateVisualAid();
 };
+
+Drupal.ModuleFilter.adjustHeight = function() {
+  // Hack for adjusting the height of the modules section.
+  var minHeight = $('#module-filter-tabs').height() + 10;
+  if (Drupal.settings.moduleFilter.dynamicPosition) {
+    minHeight += $('#module-filter-submit').height();
+  }
+  $('#module-filter-modules').css('min-height', minHeight);
+}
 
 })(jQuery);
