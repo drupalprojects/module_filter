@@ -1,4 +1,4 @@
-Module Filter 7.x-2.x, xxxx-xx-xx
+Module Filter 7.x-2.x, 2012-07-04
 ---------------------------------
 #1320796 by greenSkin: Added some validation checks before trying to select a
   tab in case the tab does not actually exist.
