@@ -78,7 +78,7 @@ function theme_module_filter_system_modules_tabs($variables) {
     $package_ids[] = $package_id;
 
     // Package title and header.
-    $rows[] = array('data' => array(array('data' => '<h3>' . $form['modules'][$package]['#title'] . '</h3>', 'colspan' => 4)), 'id' => $package_id, 'class' => array('admin-package-title'));
+    $rows[] = array('data' => array(array('data' => '<h3>' . $form['modules'][$package]['#title'] . '</h3>', 'colspan' => 4)), 'id' => $package_id . '-package', 'class' => array('admin-package-title'));
     $rows[] = array('data' => $header, 'class' => array('admin-package-header'));
 
     $stripe = 'odd';

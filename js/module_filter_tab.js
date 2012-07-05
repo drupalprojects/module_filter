@@ -31,7 +31,7 @@ Drupal.behaviors.moduleFilterTabs = {
               name = Drupal.t('New');
               break;
             default: 
-              var $row = $('#' + id);
+              var $row = $('#' + id + '-package');
               name = $.trim($row.text());
               $row.remove();
               break;

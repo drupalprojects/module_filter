@@ -1,5 +1,6 @@
 Module Filter 7.x-2.x, xxxx-xx-xx
 ---------------------------------
+#1515256 by catmat, greenSkin: Fixed Tabbed theme may remove functional content.
 by greenSkin: Integrated dynamic positioning of the save button back in, but
   if the module page_actions is enabled we let it handle the save button.
 by greenSkin: Clicking on module name now affects the toggle switch.
