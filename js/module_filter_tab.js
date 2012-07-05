@@ -172,10 +172,16 @@ Drupal.behaviors.moduleFilterTabs = {
           $('td.checkbox div.form-item').hide();
           $('td.checkbox').each(function(i) {
             var $cell = $(this);
-            $('.toggle-enable', $cell).removeClass('js-hide').click(function() {
+            var $switch = $('.toggle-enable', $cell);
+            $switch.removeClass('js-hide').click(function() {
               if (!$(this).hasClass('disabled')) {
                 $(this).toggleClass('off');
-                $('div.form-item input', $cell).click().change();
+                $(':checkbox', $cell).click();
+              }
+            });
+            $(':checkbox', $cell).change(function() {
+              if (!$switch.hasClass('disabled')) {
+                $switch.toggleClass('off');
               }
             });
           });
