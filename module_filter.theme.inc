@@ -32,6 +32,11 @@ function theme_module_filter_system_modules($variables) {
     $form['module_filter']['#attached']['js'][] = 'misc/jquery.ba-bbq.js';
     $form['module_filter']['#attached']['js'][] = drupal_get_path('module', 'module_filter') .'/js/module_filter_tab.js';
 
+    if (!module_exists('page_actions') && variable_get('module_filter_dynamic_save_position', 1)) {
+      $form['module_filter']['#attached']['css'][] = drupal_get_path('module', 'module_filter') .'/css/dynamic_position.css';
+      $form['module_filter']['#attached']['js'][] = drupal_get_path('module', 'module_filter') .'/js/dynamic_position.js';
+    }
+
     $output .= theme('module_filter_system_modules_tabs', $form);
   }
   else {

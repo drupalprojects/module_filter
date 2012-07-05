@@ -77,6 +77,8 @@ Drupal.behaviors.moduleFilterTabs = {
           .filter(':odd').addClass('even').end()
           .filter(':even').addClass('odd');
 
+        Drupal.ModuleFilter.adjustHeight();
+
         moduleFilter.element.bind('moduleFilter:start', function() {
           moduleFilter.tabResults = {
             'all-tab': { items: {}, count: 0 },
@@ -145,6 +147,7 @@ Drupal.behaviors.moduleFilterTabs = {
                     Drupal.ModuleFilter.tabs[id].element.hide();
                   }
                 }
+                Drupal.ModuleFilter.adjustHeight();
               }
             }
             else {
@@ -358,5 +361,14 @@ Drupal.ModuleFilter.updateVisualAid = function(type, $row) {
 
   tab.updateVisualAid();
 };
+
+Drupal.ModuleFilter.adjustHeight = function() {
+  // Hack for adjusting the height of the modules section.
+  var minHeight = $('#module-filter-tabs').height() + 10;
+  if (Drupal.settings.moduleFilter.dynamicPosition) {
+    minHeight += $('#module-filter-submit').height();
+  }
+  $('#module-filter-modules').css('min-height', minHeight);
+}
 
 })(jQuery);

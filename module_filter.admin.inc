@@ -45,6 +45,12 @@ function module_filter_settings() {
     '#description' => t('When a filter returns no results for a tab, the tab is hidden. This is dependent on visual aids being enabled.'),
     '#default_value' => variable_get('module_filter_hide_empty_tabs', 0)
   );
+  $form['tabs']['module_filter_dynamic_save_position'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Dynamic Save position'),
+    '#description' => t("For sites with lots of tabs, enable to help keep the 'Save configuration' button more accessible."),
+    '#default_value' => variable_get('module_filter_dynamic_save_position', 1)
+  );
   $form['tabs']['module_filter_use_url_fragment'] = array(
     '#type' => 'checkbox',
     '#title' => t('Use URL fragment'),
@@ -70,6 +76,10 @@ function module_filter_settings() {
     '#description' => t('When enabled, the last state (All, Update available, Security update, Unknown) will be remembered.'),
     '#default_value' => variable_get('module_filter_remember_update_state', 0),
   );
+
+  if (module_exists('page_actions')) {
+    $form['tabs']['module_filter_dynamic_save_position']['#description'] .= '<br />' . t('The module %name is enabled and thus this setting will have no affect.', array('%name' => t('Page actions')));
+  }
 
   return system_settings_form($form);
 }
