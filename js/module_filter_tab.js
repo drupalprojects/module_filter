@@ -178,8 +178,7 @@ Drupal.behaviors.moduleFilterTabs = {
             var $switch = $('.toggle-enable', $cell);
             $switch.removeClass('js-hide').click(function() {
               if (!$(this).hasClass('disabled')) {
-                $(this).toggleClass('off');
-                $(':checkbox', $cell).click();
+                $(':checkbox', $cell).click().change();
               }
             });
             $(':checkbox', $cell).change(function() {
