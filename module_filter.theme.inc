@@ -88,12 +88,16 @@ function theme_module_filter_system_modules_tabs($variables) {
       }
 
       $row = array();
-      unset($module['enable']['#title']);
-      $class = ($is_enabled ? 'enabled' : 'off');
-      if (!empty($module['enable']['#disabled'])) {
-        $class .= ' disabled';
+      $toggle_enable = '';
+      if (isset($module['enable']['#type']) && $module['enable']['#type'] == 'checkbox') {
+        unset($module['enable']['#title']);
+        $class = ($is_enabled ? 'enabled' : 'off');
+        if (!empty($module['enable']['#disabled'])) {
+          $class .= ' disabled';
+        }
+        $toggle_enable = '<div class="js-hide toggle-enable ' . $class . '"><div>&nbsp;</div></div>';
       }
-      $row[] = array('class' => array('checkbox'), 'data' => '<div class="js-hide toggle-enable ' . $class . '"><div>&nbsp;</div></div>' . drupal_render($module['enable']));
+      $row[] = array('class' => array('checkbox'), 'data' => $toggle_enable . drupal_render($module['enable']));
       $label = '<label';
       if (isset($module['enable']['#id'])) {
         $label .= ' for="' . $module['enable']['#id'] . '"';
