@@ -1,3 +1,9 @@
+Module Filter 7.x-x.x, 2012-09-28
+---------------------------------
+by greenSkin: Added title to "New" tab link that helps to describe the criteria
+  of a "new" module.
+
+
 Module Filter 7.x-2.x, 2012-07-04
 ---------------------------------
 #1320796 by greenSkin: Added some validation checks before trying to select a
