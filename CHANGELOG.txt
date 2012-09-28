@@ -1,5 +1,6 @@
 Module Filter 7.x-x.x, 2012-09-28
 ---------------------------------
+by greenSkin: Improved hash validation.
 by greenSkin: Added ability for tabs to be disabled. Direct use case is when
   the "New" tab contains zero new modules.
 by greenSkin: Added title to "New" tab link that helps to describe the criteria
