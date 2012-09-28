@@ -25,6 +25,18 @@
   margin-bottom: 10px;
   border-bottom: 1px solid #ccc;
 }
+#module-filter-tabs li.disabled,
+#module-filter-tabs li#new-tab.disabled {
+  pointer-events: none;
+  cursor: default;
+  background: #ccc;
+  border-top-color: #bbb;
+  border-bottom-color: #bbb;
+}
+#module-filter-tabs li.disabled a,
+#module-filter-tabs li.disabled span {
+  color: #999;
+}
 #module-filter-tabs li.suggest {
   background: #F9F9F9;
 }

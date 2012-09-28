@@ -23,14 +23,21 @@ Drupal.behaviors.moduleFilterTabs = {
           var id = Drupal.settings.moduleFilter.packageIDs[i];
 
           var name = id;
+          var tabClass = 'project-tab';
           var title = null;
+          var summary = (Drupal.settings.moduleFilter.countEnabled) ? '<span class="count">' + Drupal.ModuleFilter.countSummary(id) + '</span>' : '';
+
           switch (id) {
             case 'all':
               name = Drupal.t('All');
               break;
             case 'new':
               name = Drupal.t('New');
-              title = 'Modules installed within the last week.';
+              title = Drupal.t('Modules installed within the last week.');
+              if (Drupal.settings.moduleFilter.enabledCounts['new'].total == 0) {
+                tabClass += ' disabled';
+                summary += '<span>' + Drupal.t('No new modules.') + '</span>';
+              }
               break;
             default: 
               var $row = $('#' + id + '-package');
@@ -39,8 +46,7 @@ Drupal.behaviors.moduleFilterTabs = {
               break;
           }
 
-          var summary = (Drupal.settings.moduleFilter.countEnabled) ? '<span class="count">' + Drupal.ModuleFilter.countSummary(id) + '</span>' : '';
-          tabs += '<li id="' + id + '-tab" class="project-tab"><a href="#' + id + '" class="overlay-exclude"' + (title ? ' title="' + title + '"' : '') + '><strong>' + name + '</strong><span class="summary">' + summary + '</span></a></li>';
+          tabs += '<li id="' + id + '-tab" class="' + tabClass + '"><a href="#' + id + '" class="overlay-exclude"' + (title ? ' title="' + title + '"' : '') + '><strong>' + name + '</strong><span class="summary">' + summary + '</span></a></li>';
         }
         tabs += '</ul>';
         $('#module-filter-modules').before(tabs);
