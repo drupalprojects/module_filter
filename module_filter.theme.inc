@@ -121,16 +121,15 @@ function theme_module_filter_system_modules_tabs($variables) {
       // Add the description, along with any modules it requires and any
       // operation links.
       $description = drupal_render($module['description']);
-      if (module_exists('ctools') && $operations = _module_filter_build_operations($module['links'], TRUE)) {
-        // When ctools exists we add the operations before the module
-        // description, allowing us to easily float them in the upper right.
-        $description = $operations . $description;
-      }
       if ($module['#requires']) {
         $description .= '<div class="admin-requirements">' . t('Requires: !module-list', array('!module-list' => implode(', ', $module['#requires']))) . '</div>';
       }
       if ($module['#required_by']) {
         $description .= '<div class="admin-requirements">' . t('Required by: !module-list', array('!module-list' => implode(', ', $module['#required_by']))) . '</div>';
+      }
+      $operations = (module_exists('ctools')) ? _module_filter_build_operations($module['links'], TRUE) : _module_filter_build_operations($module['links']);
+      if ($operations) {
+        $description .= $operations;
       }
       if (!module_exists('ctools') && $operations = _module_filter_build_operations($module['links'])) {
         // When ctools is not available we default to adding the operations at this point in the description.
