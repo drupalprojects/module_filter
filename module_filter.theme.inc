@@ -127,15 +127,10 @@ function theme_module_filter_system_modules_tabs($variables) {
       if ($module['#required_by']) {
         $description .= '<div class="admin-requirements">' . t('Required by: !module-list', array('!module-list' => implode(', ', $module['#required_by']))) . '</div>';
       }
-      $operations = (module_exists('ctools')) ? _module_filter_build_operations($module['links'], TRUE) : _module_filter_build_operations($module['links']);
-      if ($operations) {
+      $operations = (module_exists('ctools')) ? theme('module_filter_operations', array('links' => $module['links'], 'dropbutton' => TRUE)) : theme('module_filter_operations', array('links' => $module['links']));
+      if (!empty($operations)) {
         $description .= $operations;
       }
-      if (!module_exists('ctools') && $operations = _module_filter_build_operations($module['links'])) {
-        // When ctools is not available we default to adding the operations at this point in the description.
-        $description .= $operations;
-      }
-      $description .= drupal_render($module['links']);
       $row[] = array('data' => $description, 'class' => array('description'));
 
       $class = array(module_filter_get_id($package) . '-tab', 'module', $stripe);
@@ -179,10 +174,13 @@ function theme_module_filter_system_modules_tabs($variables) {
   return $output;
 }
 
-function _module_filter_build_operations(&$links, $dropdown = FALSE) {
+function theme_module_filter_operations(&$vars) {
+  $links = &$vars['links'];
+  $dropbutton = $vars['dropbutton'];
+
   $operations = array();
   foreach (array('configure', 'permissions', 'help') as $key) {
-    if ($dropdown) {
+    if ($dropbutton) {
       hide($links[$key]);
       if (!empty($links[$key]['#href'])) {
         $operations[] = array(
@@ -199,7 +197,7 @@ function _module_filter_build_operations(&$links, $dropdown = FALSE) {
     }
   }
   if (!empty($operations)) {
-    if ($dropdown) {
+    if ($dropbutton) {
       return '<div class="admin-operations">' . theme('links__ctools_dropbutton', array('title' => t('Operations'), 'links' => $operations, 'attributes' => array('class' => array('links')))) . '</div>';
     }
     return '<div class="admin-operations">' . theme('item_list', array('items' => $operations, 'attributes' => array('class' => array('links', 'inline')))) . '</div>';

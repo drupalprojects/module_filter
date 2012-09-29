@@ -106,16 +106,20 @@ function module_filter_theme() {
   return array(
     'module_filter' => array(
       'render element' => 'element',
-      'file' => 'module_filter.theme.inc'
+      'file' => 'module_filter.theme.inc',
     ),
     'module_filter_system_modules' => array(
       'render element' => 'form',
-      'file' => 'module_filter.theme.inc'
+      'file' => 'module_filter.theme.inc',
     ),
     'module_filter_system_modules_tabs' => array(
       'render element' => 'form',
-      'file' => 'module_filter.theme.inc'
-    )
+      'file' => 'module_filter.theme.inc',
+    ),
+    'module_filter_operations' => array(
+      'variables' => array('links' => array(), 'dropbutton' => FALSE),
+      'file' => 'module_filter.theme.inc',
+    ),
   );
 }
 
