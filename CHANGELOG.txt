@@ -1,5 +1,6 @@
 Module Filter 7.x-x.x, 2012-09-28
 ---------------------------------
+by greenSkin: Hide toggle switch when JavaScript is disabled.
 by greenSkin: Added support for ctools dropbutton as well as views styling for
   ctools dropbutton.
 by greenSkin: Improved hash validation.

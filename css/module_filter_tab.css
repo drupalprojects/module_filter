@@ -166,7 +166,7 @@ html.js #module-filter-modules table td {
   display: inline;
 }
 
-.toggle-enable {
+html.js .toggle-enable {
   margin: auto;
   position: relative;
   width: 50px;
@@ -189,17 +189,17 @@ html.js #module-filter-modules table td {
   background-image: -moz-linear-gradient(left, red 50%, orange 50%, orange 100%);
   background-image: linear-gradient(left, red 50%, orange 50%, orange 100%);
 }
-.toggle-enable.enabled {
+html.js .toggle-enable.enabled {
   background-image: -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(50%, orange), color-stop(50%, green), color-stop(100%, green));
   background-image: -moz-linear-gradient(left, orange 50%, green 50%, green 100%);
   background-image: linear-gradient(left, orange 50%, green 50%, green 100%);
 }
-.toggle-enable.disabled {
+html.js .toggle-enable.disabled {
   background: #ccc;
   border-color: #ddd;
   cursor: auto;
 }
-.toggle-enable div {
+html.js .toggle-enable div {
   position: relative;
   color: #777;
   width: 26px;
@@ -217,13 +217,13 @@ html.js #module-filter-modules table td {
   -o-transition: left 0.2s;
   transition: left 0.2s;
 }
-.toggle-enable.disabled div {
+html.js .toggle-enable.disabled div {
   background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0%, #FEFEFE), color-stop(100%, #EEEEEE));
   background-image: -moz-linear-gradient(top, #FEFEFE 0%, #EEEEEE 100%);
   background-image: linear-gradient(top, #FEFEFE 0%, #EEEEEE 100%);
 }
-.toggle-enable div:after,
-.toggle-enable div:before {
+html.js .toggle-enable div:after,
+html.js .toggle-enable div:before {
   color: white;
   text-shadow: none;
   width: 25px;
@@ -232,14 +232,14 @@ html.js #module-filter-modules table td {
   font-size: 9px;
   font-weight: bold;
 }
-.toggle-enable div:before {
+html.js .toggle-enable div:before {
   content: "OFF";
   left: -24px;
 }
-.toggle-enable div:after {
+html.js .toggle-enable div:after {
   content: "ON";
   right: -24px;
 }
-.toggle-enable.off div {
+html.js .toggle-enable.off div {
   left: 24px;
 }
