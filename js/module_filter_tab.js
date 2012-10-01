@@ -196,8 +196,6 @@ Drupal.behaviors.moduleFilterTabs = {
             });
           });
         }
-
-        $('#module-filter-modules').css({ 'margin-left': '240px', 'border': '1px solid #ccc' });
       });
     }
   }
