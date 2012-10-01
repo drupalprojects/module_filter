@@ -36,5 +36,11 @@ function module_filter_update_status_form($form, &$form_state) {
     '#prefix' => '<div id="module-filter-show-wrapper">',
     '#suffix' => '</div>'
   );
+  if (module_exists('update_advanced')) {
+    $options = $form['module_filter']['show']['#options'];
+    $form['module_filter']['show']['#options'] = array_slice($options, 0, 2);
+    $form['module_filter']['show']['#options']['ignore'] = t('Ignored from settings');
+    $form['module_filter']['show']['#options'] = array_merge($form['module_filter']['show']['#options'], array_slice($options, 2));
+  }
   return $form;
 }

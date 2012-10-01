@@ -23,6 +23,11 @@ Drupal.behaviors.moduleFilterUpdateStatus = {
                   return true;
                 }
                 break;
+              case 'ignore':
+                if (item.state == 'ignored') {
+                  return true;
+                }
+                break;
               case 'unknown':
                 if (item.state == 'unknown') {
                   return true;
@@ -34,6 +39,10 @@ Drupal.behaviors.moduleFilterUpdateStatus = {
         ],
         buildIndex: [
           function(moduleFilter, item) {
+            if ($('.version-status', item.element).text() == Drupal.t('Ignored from settings')) {
+              item.state = 'ignored';
+              return item;
+            }
             if (item.element.is('.ok')) {
               item.state = 'ok';
             }
