@@ -65,8 +65,10 @@ function theme_module_filter_system_modules_tabs($variables) {
 
   $form = $variables['form'];
 
-  $form['actions']['#prefix'] = '<div id="module-filter-submit">';
-  $form['actions']['#suffix'] = '</div>';
+  if (!module_exists('page_actions')) {
+    $form['actions']['#prefix'] = '<div id="module-filter-submit">';
+    $form['actions']['#suffix'] = '</div>';
+  }
 
   $header = array(
     t('Enabled'),
