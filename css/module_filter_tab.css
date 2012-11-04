@@ -110,7 +110,7 @@ html.js .module-filter-inputs-wrapper label {
 html.js #module-filter-show-wrapper {
   margin-bottom: 1em;
 }
-#module-filter-modules {
+html.js #module-filter-modules {
   margin-left: 240px;
   border: 1px solid #ccc;
 }

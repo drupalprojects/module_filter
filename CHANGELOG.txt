@@ -1,3 +1,8 @@
+Module Filter 7.x-x.x, 2012-11-04
+---------------------------------
+by greenSkin: Fixed styling when JavaScript is disabled.
+
+
 Module Filter 7.x-2.x, 2012-11-04
 ---------------------------------
 by greenSkin: Fixed compatiblility with page_actions.
