@@ -1,17 +1,9 @@
-Module Filter 7.x-x.x, 2012-11-04
+Module Filter 7.x-2.x, 2012-11-04
 ---------------------------------
 by greenSkin: Fixed compatiblility with page_actions.
-
-
-Module Filter 7.x-x.x, 2012-10-01
----------------------------------
 #1351184 klonos, greenSkin: Added support for update_advanced "Ignored from
   settings".
 #1149978 by good_man, greenSkin: Added RTL Styling for tabs and toggle switch.
-
-
-Module Filter 7.x-x.x, 2012-09-28
----------------------------------
 by greenSkin: Hide toggle switch when JavaScript is disabled.
 by greenSkin: Added support for ctools dropbutton as well as views styling for
   ctools dropbutton.
