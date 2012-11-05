@@ -1,5 +1,6 @@
 Module Filter 7.x-x.x, 2012-11-04
 ---------------------------------
+by greenSkin: Added filter to user permissions page.
 by greenSkin: Fixed styling when JavaScript is disabled.
 
 

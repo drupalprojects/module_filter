@@ -86,6 +86,21 @@ function module_filter_form_system_modules_alter(&$form, &$form_state, $form_id)
 }
 
 /**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function module_filter_form_user_admin_permissions_alter(&$form, &$form_state) {
+  $form['module_filter'] = array(
+    '#type' => 'module_filter',
+    '#attached' => array(
+      'js' => array(
+        drupal_get_path('module', 'module_filter') . '/js/permissions.js',
+      ),
+    ),
+    '#weight' => -100,
+  );
+}
+
+/**
  * Implements hook_element_info().
  */
 function module_filter_element_info() {

@@ -146,7 +146,7 @@ Drupal.ModuleFilter.Filter = function(element, selector, options) {
         }
 
         var rulesResult = self.processRules(item);
-        if (rulesResult == true) {
+        if (rulesResult !== false) {
           return true;
         }
       }
@@ -235,14 +235,14 @@ Drupal.ModuleFilter.Filter.prototype.processRules = function(item) {
     for (var i in self.options.rules) {
       var func = self.options.rules[i];
       rulesResult = func(self, item);
-      if (rulesResult == false) {
+      if (rulesResult === false) {
         break;
       }
     }
   }
-  if (rulesResult == true) {
+  if (rulesResult !== false) {
     $item.removeClass('js-hide');
-    self.results.push($item);
+    self.results.push(item);
   }
   return rulesResult;
 };
