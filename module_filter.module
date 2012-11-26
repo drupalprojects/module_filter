@@ -91,6 +91,7 @@ function module_filter_form_system_modules_alter(&$form, &$form_state, $form_id)
 function module_filter_form_user_admin_permissions_alter(&$form, &$form_state) {
   $form['module_filter'] = array(
     '#type' => 'module_filter',
+    '#description' => t('Filter list by module. Use the query operator "perm" to filter by permission, e.g., perm:access.'),
     '#attached' => array(
       'js' => array(
         drupal_get_path('module', 'module_filter') . '/js/permissions.js',
