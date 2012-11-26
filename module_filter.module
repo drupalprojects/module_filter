@@ -171,6 +171,9 @@ function form_process_module_filter($element, &$form_state) {
       )
     )
   );
+  if (isset($element['#description'])) {
+    $element['name']['#description'] = $element['#description'];
+  }
   if (variable_get('module_filter_remember_update_state', 0)) {
     $element['name']['#attached']['js'][] = 'misc/jquery.cookie.js';
   }
