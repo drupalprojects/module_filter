@@ -58,7 +58,7 @@ Drupal.behaviors.moduleFilterTabs = {
           Drupal.ModuleFilter.tabs[id] = new Drupal.ModuleFilter.Tab($tab, id);
         });
 
-        $('#module-filter-modules tbody td.checkbox input').change(function() {
+        $('#module-filter-modules tbody td.checkbox input').click(function() {
           var $checkbox = $(this);
           var key = $checkbox.parents('tr').data('indexKey');
 
@@ -183,13 +183,14 @@ Drupal.behaviors.moduleFilterTabs = {
           $('td.checkbox div.form-item').hide();
           $('td.checkbox').each(function(i) {
             var $cell = $(this);
+            var $checkbox = $(':checkbox', $cell);
             var $switch = $('.toggle-enable', $cell);
             $switch.removeClass('js-hide').click(function() {
               if (!$(this).hasClass('disabled')) {
-                $(':checkbox', $cell).click().change();
+                $checkbox.click();
               }
             });
-            $(':checkbox', $cell).change(function() {
+            $checkbox.click(function() {
               if (!$switch.hasClass('disabled')) {
                 $switch.toggleClass('off');
               }

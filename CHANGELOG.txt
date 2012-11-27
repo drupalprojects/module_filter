@@ -1,3 +1,9 @@
+Module filter 7.x-x.x, 2012-11-27
+---------------------------------
+#1710230 by littlekoala, greenSkin: Fixed On | Off buttons does not change
+  state with jquery_update() module active.
+
+
 Module Filter 7.x-2.x, 2012-11-26
 ---------------------------------
 by greenSkin: Added description to filter textfield on permissions page.
