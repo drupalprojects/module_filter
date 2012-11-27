@@ -39,6 +39,14 @@ Drupal.behaviors.moduleFilterTabs = {
                 summary += '<span>' + Drupal.t('No modules added within the last week.') + '</span>';
               }
               break;
+            case 'recent':
+              name = Drupal.t('Recent');
+              title = Drupal.t('Modules enabled/disabled within the last week.');
+              if (Drupal.settings.moduleFilter.enabledCounts['recent'].total == 0) {
+                tabClass += ' disabled';
+                summary += '<span>' + Drupal.t('No modules enabled or disabled within the last week.') + '</span>';
+              }
+              break;
             default: 
               var $row = $('#' + id + '-package');
               name = $.trim($row.text());
@@ -90,6 +98,7 @@ Drupal.behaviors.moduleFilterTabs = {
         moduleFilter.element.bind('moduleFilter:start', function() {
           moduleFilter.tabResults = {
             'all-tab': { items: {}, count: 0 },
+            'recent-tab': { items: {}, count: 0 },
             'new-tab': { items: {}, count: 0 }
           };
 
@@ -113,6 +122,11 @@ Drupal.behaviors.moduleFilterTabs = {
                 // All tab
                 moduleFilter.tabResults['all-tab'].count++;
 
+                // Recent tab
+                if (item.element.hasClass('recent-module')) {
+                  moduleFilter.tabResults['recent-tab'].count++;
+                }
+
                 // New tab
                 if (item.element.hasClass('new-module')) {
                   moduleFilter.tabResults['new-tab'].count++;
@@ -123,7 +137,7 @@ Drupal.behaviors.moduleFilterTabs = {
               }
 
               if (Drupal.ModuleFilter.activeTab != undefined && Drupal.ModuleFilter.activeTab.id != 'all-tab') {
-                if ((Drupal.ModuleFilter.activeTab.id == 'new-tab' && !item.element.hasClass('new-module')) || (Drupal.ModuleFilter.activeTab.id != 'new-tab' && id != Drupal.ModuleFilter.activeTab.id)) {
+                if ((Drupal.ModuleFilter.activeTab.id == 'recent-tab' && !item.element.hasClass('recent-module')) || (Drupal.ModuleFilter.activeTab.id == 'new-tab' && !item.element.hasClass('new-module')) || (Drupal.ModuleFilter.activeTab.id != 'recent-tab' && Drupal.ModuleFilter.activeTab.id != 'new-tab' && id != Drupal.ModuleFilter.activeTab.id)) {
                   // The item is not in the active tab, so hide it.
                   item.element.addClass('js-hide');
                 }

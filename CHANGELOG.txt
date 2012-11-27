@@ -1,5 +1,6 @@
 Module filter 7.x-x.x, 2012-11-27
 ---------------------------------
+by greenSkin: Added functionality to show recently enabled/disabled modules.
 #1710230 by littlekoala, greenSkin: Fixed On | Off buttons does not change
   state with jquery_update() module active.
 
