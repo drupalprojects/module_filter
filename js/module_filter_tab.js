@@ -44,7 +44,7 @@ Drupal.behaviors.moduleFilterTabs = {
               title = Drupal.t('Modules enabled/disabled within the last week.');
               if (Drupal.settings.moduleFilter.enabledCounts['recent'].total == 0) {
                 tabClass += ' disabled';
-                summary += '<span>' + Drupal.t('No modules enabled or disabled within the last week.') + '</span>';
+                summary += '<span>' + Drupal.t('No modules were enabled or disabled within the last week.') + '</span>';
               }
               break;
             default: 

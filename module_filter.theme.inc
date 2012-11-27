@@ -77,7 +77,7 @@ function theme_module_filter_system_modules_tabs($variables) {
     t('Description')
   );
   $package_ids = array('all');
-  $enabled['all'] = $enabled['new'] = array();
+  $enabled['all'] = array();
 
   if (variable_get('module_filter_track_recent_modules', 1)) {
     $recent_modules = array_filter(variable_get('module_filter_recent_modules', array()), 'module_filter_recent_filter');
@@ -85,11 +85,13 @@ function theme_module_filter_system_modules_tabs($variables) {
     variable_get('module_filter_recent_modules', $recent_modules);
 
     $package_ids[] = 'recent';
+    $enabled['recent'] = array();
   }
 
   // Determine what modules are new (within a week).
   $new_modules = module_filter_new_modules();
   $package_ids[] = 'new';
+  $enabled['new'] = array();
 
   $rows = array();
   $flip = array('even' => 'odd', 'odd' => 'even');
