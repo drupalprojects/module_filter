@@ -1,4 +1,10 @@
-Module filter 7.x-2.x, 2012-11-27
+Module Filter 7.x-2.x, 2013-01-04
+---------------------------------
+by greenSkin: Fixed issue relating to row coloring when enabling/disabling
+  modules via switch due to recent fix for jQuery Update module.
+
+
+Module Filter 7.x-2.x, 2012-11-27
 ---------------------------------
 by greenSkin: Added functionality to show recently enabled/disabled modules.
 #1710230 by littlekoala, greenSkin: Fixed On | Off buttons does not change

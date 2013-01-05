@@ -5,6 +5,40 @@ Drupal.ModuleFilter.tabs = {};
 Drupal.ModuleFilter.enabling = {};
 Drupal.ModuleFilter.disabling = {};
 
+Drupal.ModuleFilter.jQueryIsNewer = function() {
+  if (Drupal.ModuleFilter.jQueryNewer == undefined) {
+    var v1parts = $.fn.jquery.split('.');
+    var v2parts = new Array('1', '4', '4');
+
+    for (var i = 0; i < v1parts.length; ++i) {
+      if (v2parts.length == i) {
+        Drupal.ModuleFilter.jQueryNewer = true;
+        return Drupal.ModuleFilter.jQueryNewer;
+      }
+
+      if (v1parts[i] == v2parts[i]) {
+        continue;
+      }
+      else if (v1parts[i] > v2parts[i]) {
+        Drupal.ModuleFilter.jQueryNewer = true;
+        return Drupal.ModuleFilter.jQueryNewer;
+      }
+      else {
+        Drupal.ModuleFilter.jQueryNewer = false;
+        return Drupal.ModuleFilter.jQueryNewer;
+      }
+    }
+
+    if (v1parts.length != v2parts.length) {
+      Drupal.ModuleFilter.jQueryNewer = false;
+      return Drupal.ModuleFilter.jQueryNewer;
+    }
+
+    Drupal.ModuleFilter.jQueryNewer = false;
+  }
+  return Drupal.ModuleFilter.jQueryNewer;
+};
+
 Drupal.behaviors.moduleFilterTabs = {
   attach: function(context) {
     if (Drupal.settings.moduleFilter.tabs) {
@@ -66,7 +100,7 @@ Drupal.behaviors.moduleFilterTabs = {
           Drupal.ModuleFilter.tabs[id] = new Drupal.ModuleFilter.Tab($tab, id);
         });
 
-        $('#module-filter-modules tbody td.checkbox input').click(function() {
+        $('#module-filter-modules tbody td.checkbox input').change(function() {
           var $checkbox = $(this);
           var key = $checkbox.parents('tr').data('indexKey');
 
@@ -201,7 +235,12 @@ Drupal.behaviors.moduleFilterTabs = {
             var $switch = $('.toggle-enable', $cell);
             $switch.removeClass('js-hide').click(function() {
               if (!$(this).hasClass('disabled')) {
-                $checkbox.click();
+                if (Drupal.ModuleFilter.jQueryIsNewer()) {
+                  $checkbox.click();
+                }
+                else {
+                  $checkbox.click().change();
+                }
               }
             });
             $checkbox.click(function() {
