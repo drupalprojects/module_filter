@@ -1,5 +1,6 @@
 Module Filter 7.x-1.x, 2013-08-08
 ---------------------------------
+#1933384 by kaidjohnson: Fixed jQuery UI button breaks functionality.
 #1166414 by greenSkin: Fixed module filter + tabs disabled = broken modules
   page.
 
