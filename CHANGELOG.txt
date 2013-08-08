@@ -1,5 +1,7 @@
 Module Filter 7.x-2.x, xxxx-xx-xx
 ---------------------------------
+by greenSkin: Changed the title for the 'module_filter_dynamic_save_position'
+  checkbox to make it clearer what it does.
 #1166414 by greenSkin: Fixed broken submit when tabs are disabled. We no longer
   reroute the theme of the system modules page unless tabs are enabled.
 by greenSkin: Fixed issue on Available updates page where the update state
