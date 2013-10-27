@@ -224,7 +224,7 @@ Drupal.behaviors.moduleFilterTabs = {
           $(window).bind('hashchange.module-filter', $.proxy(Drupal.ModuleFilter, 'eventHandlerOperateByURLFragment')).triggerHandler('hashchange.module-filter');
         }
         else {
-          Drupal.ModuleFilter.selectTab('all');
+          Drupal.ModuleFilter.selectTab();
         }
 
         if (Drupal.settings.moduleFilter.useSwitch) {
@@ -288,7 +288,16 @@ Drupal.ModuleFilter.Tab = function(element, id) {
 
 Drupal.ModuleFilter.selectTab = function(hash) {
   if (!hash || Drupal.ModuleFilter.tabs[hash + '-tab'] == undefined || Drupal.settings.moduleFilter.enabledCounts[hash].total == 0) {
-    hash = 'all';
+    if (Drupal.settings.moduleFilter.rememberActiveTab) {
+      var activeTab = Drupal.ModuleFilter.getState('activeTab');
+      if (activeTab && Drupal.ModuleFilter.tabs[activeTab + '-tab'] != undefined) {
+        hash = activeTab;
+      }
+    }
+
+    if (!hash) {
+      hash = 'all';
+    }
   }
 
   if (Drupal.ModuleFilter.activeTab != undefined) {
@@ -300,6 +309,8 @@ Drupal.ModuleFilter.selectTab = function(hash) {
 
   var moduleFilter = $('input[name="module_filter[name]"]').data('moduleFilter');
   moduleFilter.applyFilter();
+
+  Drupal.ModuleFilter.setState('activeTab', hash);
 };
 
 Drupal.ModuleFilter.eventHandlerOperateByURLFragment = function(event) {
