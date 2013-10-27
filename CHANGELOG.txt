@@ -1,5 +1,7 @@
 Module Filter 7.x-2.x, xxxx-xx-xx
 ---------------------------------
+#1854348 by alexweber, greenSkin: Make filter textfield wider on modules page
+  when viewing as tabs.
 by greenSkin: Fixed what was suppose to be a call to variable_set().
 #1370492 by greenSkin: Remember selected tab after modules form submit.
 
