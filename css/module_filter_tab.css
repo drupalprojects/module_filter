@@ -134,3 +134,7 @@ table.package tr.enabling {
 table.package tr.disabling {
   background-color: #fcc;
 }
+#module-filter-wrapper span.module-machine-name {
+  font-size: 0.9em;
+  font-weight: normal;
+}

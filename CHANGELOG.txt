@@ -1,3 +1,8 @@
+Module Filter 7.x-1.x, 2013-10-26
+---------------------------------
+#1310440 by mossy2100, greenSkin: Show module machine name in Name column.
+
+
 Module Filter 7.x-1.8, 2013-08-08
 ---------------------------------
 by greenSkin: Changed the title for the 'module_filter_dynamic_save_position'

@@ -23,7 +23,7 @@ function theme_module_filter_modules_table($variables) {
     if (isset($module['enable']['#id'])) {
       $label .= ' for="'. $module['enable']['#id'] .'"';
     }
-    $row[] = $label .'><strong>' . drupal_render($module['name']) . '</strong></label>';
+    $row[] = $label . '><strong>' . drupal_render($module['name']) . '</strong><br><span class="module-machine-name">(' . $key . ')</span></label>';
     $row[] = drupal_render($module['version']);
     // Add the description, along with any modules it requires.
     $description = drupal_render($module['description']);
