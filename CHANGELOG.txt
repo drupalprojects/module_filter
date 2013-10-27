@@ -1,5 +1,6 @@
 Module Filter 7.x-2.x, xxxx-xx-xx
 ---------------------------------
+by greenSkin: Fixed what was suppose to be a call to variable_set().
 #1370492 by greenSkin: Remember selected tab after modules form submit.
 
 
