@@ -249,3 +249,12 @@ html.js .toggle-enable div:after {
 html.js .toggle-enable.off div {
   left: 24px;
 }
+
+#module-filter-tabs.top-fixed {
+  position: fixed;
+  top: 0;
+}
+#module-filter-tabs.bottom-fixed {
+  position: fixed;
+  bottom: 0;
+}
