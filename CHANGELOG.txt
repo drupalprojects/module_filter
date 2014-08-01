@@ -1,5 +1,6 @@
 Module Filter 7.x-2.x, xxxx-xx-xx
 ---------------------------------
+#2235553 by greenSkin: Fixed latest jquery_update breaks module filter.
 #2304687 by mpdonadio: Fixed Remove hardcoded operations.
 #2293029 by topsitemakers: Fixed Take header offset into account when selecting
   a tab.
