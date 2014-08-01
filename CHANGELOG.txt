@@ -1,3 +1,9 @@
+Module Filter 7.x-2.x, xxxx-xx-xx
+---------------------------------
+#2290213 by topsitemakers: Minor typo in description - "has no affect" -> "has
+  no effect".
+
+
 Module Filter 7.x-2.0-alpha2, 2013-12-06
 ----------------------------------------
 #2141743, #2141743 by greenSkin: Fixed issues related to the new dynamically
