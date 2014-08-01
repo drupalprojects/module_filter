@@ -1,5 +1,7 @@
 Module Filter 7.x-2.x, xxxx-xx-xx
 ---------------------------------
+#2293029 by topsitemakers: Fixed Take header offset into account when selecting
+  a tab.
 #2290213 by topsitemakers: Minor typo in description - "has no affect" -> "has
   no effect".
 
