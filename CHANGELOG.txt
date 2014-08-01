@@ -1,3 +1,8 @@
+Module Filter 7.x-1.x, xxxx-xx-xx
+---------------------------------
+#2303379 by jobjol: Category of module_filter.
+
+
 Module Filter 7.x-1.x, 2013-10-26
 ---------------------------------
 #1310440 by mossy2100, greenSkin: Show module machine name in Name column.
