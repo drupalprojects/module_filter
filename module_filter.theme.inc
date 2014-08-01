@@ -159,7 +159,7 @@ function theme_module_filter_operations(&$vars) {
   $dropbutton = $vars['dropbutton'];
 
   $operations = array();
-  foreach (array('configure', 'permissions', 'help') as $key) {
+  foreach (element_children($links) as $key) {
     if ($dropbutton) {
       hide($links[$key]);
       if (!empty($links[$key]['#href'])) {
