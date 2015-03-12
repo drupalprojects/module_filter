@@ -1,3 +1,8 @@
+Module Filter 7.x-2.x, xxxx-xx-xx
+---------------------------------
+Issue #2113191 by joelpittet: Category tabs not working.
+
+
 Module Filter 7.x-2.0, 2015-02-22
 ---------------------------------
 Simplifying the table rows by hiding version and requirements until a
