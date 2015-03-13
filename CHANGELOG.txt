@@ -1,4 +1,4 @@
-Module Filter 7.x-2.x, xxxx-xx-xx
+Module Filter 7.x-2.x, 2015-03-12
 ---------------------------------
 Added option to show description as expanded by default.
 Improved description field so when it is open, interacting with it's contents
