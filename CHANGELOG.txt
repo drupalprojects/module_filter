@@ -1,5 +1,7 @@
 Module Filter 7.x-2.x, xxxx-xx-xx
 ---------------------------------
+Improved description field so when it is open, interacting with it's contents
+  does not make it collapse.
 Placed collapsed/expanded images inside of module for easier, more reliable
   access.
 Added option to place version in own column.

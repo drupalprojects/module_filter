@@ -6,6 +6,11 @@ Drupal.behaviors.moduleFilter = {
       $('.inner.expand', $(this)).click(function() {
         $(this).toggleClass('expanded');
       });
+      $('.inner.expand', $(this)).children().click(function(e) {
+        if ($(this).parent().hasClass('expanded')) {
+          e.stopPropagation();
+        }
+      });
     });
 
     $('.module-filter-inputs-wrapper', context).once('module-filter', function() {

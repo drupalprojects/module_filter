@@ -32,6 +32,9 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+#system-modules .description .inner.expanded > * {
+  cursor: auto;
+}
 #system-modules .description .requirements,
 #system-modules .description .links {
   display: none;
