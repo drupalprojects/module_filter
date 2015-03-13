@@ -37,6 +37,9 @@ function theme_module_filter_system_modules_tabs($variables) {
     array('data' => t('Description'), 'class' => array('description')),
     array('data' => t('Links'), 'class' => array('links')),
   );
+  if (variable_get('module_filter_version_column', 0)) {
+    array_splice($header, 2, 0, array(array('data' => t('Version'), 'class' => array('version'))));
+  }
   $package_ids = array('all');
   $enabled['all'] = array();
 
@@ -106,7 +109,12 @@ function theme_module_filter_system_modules_tabs($variables) {
       if ($version || $requires || $required_by) {
         $description .= '<div class="requirements">';
         if ($version) {
-          $description .= '<div class="admin-requirements">' . t('Version: !module-version', array('!module-version' => drupal_render($module['version']))) . '</div>';
+          if (!variable_get('module_filter_version_column', 0)) {
+            $description .= '<div class="admin-requirements">' . t('Version: !module-version', array('!module-version' => drupal_render($module['version']))) . '</div>';
+          }
+          else {
+            $row[] = array('class' => array('version'), 'data' => drupal_render($module['version']));
+          }
         }
         if ($requires) {
           $description .= '<div class="admin-requirements">' . t('Requires: !module-list', array('!module-list' => implode(', ', $module['#requires']))) . '</div>';

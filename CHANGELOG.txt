@@ -1,5 +1,6 @@
 Module Filter 7.x-2.x, xxxx-xx-xx
 ---------------------------------
+Added option to place version in own column.
 Issue #2113191 by joelpittet: Category tabs not working.
 
 

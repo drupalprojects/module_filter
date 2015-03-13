@@ -7,6 +7,9 @@
 #system-modules th.name {
   width: 25%;
 }
+#system-modules th.version {
+  width: 10%;
+}
 #system-modules th.links {
   width: 15%;
 }
