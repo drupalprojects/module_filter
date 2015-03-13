@@ -3,8 +3,8 @@
 Drupal.behaviors.moduleFilter = {
   attach: function(context) {
     $('#system-modules td.description').once('description', function() {
-      $('.inner.expand', $(this)).click(function() {
-        $(this).toggleClass('expanded');
+      $(this).click(function() {
+        $('.inner.expand', $(this)).toggleClass('expanded');
       });
       $('.inner.expand', $(this)).children().click(function(e) {
         if ($(this).parent().hasClass('expanded')) {
