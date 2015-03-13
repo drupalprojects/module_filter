@@ -17,12 +17,12 @@
   vertical-align: top;
 }
 #system-modules .expand.inner {
-  background: transparent url(/misc/menu-collapsed.png) left 0.6em no-repeat;
+  background: transparent url(../images/collapsed.png) left 0.6em no-repeat;
   margin-left: -12px;
   padding-left: 12px;
 }
 #system-modules .expanded.expand.inner {
-  background: transparent url(/misc/menu-expanded.png) left 0.6em no-repeat;
+  background: transparent url(../images/expanded.png) left 0.6em no-repeat;
 }
 #system-modules .description {
   cursor: pointer;
