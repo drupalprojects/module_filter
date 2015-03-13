@@ -88,6 +88,12 @@ function module_filter_settings() {
     '#description' => t("Moves the version out of the description and into it's own column"),
     '#default_value' => variable_get('module_filter_version_column', 0),
   );
+  $form['tabs']['module_filter_expanded_description'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Expand description by default'),
+    '#description' => t('When enabled, the description will be expanded by default.'),
+    '#default_value' => variable_get('module_filter_expanded_description', 0),
+  );
 
   $form['update'] = array(
     '#type' => 'fieldset',
