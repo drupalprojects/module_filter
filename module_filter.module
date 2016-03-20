@@ -194,6 +194,7 @@ function form_process_module_filter($element, &$form_state) {
               'trackRecent' => variable_get('module_filter_track_recent_modules', 1),
               'rememberActiveTab' => variable_get('module_filter_remember_active_tab', 1),
               'rememberUpdateState' => variable_get('module_filter_remember_update_state', 0),
+              'expandedDescription' => variable_get('module_filter_expanded_description', 0),
             ),
           ),
           'type' => 'setting',
