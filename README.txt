@@ -33,7 +33,7 @@ Configuration
 -------------
 To enable and configure this module do the following:
 
-1. Go to Admin -> Modules, and enable Module Filter.
+1. Go to Admin -> Extend, and enable Module Filter.
 
 2. Go to Admin -> Configuration -> User interface -> Module filter, and make
    any necessary configuration changes. 

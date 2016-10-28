@@ -1,5 +1,5 @@
 
-(function ($) {
+(function ($, Drupal, drupalSettings) {
 
 Drupal.ModuleFilter.tabs = {};
 Drupal.ModuleFilter.enabling = {};
@@ -41,8 +41,9 @@ Drupal.ModuleFilter.jQueryIsNewer = function() {
 
 Drupal.behaviors.moduleFilterTabs = {
   attach: function(context) {
-    if (Drupal.settings.moduleFilter.tabs) {
-      $('#module-filter-wrapper table:not(.sticky-header)', context).once('module-filter-tabs', function() {
+    if (drupalSettings.moduleFilter.tabs) {
+      $(context).find('#module-filter-wrapper table:not(.sticky-header)').once('module-filter-tabs').each(function() {
+      //$('#module-filter-wrapper table:not(.sticky-header)', context).once('module-filter-tabs', function() {
         var $modules = $('#module-filter-modules');
         var moduleFilter = $('input[name="module_filter[name]"]').data('moduleFilter');
         var table = $(this);
@@ -56,13 +57,13 @@ Drupal.behaviors.moduleFilterTabs = {
 
         // Build tabs from package title rows.
         var tabs = '<ul>';
-        for (var i in Drupal.settings.moduleFilter.packageIDs) {
-          var id = Drupal.settings.moduleFilter.packageIDs[i];
+        for (var i in drupalSettings.moduleFilter.packageIDs) {
+          var id = drupalSettings.moduleFilter.packageIDs[i];
 
           var name = id;
           var tabClass = 'project-tab';
           var title = null;
-          var summary = (Drupal.settings.moduleFilter.countEnabled) ? '<span class="count">' + Drupal.ModuleFilter.countSummary(id) + '</span>' : '';
+          var summary = (drupalSettings.moduleFilter.countEnabled) ? '<span class="count">' + Drupal.ModuleFilter.countSummary(id) + '</span>' : '';
 
           switch (id) {
             case 'all':
@@ -71,7 +72,7 @@ Drupal.behaviors.moduleFilterTabs = {
             case 'new':
               name = Drupal.t('New');
               title = Drupal.t('Modules installed within the last week.');
-              if (Drupal.settings.moduleFilter.enabledCounts['new'].total == 0) {
+              if (drupalSettings.moduleFilter.enabledCounts['new'].total == 0) {
                 tabClass += ' disabled';
                 summary += '<span>' + Drupal.t('No modules added within the last week.') + '</span>';
               }
@@ -79,7 +80,7 @@ Drupal.behaviors.moduleFilterTabs = {
             case 'recent':
               name = Drupal.t('Recent');
               title = Drupal.t('Modules enabled/disabled within the last week.');
-              if (Drupal.settings.moduleFilter.enabledCounts['recent'].total == 0) {
+              if (drupalSettings.moduleFilter.enabledCounts['recent'].total == 0) {
                 tabClass += ' disabled';
                 summary += '<span>' + Drupal.t('No modules were enabled or disabled within the last week.') + '</span>';
               }
@@ -110,7 +111,7 @@ Drupal.behaviors.moduleFilterTabs = {
 
           moduleFilter.index[key].status = $checkbox.is(':checked');
 
-          if (Drupal.settings.moduleFilter.visualAid) {
+          if (drupalSettings.moduleFilter.visualAid) {
             var type = ($checkbox.is(':checked')) ? 'enable' : 'disable';
             Drupal.ModuleFilter.updateVisualAid(type, $checkbox.parents('tr'));
           }
@@ -183,7 +184,7 @@ Drupal.behaviors.moduleFilterTabs = {
             }
           });
 
-          if (Drupal.settings.moduleFilter.visualAid) {
+          if (drupalSettings.moduleFilter.visualAid) {
             if (moduleFilter.text) {
               // Add result info to tabs.
               for (var id in moduleFilter.tabResults) {
@@ -198,7 +199,7 @@ Drupal.behaviors.moduleFilterTabs = {
                 tab.resultInfo.append(moduleFilter.tabResults[id].count);
               }
 
-              if (Drupal.settings.moduleFilter.hideEmptyTabs) {
+              if (drupalSettings.moduleFilter.hideEmptyTabs) {
                 for (var id in Drupal.ModuleFilter.tabs) {
                   if (moduleFilter.tabResults[id] != undefined) {
                     Drupal.ModuleFilter.tabs[id].element.show();
@@ -211,7 +212,7 @@ Drupal.behaviors.moduleFilterTabs = {
             }
             else {
               // Make sure all tabs are visible.
-              if (Drupal.settings.moduleFilter.hideEmptyTabs) {
+              if (drupalSettings.moduleFilter.hideEmptyTabs) {
                 $('#module-filter-tabs li').show();
               }
             }
@@ -225,14 +226,14 @@ Drupal.behaviors.moduleFilterTabs = {
           moduleFilter.adjustHeight();
         });
 
-        if (Drupal.settings.moduleFilter.useURLFragment) {
+        if (drupalSettings.moduleFilter.useURLFragment) {
           $(window).bind('hashchange.module-filter', $.proxy(Drupal.ModuleFilter, 'eventHandlerOperateByURLFragment')).triggerHandler('hashchange.module-filter');
         }
         else {
           Drupal.ModuleFilter.selectTab();
         }
 
-        if (Drupal.settings.moduleFilter.useSwitch) {
+        if (drupalSettings.moduleFilter.useSwitch) {
           $('td.checkbox div.form-item').hide();
           $('td.checkbox').each(function(i) {
             var $cell = $(this);
@@ -242,12 +243,15 @@ Drupal.behaviors.moduleFilterTabs = {
               if (!$(this).hasClass('disabled')) {
                 if (Drupal.ModuleFilter.jQueryIsNewer()) {
                   $checkbox.click();
-                  $switch.toggleClass('off');
                 }
                 else {
                   $checkbox.click().change();
-                  $switch.toggleClass('off');
                 }
+              }
+            });
+            $checkbox.click(function() {
+              if (!$switch.hasClass('disabled')) {
+                $switch.toggleClass('off');
               }
             });
           });
@@ -319,7 +323,7 @@ Drupal.behaviors.moduleFilterTabs = {
             if (pageActionsHeight > 0) {
               style = 'bottom: ' + pageActionsHeight + 'px';
             }
-            else if (Drupal.settings.moduleFilter.dynamicPosition) {
+            else if (drupalSettings.moduleFilter.dynamicPosition) {
               // style = 'bottom: ' + $('#module-filter-submit', $tabs).height() + 'px';
             }
             $tabs.attr('style', style);
@@ -364,7 +368,7 @@ Drupal.ModuleFilter.Tab = function(element, id) {
   this.element = element;
 
   $('a', this.element).click(function() {
-    if (!Drupal.settings.moduleFilter.useURLFragment) {
+    if (!drupalSettings.moduleFilter.useURLFragment) {
       var hash = (!self.element.hasClass('selected')) ? self.hash : 'all';
       Drupal.ModuleFilter.selectTab(hash);
       return false;
@@ -388,8 +392,8 @@ Drupal.ModuleFilter.Tab = function(element, id) {
 };
 
 Drupal.ModuleFilter.selectTab = function(hash) {
-  if (!hash || Drupal.ModuleFilter.tabs[hash + '-tab'] == undefined || Drupal.settings.moduleFilter.enabledCounts[hash].total == 0) {
-    if (Drupal.settings.moduleFilter.rememberActiveTab) {
+  if (!hash || Drupal.ModuleFilter.tabs[hash + '-tab'] == undefined || drupalSettings.moduleFilter.enabledCounts[hash].total == 0) {
+    if (drupalSettings.moduleFilter.rememberActiveTab) {
       var activeTab = Drupal.ModuleFilter.getState('activeTab');
       if (activeTab && Drupal.ModuleFilter.tabs[activeTab + '-tab'] != undefined) {
         hash = activeTab;
@@ -418,7 +422,7 @@ Drupal.ModuleFilter.selectTab = function(hash) {
     // Calculate header offset; this is important in case the site is using
     // admin_menu module which has fixed positioning and is on top of everything
     // else.
-    var headerOffset = Drupal.settings.tableHeaderOffset ? eval(Drupal.settings.tableHeaderOffset + '()') : 0;
+    var headerOffset = drupalSettings.tableHeaderOffset ? eval(drupalSettings.tableHeaderOffset + '()') : 0;
     // Scroll back to top of #module-filter-modules.
     $('html, body').animate({
       scrollTop: Drupal.ModuleFilter.modulesTop - headerOffset
@@ -430,12 +434,12 @@ Drupal.ModuleFilter.selectTab = function(hash) {
 };
 
 Drupal.ModuleFilter.eventHandlerOperateByURLFragment = function(event) {
-  var hash = $.param.fragment();
+  var hash = window.location.hash.substring(1);//$.param.fragment();
   Drupal.ModuleFilter.selectTab(hash);
 };
 
 Drupal.ModuleFilter.countSummary = function(id) {
-  return Drupal.t('@enabled of @total', { '@enabled': Drupal.settings.moduleFilter.enabledCounts[id].enabled, '@total': Drupal.settings.moduleFilter.enabledCounts[id].total });
+  return Drupal.t('@enabled of @total', { '@enabled': drupalSettings.moduleFilter.enabledCounts[id].enabled, '@total': drupalSettings.moduleFilter.enabledCounts[id].total });
 };
 
 Drupal.ModuleFilter.Tab.prototype.updateEnabling = function(name, remove) {
@@ -556,4 +560,4 @@ Drupal.ModuleFilter.Filter.prototype.adjustHeight = function() {
   this.element.trigger('moduleFilter:adjustHeight');
 }
 
-})(jQuery);
+})(jQuery, Drupal, drupalSettings);

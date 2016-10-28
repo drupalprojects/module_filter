@@ -1,3 +1,7 @@
+Module Filter 8.x-1.x, 2016-10-28
+---------------------------------
+Issue #2141121 by shumushin: Initial D8 port
+
 Module Filter 7.x-2.x, 2016-03-20
 ---------------------------------
 Issue #2452067 by Madis: Option to show description expanded as default

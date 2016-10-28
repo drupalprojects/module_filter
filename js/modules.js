@@ -1,22 +1,17 @@
-(function($) {
+(function($, Drupal, drupalSettings) {
 
 Drupal.behaviors.moduleFilter = {
   attach: function(context) {
-    $('#system-modules td.description').once('description', function() {
-      $(this).click(function() {
-        $('.inner.expand', $(this)).toggleClass('expanded');
-      });
-      $('.inner.expand', $(this)).children().click(function(e) {
-        if ($(this).parent().hasClass('expanded')) {
-          e.stopPropagation();
-        }
+    $(context).find('#system-modules td.description').once('description').each(function() {
+      $('.inner.expand', $(this)).click(function() {
+        $(this).toggleClass('expanded');
       });
     });
 
-    $('.module-filter-inputs-wrapper', context).once('module-filter', function() {
+    $(context).find('.module-filter-inputs-wrapper').once('module-filter').each(function() {
       var filterInput = $('input[name="module_filter[name]"]', context);
       var selector = '#system-modules table tbody tr';
-      if (Drupal.settings.moduleFilter.tabs) {
+      if (drupalSettings.moduleFilter.tabs) {
         selector += '.module';
       }
 
@@ -133,7 +128,7 @@ Drupal.behaviors.moduleFilter = {
         moduleFilter.applyFilter();
       });
 
-      if (!Drupal.settings.moduleFilter.tabs) {
+      if (!drupalSettings.moduleFilter.tabs) {
         moduleFilter.element.bind('moduleFilter:start', function() {
           $('#system-modules fieldset').show();
         });
@@ -178,4 +173,4 @@ Drupal.ModuleFilter.getRequirements = function(element) {
   return { requires: requires, requiredBy: requiredBy };
 };
 
-})(jQuery);
+})(jQuery, Drupal, drupalSettings);

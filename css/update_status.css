@@ -16,3 +16,6 @@ p.module-filter-no-results {
   clear: both;
   padding-top: 30px;
 }
+.module-filter-inputs-wrapper {
+  display: block;
+}
