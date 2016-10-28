@@ -1,0 +1,31 @@
+winnow:
+  version: VERSION
+  js:
+    js/jquery.winnow.js: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.ui.autocomplete
+modules:
+  version: VERSION
+  js:
+    js/module_filter.modules.js: {}
+  css:
+    theme:
+      css/module_filter.modules.css: {}
+  dependencies:
+    - module_filter/winnow
+modules.uninstall:
+  version: VERSION
+  js:
+    js/module_filter.modules_uninstall.js: {}
+  dependencies:
+    - module_filter/winnow
+update.status:
+  version: VERSION
+  js:
+    js/module_filter.update_status.js: {}
+  css:
+    theme:
+      css/module_filter.update_status.css: {}
+  dependencies:
+    - module_filter/winnow
