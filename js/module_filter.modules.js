@@ -12,7 +12,7 @@
    */
   Drupal.behaviors.moduleFilterModules = {
     attach: function(context, settings) {
-      var $input = $('input.table-filter-text').once('module-filter');
+      var $input = $('input.table-filter-text', context).once('module-filter');
       if ($input.length) {
         var selector = 'tbody tr';
         var wrapperId = $input.attr('data-table');

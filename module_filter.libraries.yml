@@ -29,3 +29,9 @@ update.status:
       css/module_filter.update_status.css: {}
   dependencies:
     - module_filter/winnow
+permissions:
+  version: VERSION
+  js:
+    js/module_filter.permissions.js: {}
+  dependencies:
+    - module_filter/winnow

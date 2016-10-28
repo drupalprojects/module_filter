@@ -57,6 +57,32 @@ function module_filter_form_system_modules_uninstall_alter(&$form, \Drupal\Core\
 }
 
 /**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function module_filter_form_user_admin_permissions_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  $form['filters'] = [
+    '#type' => 'container',
+    '#attributes' => [
+      'class' => ['table-filter', 'js-show'],
+    ],
+  ];
+  $form['filters']['text'] = [
+    '#type' => 'search',
+    '#title' => t('Filter modules'),
+    '#title_display' => 'invisible',
+    '#size' => 30,
+    '#placeholder' => t('Filter by name'),
+    '#attributes' => [
+      'class' => ['table-filter-text'],
+      'data-table' => '#permissions',
+      'autocomplete' => 'off',
+    ],
+    '#weight' => -1000,
+  ];
+  $form['#attached']['library'][] = 'module_filter/permissions';
+}
+
+/**
  * Implements hook_theme_registry_alter().
  */
 function module_filter_theme_registry_alter(&$theme_registry) {

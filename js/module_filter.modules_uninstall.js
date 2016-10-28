@@ -12,11 +12,11 @@
    */
   Drupal.behaviors.moduleFilterModulesUninstall = {
     attach: function(context, settings) {
-      var $input = $('input.table-filter-text').once('module-filter');
+      var $input = $('input.table-filter-text', context).once('module-filter');
       if ($input.length) {
-        var selector = 'tbody tr';
         var wrapperId = $input.attr('data-table');
         var $wrapper = $(wrapperId);
+        var selector = 'tbody tr';
 
         $wrapper.children('details').wrapAll('<div class="modules-uninstall-wrapper"></div>');
         var $modulesWrapper = $('.modules-uninstall-wrapper', $wrapper);
