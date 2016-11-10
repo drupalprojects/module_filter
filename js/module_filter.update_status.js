@@ -37,9 +37,10 @@
           });
 
           Drupal.announce(
-            Drupal.t(
-              '!projects projects are available in the modified list.',
-              {'!projects': $wrapper.find(selector + ':visible').length}
+            Drupal.formatPlural(
+              $wrapper.find(selector + ':visible').length,
+              '1 project is available in the modified list.',
+              '@count projects are available in the modified list.'
             )
           );
         });

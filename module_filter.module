@@ -5,17 +5,20 @@
  * Provides a filtering mechanism to various admin pages.
  */
 
+use Drupal\Core\Render\Element;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Implements hook_form_FORM_ID_alter().
  */
 function module_filter_form_system_modules_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $config = \Drupal::config('module_filter.settings');
+
   $key = array_search('system/drupal.system.modules', $form['#attached']['library']);
   if ($key !== FALSE) {
     unset($form['#attached']['library'][$key]);
   }
-  $form['#attached']['library'][] = 'module_filter/modules';
+  $form['#attached']['library'][] = $config->get('tabs') ? 'module_filter/modules.tabs' : 'module_filter/modules.bare';
   unset($form['filters']['text']['#description']);
   $form['filters']['text']['#placeholder'] = t('Filter by name');
 
@@ -41,6 +44,27 @@ function module_filter_form_system_modules_alter(&$form, FormStateInterface $for
       ),
     ),
   );
+
+  $state = \Drupal::state();
+  $recent = $state->get('module_filter.recent') ?: array();
+
+  // Remove recent items older than a week.
+  $recent = array_filter($recent, function ($val) {
+    return !($val < REQUEST_TIME - 60 * 60 * 24 * 7);
+  });
+  $state->set('module_filter.recent', $recent);
+
+  if (!empty($recent)) {
+    foreach ($recent as $module => $time) {
+      foreach (Element::children($form['modules']) as $package) {
+        if (isset($form['modules'][$package][$module])) {
+          $form['modules'][$package][$module]['#attributes']['class'][] = 'recent';
+        }
+      }
+    }
+  }
+
+  $form['#submit'][] = 'module_filter_system_modules_recent_enabled_submit';
 }
 
 /**
@@ -89,4 +113,28 @@ function module_filter_theme_registry_alter(&$theme_registry) {
   // We need to alter the system-modules-details template so we can add
   // applicable requires and required-by classes.
   $theme_registry['system_modules_details']['path'] = drupal_get_path('module', 'module_filter') . '/templates';
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function module_filter_preprocess_system_modules_details(&$variables) {
+}
+
+/**
+ * Form submit callback to track recently enabled modules.
+ */
+function module_filter_system_modules_recent_enabled_submit($form, FormStateInterface $form_state) {
+  $state = \Drupal::state();
+  $recent = $state->get('module_filter.recent') ?: array();
+
+  foreach ($form_state->getValue('modules') as $package => $modules) {
+    foreach ($modules as $module => $details) {
+      if ($form['modules'][$package][$module]['enable']['#default_value'] != $details['enable']) {
+        $recent[$module] = REQUEST_TIME;
+      }
+    }
+  }
+
+  $state->set('module_filter.recent', $recent);
 }

@@ -42,9 +42,10 @@
 
         $input.bind('winnow:finish', function() {
           Drupal.announce(
-            Drupal.t(
-              '!modules modules are available in the modified list.',
-              {'!modules': $modulesWrapper.find('tbody tr:visible').length}
+            Drupal.formatPlural(
+              $modulesWrapper.find(selector + ':visible').length,
+              '1 module is available in the modified list.',
+              '@count modules are available in the modified list.'
             )
           );
         });

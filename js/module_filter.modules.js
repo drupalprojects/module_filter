@@ -7,6 +7,9 @@
 
   'use strict';
 
+  Drupal.ModuleFilter = Drupal.ModuleFilter || {};
+  var ModuleFilter = Drupal.ModuleFilter;
+
   /**
    * Filter enhancements.
    */
@@ -14,24 +17,25 @@
     attach: function(context, settings) {
       var $input = $('input.table-filter-text', context).once('module-filter');
       if ($input.length) {
-        var selector = 'tbody tr';
-        var wrapperId = $input.attr('data-table');
-        var $wrapper = $(wrapperId);
-        var $enabled = $('.table-filter [name="checkboxes[enabled]"]', $wrapper);
-        var $disabled = $('.table-filter [name="checkboxes[disabled]"]', $wrapper);
-        var $unavailable = $('.table-filter [name="checkboxes[unavailable]"]', $wrapper);
+        ModuleFilter.input = $input;
+        ModuleFilter.selector = 'tbody tr';
+        ModuleFilter.wrapperId = ModuleFilter.input.attr('data-table');
+        ModuleFilter.wrapper = $(ModuleFilter.wrapperId);
+        var $enabled = $('.table-filter [name="checkboxes[enabled]"]', ModuleFilter.wrapper);
+        var $disabled = $('.table-filter [name="checkboxes[disabled]"]', ModuleFilter.wrapper);
+        var $unavailable = $('.table-filter [name="checkboxes[unavailable]"]', ModuleFilter.wrapper);
         var showEnabled = $enabled.is(':checked');
         var showDisabled = $disabled.is(':checked');
         var showUnavailable = $unavailable.is(':checked');
 
-        $wrapper.children('details').wrapAll('<div class="modules-wrapper"></div>');
-        var $modulesWrapper = $('.modules-wrapper', $wrapper);
+        ModuleFilter.wrapper.children('details').wrapAll('<div class="modules-wrapper"></div>');
+        ModuleFilter.modulesWrapper = $('.modules-wrapper', ModuleFilter.wrapper);
 
-        $input.winnow(wrapperId + ' ' + selector, {
+        ModuleFilter.input.winnow(ModuleFilter.wrapperId + ' ' + ModuleFilter.selector, {
           textSelector: 'td.module .module-name',
           emptyMessage: Drupal.t('No results'),
           clearLabel: Drupal.t('clear'),
-          wrapper: $modulesWrapper,
+          wrapper: ModuleFilter.modulesWrapper,
           buildIndex: [
             function(item) {
               var $checkbox = $('td.checkbox :checkbox', item.element);
@@ -115,49 +119,30 @@
             }
           ]
         }).focus();
+        ModuleFilter.winnow = ModuleFilter.input.data('winnow');
 
-        var $details = $modulesWrapper.children('details');
-        $input.bind('winnow:start', function() {
-          // Note that we first open all <details> to be able to use ':visible'.
-          // Mark the <details> elements that were closed before filtering, so
-          // they can be reclosed when filtering is removed.
-          $details.show().not('[open]').attr('data-module_filter-state', 'forced-open');
-        });
-        $input.bind('winnow:finish', function() {
-          // Hide the package <details> if they don't have any visible rows.
-          // Note that we first show() all <details> to be able to use ':visible'.
-          $details.attr('open', true).each(function(index, element) {
-            var $group = $(element);
-            var $visibleRows = $group.find(selector + ':visible');
-            $group.toggle($visibleRows.length > 0);
-          });
-
-          // Return <details> elements that had been closed before filtering
-          // to a closed state.
-          $details.filter('[data-module_filter-state="forced-open"]')
-            .removeAttr('data-module_filter-state')
-            .attr('open', false);
-
+        var $details = ModuleFilter.modulesWrapper.children('details');
+        ModuleFilter.input.bind('winnow:finish', function() {
           Drupal.announce(
-            Drupal.t(
-              '!modules modules are available in the modified list.',
-              {'!modules': $modulesWrapper.find(selector + ':visible').length}
+            Drupal.formatPlural(
+              ModuleFilter.modulesWrapper.find(ModuleFilter.selector + ':visible').length,
+              '1 module is available in the modified list.',
+              '@count modules are available in the modified list.'
             )
           );
         });
 
-        var winnow = $input.data('winnow');
         $enabled.change(function() {
           showEnabled = $enabled.is(':checked');
-          winnow.filter();
+          ModuleFilter.winnow.filter();
         });
         $disabled.change(function() {
           showDisabled = $disabled.is(':checked');
-          winnow.filter();
+          ModuleFilter.winnow.filter();
         });
         $unavailable.change(function() {
           showUnavailable = $unavailable.is(':checked');
-          winnow.filter();
+          ModuleFilter.winnow.filter();
         });
       }
     }

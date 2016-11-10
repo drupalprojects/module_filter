@@ -1,5 +1,10 @@
 (function($) {
 
+  'use strict';
+
+  /**
+   * Filter enhancements.
+   */
   Drupal.behaviors.moduleFilterPermissions = {
     attach: function(context) {
       var $input = $('input.table-filter-text', context).once('module-filter');

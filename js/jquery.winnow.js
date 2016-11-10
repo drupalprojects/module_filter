@@ -86,8 +86,10 @@
       self.options.wrapper = $(self.selector).parent();
     }
 
+    self.element.wrap('<div class="winnow-input"></div>');
+
     // Add clear button.
-    self.clearButton = $('<a href="#">' + self.options.clearLabel + '</a>');
+    self.clearButton = $('<a href="#" class="winnow-clear">' + self.options.clearLabel + '</a>');
     self.clearButton.css({
       'display': 'inline-block',
       'margin-left': '0.75em'
@@ -198,9 +200,9 @@
 
   Winnow.prototype.buildIndex = function() {
     var self = this;
-    var index = [];
+    this.index = [];
 
-    $(self.selector).each(function(i) {
+    $(self.selector, self.wrapper).each(function(i) {
       var text = (self.options.textSelector) ? $(self.options.textSelector, this).text() : $(this).text();
       var item = {
         key: i,
@@ -213,14 +215,24 @@
       }
 
       $(this).data('winnowIndex', i);
-      index.push(item);
+      self.index.push(item);
     });
 
-    return index;
+    return self.trigger('finishIndexing', [ self ]);
+  };
+
+  Winnow.prototype.bind = function() {
+    var args = arguments;
+    args[0] = 'winnow:' + args[0];
+
+    return this.element.bind.apply(this.element, args);
   };
 
   Winnow.prototype.trigger = function(event) {
-    return this.element.trigger.apply(this.element, arguments);
+    var args = arguments;
+    args[0] = 'winnow:' + args[0];
+
+    return this.element.trigger.apply(this.element, args);
   };
 
   Winnow.prototype.filter = function() {
@@ -230,10 +242,10 @@
     self.setQueries(self.element.val());
 
     if (self.index === undefined) {
-      self.index = self.buildIndex();
+      self.buildIndex();
     }
 
-    self.trigger('winnow:start');
+    var start = self.trigger('start');
 
     $.each(self.index, function(key, item) {
       var $item = item.element;
@@ -269,7 +281,7 @@
       $item.hide();
     });
 
-    self.trigger('winnow:finish', { results: self.results });
+    var finish = self.trigger('finish', [ self.results ]);
 
     if (self.options.striping) {
       stripe();
@@ -328,6 +340,7 @@
     this.element.val('');
     this.filter();
     this.clearButton.hide();
+    this.element.focus();
   };
 
   Winnow.prototype.getState = function(key) {
