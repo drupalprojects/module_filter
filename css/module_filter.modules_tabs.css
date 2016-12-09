@@ -70,6 +70,7 @@
   padding-top: 0.4em;
   color: #666;
   font-size: 0.846em;
+  line-height: 1em;
 }
 .modules-tabs__menu-item ul.enabling {
   display: block;
