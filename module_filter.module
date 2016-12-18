@@ -21,6 +21,9 @@ function module_filter_form_system_modules_alter(&$form, FormStateInterface $for
   $form['#attached']['library'][] = $config->get('tabs') ? 'module_filter/modules.tabs' : 'module_filter/modules.bare';
   unset($form['filters']['text']['#description']);
   $form['filters']['text']['#placeholder'] = t('Filter by name');
+  if (!empty($_GET['filter'])) {
+    $form['filters']['text']['#default_value'] = $_GET['filter'];
+  }
 
   $status_defaults = array(
     ((isset($_GET['enabled'])) ? $_GET['enabled'] : 1) ? 'enabled' : '',
@@ -65,6 +68,7 @@ function module_filter_form_system_modules_alter(&$form, FormStateInterface $for
   }
 
   $form['#submit'][] = 'module_filter_system_modules_recent_enabled_submit';
+  $form['#submit'][] = 'module_filter_system_modules_redirect_submit';
 }
 
 /**
@@ -78,6 +82,9 @@ function module_filter_form_system_modules_uninstall_alter(&$form, \Drupal\Core\
   $form['#attached']['library'][] = 'module_filter/modules.uninstall';
   unset($form['filters']['text']['#description']);
   $form['filters']['text']['#placeholder'] = t('Filter by name');
+  if (!empty($_GET['filter'])) {
+    $form['filters']['text']['#default_value'] = $_GET['filter'];
+  }
 }
 
 /**
@@ -103,6 +110,9 @@ function module_filter_form_user_admin_permissions_alter(&$form, \Drupal\Core\Fo
     ],
     '#weight' => -1000,
   ];
+  if (!empty($_GET['filter'])) {
+    $form['filters']['text']['#default_value'] = $_GET['filter'];
+  }
   $form['#attached']['library'][] = 'module_filter/permissions';
 }
 
@@ -137,4 +147,13 @@ function module_filter_system_modules_recent_enabled_submit($form, FormStateInte
   }
 
   $state->set('module_filter.recent', $recent);
+}
+
+/**
+ * Form submit callback for remembering the filter value.
+ */
+function module_filter_system_modules_redirect_submit($form, FormStateInterface $form_state) {
+  if ($text = $form_state->getValue('text')) {
+    $form_state->setRedirect('system.modules_list', array('filter' => $text));
+  }
 }

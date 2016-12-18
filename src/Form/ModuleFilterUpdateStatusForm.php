@@ -45,6 +45,9 @@ class ModuleFilterUpdateStatusForm extends FormBase {
         ],
       ],
     ];
+    if (!empty($_GET['filter'])) {
+      $form['filters']['text']['#default_value'] = $_GET['filter'];
+    }
 
     return $form;
   }
