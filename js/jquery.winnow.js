@@ -93,7 +93,10 @@
     self.clearButton.css({
       'display': 'inline-block',
       'margin-left': '0.75em'
-    }).hide();
+    });
+    if (self.element.val() == '') {
+      self.clearButton.hide();
+    }
     self.clearButton.click(function(e) {
       e.preventDefault();
 

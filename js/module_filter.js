@@ -14,7 +14,6 @@
     },
     getBoolean: function(key) {
       var item = Drupal.ModuleFilter.localStorage.getItem(key);
-      console.log(item);
 
       if (item != null) {
         return (item == 'true');
