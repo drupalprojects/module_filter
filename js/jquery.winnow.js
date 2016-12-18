@@ -343,41 +343,6 @@
     this.element.focus();
   };
 
-  Winnow.prototype.getState = function(key) {
-    if ($.cookie !== undefined) {
-      var cookie = $.cookie('winnow');
-      var query = cookie ? cookie.split('&') : [];
-      if (query) {
-        for (var i in query) {
-          // Extra check to avoid js errors in Chrome, IE and Safari when
-          // combined with JS like twitter's widget.js.
-          if (typeof(query[i]) == 'string' && query[i].indexOf('=') != -1) {
-            var value = query[i].split('=');
-            if (value.length === 2) {
-              winnow.state[value[0]] = value[1];
-            }
-          }
-        }
-      }
-    }
-
-    return winnow.state[key] ? winnow.state[key] : null;
-  };
-
-  Winnow.prototype.setState = function(key, value) {
-    var currentState = getState(key);
-    if (currentState != value) {
-      winnow.state[key] = value;
-      if ($.cookie !== undefined) {
-        var query = [];
-        for (var i in winnow.state) {
-          query.push(i + '=' + winnow.state[i]);
-        }
-        $.cookie('winnow', query.join('&'), { expires: 7, path: '/' });
-      }
-    }
-  };
-
   $.fn.winnow = function(selector, options) {
     var $input = this.not('.winnow-processed').addClass('winnow-processed');
 
