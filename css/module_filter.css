@@ -11,6 +11,7 @@
   bottom: 0;
   right: 2px;
   left: auto;
+  text-align: left;
   text-indent: -9999px;
 }
 .winnow-clear:after {

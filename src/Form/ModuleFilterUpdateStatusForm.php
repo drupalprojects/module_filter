@@ -49,6 +49,24 @@ class ModuleFilterUpdateStatusForm extends FormBase {
       $form['filters']['text']['#default_value'] = $_GET['filter'];
     }
 
+    $form['filters']['radios'] = array(
+      '#type' => 'container',
+      '#attributes' => array(
+        'class' => array(
+          'module-filter-status',
+        ),
+      ),
+      'show' => array(
+        '#type' => 'radios',
+        '#default_value' => 'all',
+        '#options' => array(
+          'all' => t('All'),
+          'updates' => t('Update available'),
+          'security' => t('Security update'),
+        ),
+      ),
+    );
+
     return $form;
   }
 
