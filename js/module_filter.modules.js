@@ -52,7 +52,14 @@
           buildIndex: [
             function(item) {
               var $checkbox = $('td.checkbox :checkbox', item.element);
-              item.status = ($checkbox.size() > 0) ? $checkbox.is(':checked') : null;
+              if ($checkbox.size() > 0) {
+                item.status = $checkbox.is(':checked');
+                item.disabled = $checkbox.is(':disabled');
+              }
+              else {
+                item.status = false;
+                item.disabled = true;
+              }
               return item;
             }
           ],
@@ -113,17 +120,17 @@
           rules: [
             function(item) {
               if (showEnabled) {
-                if (item.status === true) {
+                if (item.status === true && item.disabled === true) {
                   return true;
                 }
               }
               if (showDisabled) {
-                if (item.status === false) {
+                if (item.status === false && item.disabled === false) {
                   return true;
                 }
               }
               if (showUnavailable) {
-                if (item.status === null) {
+                if (item.status === false && item.disabled === true) {
                   return true;
                 }
               }
