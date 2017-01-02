@@ -6,6 +6,14 @@
  */
 
 /**
+ * Implements hook_install().
+ */
+function module_filter_install() {
+  $state = \Drupal::state();
+  $state->set('module_filter.recent', array('module_filter' => REQUEST_TIME));
+}
+
+/**
  * Implements hook_uninstall().
  */
 function module_filter_uninstall() {
