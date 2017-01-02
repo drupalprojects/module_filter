@@ -11,6 +11,7 @@
       if ($input.length) {
         var wrapperId = $input.attr('data-table');
         var selector = 'tbody tr';
+        var lastModuleItem;
 
         // Move location of filter input to before the permissions table.
         $(wrapperId).parent().prepend($input.closest('.table-filter'));
