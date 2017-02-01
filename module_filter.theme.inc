@@ -109,6 +109,9 @@ function theme_module_filter_system_modules_tabs($variables) {
       }
 
       // Add the description, along with any modules it requires.
+      if (empty($module['description']['#markup'])) {
+        $module['description']['#markup'] = '<em>' . t('No description available.') . '</em>';
+      }
       $description = '<span class="details"><span class="text">' . drupal_render($module['description']) . '</span></span>';
       if ($requires || $required_by || (!variable_get('module_filter_version_column', 0) && $version)) {
         $description .= '<div class="requirements">';
