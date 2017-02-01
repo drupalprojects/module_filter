@@ -4,7 +4,6 @@ core = 7.x
 package = Administration
 
 files[] = module_filter.install
-files[] = module_filter.js
 files[] = module_filter.module
 files[] = module_filter.admin.inc
 files[] = module_filter.theme.inc
