@@ -60,9 +60,9 @@ class ModuleFilterUpdateStatusForm extends FormBase {
         '#type' => 'radios',
         '#default_value' => 'all',
         '#options' => array(
-          'all' => t('All'),
-          'updates' => t('Update available'),
-          'security' => t('Security update'),
+          'all' => $this->t('All'),
+          'updates' => $this->t('Update available'),
+          'security' => $this->t('Security update'),
         ),
       ),
     );
