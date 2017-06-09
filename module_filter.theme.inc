@@ -189,16 +189,19 @@ function theme_module_filter_operations(&$vars) {
     if ($dropbutton) {
       hide($links[$key]);
       if (!empty($links[$key]['#href'])) {
-        $operations[] = array(
+        $operations[$key] = array(
           'title' => $links[$key]['#title'],
           'href' => $links[$key]['#href'],
         );
+        if (isset($links[$key]['#options'])) {
+          $operations[$key] += $links[$key]['#options'];
+        }
       }
     }
     else {
       $data = drupal_render($links[$key]);
       if (!empty($data)) {
-        $operations[] = array('data' => $data);
+        $operations[$key] = array('data' => $data);
       }
     }
   }
