@@ -91,6 +91,17 @@ function module_filter_form_system_modules_alter(&$form, FormStateInterface $for
 /**
  * Implements hook_form_FORM_ID_alter().
  */
+function module_filter_form_system_modules_confirm_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $form['filters']['text'] = array(
+    '#type' => 'value',
+    '#value' => isset($_GET['filter']) ? $_GET['filter'] : '',
+  );
+  $form['#submit'][] = 'module_filter_system_modules_redirect_submit';
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
 function module_filter_form_system_modules_uninstall_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
   $key = array_search('system/drupal.system.modules', $form['#attached']['library']);
   if ($key !== FALSE) {
@@ -171,6 +182,8 @@ function module_filter_system_modules_recent_enabled_submit($form, FormStateInte
  */
 function module_filter_system_modules_redirect_submit($form, FormStateInterface $form_state) {
   if ($text = $form_state->getValue('text')) {
-    $form_state->setRedirect('system.modules_list', array('filter' => $text));
+    /** @var \Drupal\Core\Url $redirect */
+    $route_name = ($redirect = $form_state->getRedirect()) ? $redirect->getRouteName() : 'system.modules_list';
+    $form_state->setRedirect($route_name, array('filter' => $text));
   }
 }
