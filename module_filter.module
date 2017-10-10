@@ -166,9 +166,22 @@ function module_filter_system_modules_recent_enabled_submit($form, FormStateInte
   $state = \Drupal::state();
   $recent = $state->get('module_filter.recent') ?: array();
 
-  foreach ($form_state->getValue('modules') as $package => $modules) {
+  // Drupal 8.3.0 simplified the module form structure which requires checking
+  // the version of Drupal and building the $modules array accordingly.
+  // @see https://www.drupal.org/node/2851653
+  $modules = [];
+  if (version_compare(\DRUPAL::VERSION, '8.3.0', '<')) {
+    foreach ($form_state->getValue('modules') as $package) {
+      $modules += $package;
+    }
+  }
+  else {
+    $modules = $form_state->getValue('modules');
+  }
+
+  foreach (Element::children($form['modules']) as $package) {
     foreach ($modules as $module => $details) {
-      if ($form['modules'][$package][$module]['enable']['#default_value'] != $details['enable']) {
+      if (isset($form['modules'][$package][$module]) && $form['modules'][$package][$module]['enable']['#default_value'] != $details['enable']) {
         $recent[$module] = REQUEST_TIME;
       }
     }
