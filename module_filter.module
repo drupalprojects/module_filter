@@ -102,7 +102,7 @@ function module_filter_form_system_modules_confirm_form_alter(&$form, FormStateI
 /**
  * Implements hook_form_FORM_ID_alter().
  */
-function module_filter_form_system_modules_uninstall_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+function module_filter_form_system_modules_uninstall_alter(&$form, FormStateInterface $form_state, $form_id) {
   $key = array_search('system/drupal.system.modules', $form['#attached']['library']);
   if ($key !== FALSE) {
     unset($form['#attached']['library'][$key]);
@@ -118,7 +118,7 @@ function module_filter_form_system_modules_uninstall_alter(&$form, \Drupal\Core\
 /**
  * Implements hook_form_FORM_ID_alter().
  */
-function module_filter_form_user_admin_permissions_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+function module_filter_form_user_admin_permissions_alter(&$form, FormStateInterface $form_state, $form_id) {
   $form['filters'] = [
     '#type' => 'container',
     '#attributes' => [
