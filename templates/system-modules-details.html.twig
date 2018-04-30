@@ -48,7 +48,7 @@
           <div class="details-wrapper">
             <div class="details-description">
               <div class="requirements">
-                <div class="admin-requirements">{{ 'Machine name: <span dir="ltr" class="table-filter-text-source">@machine-name</span>'|t({'@machine-name': module.machine_name }) }}</div>
+                <div class="admin-requirements">{{ 'Machine name: <span dir="ltr" class="module-machine-name table-filter-text-source">@machine-name</span>'|t({'@machine-name': module.machine_name }) }}</div>
                 {% if module.version %}
                   <div class="admin-requirements">{{ 'Version: @module-version'|t({'@module-version': module.version }) }}</div>
                 {% endif %}
